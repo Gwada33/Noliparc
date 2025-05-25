@@ -11,15 +11,18 @@
     "nav": {
             "Nolijump": {
         "label": "Nolijump",
-        "link": "#nolijump"
+        "link": "#nolijump",
+        "button": false
       },
       "Noliparc": {
         "label" :"Noliparc",
-        "link": "#noliparc"
+        "link": "#noliparc",
+        "button": false
       },
       "anniversaires": {
         "label": "Anniversaires",
-        "link": "/anniversaires"
+        "link": "/anniversaires",
+        "button": false
       }
     }
   },
