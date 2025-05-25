@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import content from '../../public/texts.json'
 
-export default function Loading({ progress }) {
+export default function Loading() {
   return (
     <div className="loading-screen">
       <div className="loading-content">
@@ -14,7 +14,7 @@ export default function Loading({ progress }) {
           height={906}
           priority
         />
-        <div className="loading-text">{progress}%</div>
+        <div className="loading-text">{}%</div>
       </div>
     </div>
   )
