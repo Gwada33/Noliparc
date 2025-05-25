@@ -6,6 +6,17 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import {client} from '@/lib/db';
 
+
+type ReservationPayload = {
+  userId: string;
+  date: string; // ou Date si tu préfères
+  formule: string;
+  childrenCount: number;
+  adultsCount: number;
+  extras: string[] | string; // tu gères les deux cas dans ton code
+};
+
+
 function generateId() {
   return 'resv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
 }
