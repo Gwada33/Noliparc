@@ -1,5 +1,5 @@
 // db.ts
-import { Client } from '../../node_modules/@types/pg';
+import { Client } from 'pg';
 
 const client = new Client({
   user: process.env.PG_USER,         // Remplace par ton utilisateur PostgreSQL
