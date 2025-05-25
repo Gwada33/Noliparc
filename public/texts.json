@@ -1,0 +1,80 @@
+{
+  "header": {
+    "image-noli": "/images/image-noli.png",
+    "image-noliparc": "/images/image-noliparc.png",
+    "image-nolitexte": "/images/image-noli-texte.png",
+    "image-nolijump": "/images/image-nolijump.png",
+    "image-nolijump-texte": "/images/image-nolijump-texte.png",
+    "brand": "Noliparc",
+    "subtitle": "Le plus grand parc indoor de Guadeloupe",
+    "cta": "Réserver maintenant",
+    "nav": {
+            "Nolijump": {
+        "label": "Nolijump",
+        "link": "#nolijump"
+      },
+      "Noliparc": {
+        "label" :"Noliparc",
+        "link": "#noliparc"
+      },
+      "anniversaires": {
+        "label": "Anniversaires",
+        "link": "/anniversaires"
+      }
+    }
+  },
+
+"features": [
+  {
+    "title": "NOLIPARC À SAINTE ROSE",
+    "paragraph": "Parc de loisirs indoor, un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profite de nos diverses activités,nous vous proposons 2 structures de jeux dans une surface de 250m2 avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants escalader, ramper et s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n On propose aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
+    "link": {
+      "label": "Reserver à l'avance",
+      "href": "/reservation"
+    },
+    "image": "/images/image-toboggan.jpeg"
+  },
+  {
+    "title": "QUAD",
+    "paragraph": "Offrez à vos enfants une expérience inoubliable avec notre parcours Quad sécurisé et fun ! Encadrés par notre équipe, les enfants pourront piloter de vrais mini-quads sur un circuit adapté, dans un cadre 100% sécurisé.",
+    "link": {
+      "label": "Voir les quads",
+      "href": "/quad"
+    },
+    "image": "/images/image-quad.png"
+  }
+],
+  "quote": {
+    "text": "Noliparc et NolijJump un lieu de fun, de défi et de partage.",
+    "author": "Spoon, Manager",
+    "internalTitle": "Avis"
+  },
+  "footer": {
+    "title": "Accès & infos pratiques",
+    "description": "Inscris-toi pour ne rien manquer du lancement.",
+    "cta": "Je m'inscris",
+    "internalTitle": "Pied de page"
+  },
+
+ "informations": {
+  "items": [
+    {
+      "icon": "FaRulerCombined",
+      "text": "950m² de surface"
+    },
+    {
+      "icon": "FaUsers",
+      "text": "Capacité de 20 personnes"
+    },
+    {
+      "icon": "FaClock",
+      "text": "Chaussettes anti-dérapantes obligatoire"
+    },
+    {
+      "icon": "FaGavel",
+      "text": "Pas de nourriture autorisée"
+    }
+  ]
+}
+
+}

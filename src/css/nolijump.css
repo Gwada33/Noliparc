@@ -1,0 +1,54 @@
+.nolijump-section {
+    padding: 4rem 1rem;
+    background: linear-gradient(to bottom, #8bcd5d, #ffffff);
+    text-align: center;
+  }
+  
+  .nolijump-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #e2511d;
+  }
+  
+  .nolijump-description {
+    font-size: 1.35rem;
+    font-weight: 500;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    margin-top: 4rem;
+    color: #000000;
+  }
+  
+ 
+
+.jump-pricing{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+
+
+
+
+  .nolijump-btn {
+    margin-top: 2rem;
+  }
+  
+  .btn-primary {
+    padding: 0.8rem 2rem;
+    background-color: #ff6600;
+    color: white;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e2511d;
+  }
+  
+

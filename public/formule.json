@@ -1,0 +1,126 @@
+{
+    "noliparcPackages": [
+      {
+        "title": "Formule Grenouille",
+        "subtitle": "1h30 en salle d'anniversaire",
+        "durations": [
+          { "time": "", "price": "20€/enfant (min. 14 enfants)" }
+        ],
+        "notes": [
+          "Gâteau au chocolat ou yaourt",
+          "Coupelle de bonbons",
+          "Sirop à l’eau à volonté",
+          "Les enfants peuvent profiter du parc ensuite"
+        ],
+        "details": [
+          "Salle équipée pour anniversaire",
+          "Accès au parc après la fête"
+        ]
+      },
+      {
+        "title": "Formule Foumi Manioc",
+        "subtitle": "2h00 en salle d'anniversaire",
+        "durations": [
+          { "time": "", "price": "30€/enfant (min. 15 enfants)" }
+        ],
+        "notes": [
+          "Frites et nuggets",
+          "Gâteau au chocolat",
+          "Sirop et eau à volonté",
+          "Une bouteille de jus ou soda",
+          "Coupelle de bonbons"
+        ],
+        "details": [
+          "Animation possible en supplément",
+          "Espace jeux accessible après"
+        ]
+      },
+      {
+        "title": "Formule Mangouste (privatisation dimanche)",
+        "subtitle": "14h00 - 17h00",
+        "durations": [
+          { "time": "", "price": "30€/enfant (min. 20 enfants)" },
+          { "time": "Supplément :", "price": "+50€/heure" }
+        ],
+        "notes": [
+          "Nuggets et frites",
+          "Gâteau chocolat",
+          "Jus, sirop, eau",
+          "1/2h d’animation",
+          "4 adultes gratuits, 5€ par adulte en plus"
+        ],
+        "details": [
+          "Privatisation complète du lieu",
+          "Animation incluse 30 minutes"
+        ]
+      }
+    ],
+    "nolijumpPackages": [
+      {
+        "title": "HappyJump Birthday",
+        "subtitle": "Samedi matin",
+        "age": "3 à 6 ans",
+        "durations": [
+          { "time": "", "price": "18€/enfant (min. 8 enfants)" }
+        ],
+        "notes": [
+          "Trampoline (1h) de 10h00 à 11h00",
+          "Goûter (30min) inclus gâteau, sirop, eau"
+        ],
+        "details": [
+          "Animation trampoline encadrée",
+          "Matériel adapté aux plus petits"
+        ]
+      },
+      {
+        "title": "PartyJump Birthday",
+        "age": "Tous âges",
+        "durations": [
+          { "time": "", "price": "20€/enfant (min. 8 enfants)" }
+        ],
+        "notes": [
+          "Trampoline (1h) horaires libres",
+          "Goûter (30min) inclus gâteau, soda, sirop, eau"
+        ],
+        "details": [
+          "Accès libre au trampoline",
+          "Goûter dans la salle dédiée"
+        ]
+      },
+      {
+        "title": "FiestaJump Birthday",
+        "age": "Tous âges",
+        "durations": [
+          { "time": "", "price": "25€/enfant (min. 8 enfants)" }
+        ],
+        "notes": [
+          "Trampoline (1h30) horaires libres",
+          "Goûter (30min) inclus gâteau chocolat ou yaourt, soda, sirop, eau"
+        ],
+        "details": [
+          "Temps de trampoline prolongé",
+          "Animations optionnelles"
+        ]
+      },
+      {
+        "title": "GOLDEN Birthday (privatisation dimanche)",
+        "subtitle": "10h00 - 12h30",
+        "age": "Tous âges",
+        "durations": [
+          { "time": "", "price": "30€/enfant (min. 15 enfants)" },
+          { "time": "Supplément :", "price": "+50€/heure" }
+        ],
+        "notes": [
+          "Trampoline (1h30) inclus",
+          "Lunch (1h) nuggets & frites",
+          "Goûter (30min) inclus gâteau, soda, sirop, eau"
+        ],
+        "details": [
+          "Privatisation complète du trampoline",
+          "Animation et repas inclus",
+          "Tarifs et suppléments selon durée"
+        ]
+      }
+    ]
+  }
+  

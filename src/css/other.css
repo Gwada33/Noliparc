@@ -1,0 +1,40 @@
+/* Quote */
+.quote {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  /* Footer */
+  
+  .cta h2 {
+    font-size: 2rem;
+    color: white;
+  }
+  
+  .cta p {
+    color: #ccc;
+    margin-bottom: 1rem;
+  }
+
+  /* AOS Animations */
+[data-aos="fade-up"] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  [data-aos="fade-up"].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  [data-aos="fade-in"] {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  [data-aos="fade-in"].aos-animate {
+    opacity: 1;
+  }
+  

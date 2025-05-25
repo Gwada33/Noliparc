@@ -1,0 +1,169 @@
+/* Features */
+
+.feature-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10vh;
+  flex-direction: column;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  padding: 2rem; /* Ajoute un espacement entre les cartes */
+  min-height: 60vh; /* Facultatif, assure une taille correcte sans forcer */
+}
+
+.feature-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.feature-content {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #000000;
+  gap: 20px;
+}
+
+.feature-content h2 {
+  text-transform: uppercase;
+  font-size: 3.5rem;
+}
+
+.feature-content p {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.btn-secondary {
+  background: #03a9f4;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .feature-card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .feature-card:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+
+  .feature-image,
+  .feature-content {
+    flex: 1;
+  }
+}
+.informations-section {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  background-color: #8bcd5d;
+  min-height: 40vh;
+  width: 100%;
+}
+
+.informations-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+}
+.informations-list li {
+  position: relative;
+  box-sizing: border-box;
+  width: 25%;
+  padding: 1rem;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 0;
+}
+
+/* Bordure droite fondue avec un gradient */
+.informations-list li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(224, 224, 224, 0));
+}
+
+/* Supprimer l'effet sur le 4e élément (desktop) */
+.informations-list li:nth-child(4)::after {
+  display: none;
+}
+
+.informations-list li svg {
+  font-size: 4rem;
+  color: #efefef;
+  margin-bottom: 0.5rem;
+}
+
+/* Ombre derrière l'icône */
+.informations-list li svg::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0.5;
+  filter: blur(2px);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+/* Responsive à 1024px : 2 colonnes */
+@media (max-width: 1024px) {
+  .informations-list li {
+    width: 50%;
+  }
+
+  .informations-list li:nth-child(2n)::after {
+    display: none;
+  }
+}
+
+/* Responsive à 600px : 1 colonne */
+@media (max-width: 600px) {
+  .informations-list li {
+    width: 100%;
+  }
+
+  .informations-list li::after {
+    display: none;
+  }
+}

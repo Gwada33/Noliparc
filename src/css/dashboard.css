@@ -1,0 +1,65 @@
+/* dashboard.css */
+
+/* ------- Conteneur principal ------- */
+.dashboard {
+  max-width: 1000px;
+  margin-top: 60px;
+  margin-inline: auto;
+  padding: 2rem 1.5rem;
+  color: #222;
+}
+
+/* Titres */
+.dashboard h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard h2 {
+  font-size: 1.25rem;
+  margin: 2rem 0 0.75rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.25rem;
+}
+
+/* Bloc d’accueil */
+.welcome p {
+  margin: 0.25rem 0;
+}
+
+/* Liste des réservations */
+.reservations {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reservations li {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reservations li strong {
+  font-weight: 600;
+}
+
+/* Badge de statut */
+.reservations li em {
+  font-style: normal;
+  font-size: 0.875rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: #f3f3f3;
+  text-transform: capitalize;
+}
+
+.reservations li em.pending   { background:#fff5cc; }
+.reservations li em.confirmed { background:#d6ffe1; }
+.reservations li em.canceled  { background:#ffd6d6; }
+
+/* Messages d’état */

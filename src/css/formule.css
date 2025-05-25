@@ -1,0 +1,131 @@
+.formule-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .formule-title{
+    color: var(--button-primary);
+    font-size: 5rem;
+  }
+  
+  .formule-card {
+    display: flex;                 /* passe en flex container */
+    flex-direction: column;        /* empile verticalement */
+    justify-content: space-between;/* espace le contenu et le bouton */
+    background: none;
+    border: 2px solid var(--button-primary);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    gap: 0.5rem;
+    width: 260px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);*/
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .price.highlight {
+  font-size: 2.5rem;
+  color: #ff6f4f;
+  font-weight: bold;
+}
+
+.icon {
+  margin-right: 6px;
+}
+
+  .noliparc-anniv {
+    background-color: none; /* vert clair */
+    border: 2px solid #78c343;
+    color: #2e7d32;
+  }
+  
+  .nolijump-entree {
+    background-color: #ffffff; /* bleu clair */
+  }
+
+  
+  .formule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Conteneur pour tout le contenu sauf le bouton */
+  .formule-card .content {
+    overflow: hidden;   /* cache le surplus de texte */
+    flex-grow: 1;       /* prend tout l’espace disponible */
+    margin-bottom: 1rem;
+  }
+  
+  .formule-card h4 {
+    font-size: 1.6rem;
+    color: var(--button-primary);
+    margin-bottom: 0.5rem;
+  }
+  
+  .formule-card .subtitle {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.8rem;
+  }
+
+  .orange {
+  color: var(--button-primary); /* texte orange */
+  /* ou pour un fond orange : */
+  font-size: larger;
+  font-weight: 1000;
+  /* background-color: orange; */
+}
+  
+  .formule-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .formule-card li {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #000000;
+  }
+  
+  .formule-card b {
+    color: #000;
+  }
+
+  .formule-card .note svg{
+    font-size: 2rem;
+    text-align: center;
+  } 
+  
+  .formule-card .note {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    color: #000000;
+    font-style: italic;
+  }
+  
+  /* Bouton réservé toujours en bas */
+  .btn-reserver {
+    display: inline-flex;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #e91e63;
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+  
+    justify-content: flex-start; /* texte aligné à gauche */
+    align-items: center;         /* centre verticalement */
+    transition: 0.3s ease;
+  }
+  
+  .btn-reserver:hover {
+    background-color: #c2185b;
+    justify-content: center; /* texte centré au hover */
+  }
+  
