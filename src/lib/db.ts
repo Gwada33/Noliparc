@@ -6,7 +6,7 @@ const client = new Client({
   host: process.env.PG_HOST,           // Adresse de ton serveur PostgreSQL
   database: process.env.PG_DATABASE,  // Nom de la base de données cible
   password: process.env.PG_PASSWORD,         // Mot de passe
-  port: process.env.PG_PORT,                  // Port PostgreSQL (par défaut 5432)
+  port: 5432,                  // Port PostgreSQL (par défaut 5432)
 });
 
 client.connect()
