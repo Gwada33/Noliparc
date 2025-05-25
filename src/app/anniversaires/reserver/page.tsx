@@ -85,7 +85,7 @@ export default function ReserverAnniversairePage() {
 
   const watchFormule = watch("formule");
   const selectedFormule = formules.find((f) => f.value === watchFormule);
-  const formuleDetails = formules.find((f) => f.value === selectedFormule);
+  const formuleDetails = selectedFormule;
   const onlySunday = formuleDetails?.isPrivatisation;
 
   // Cherche les infos de la formule choisie
