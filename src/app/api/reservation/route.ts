@@ -6,6 +6,8 @@ function generateId() {
   return 'resv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
 }
 
+export const runtime = 'nodejs'; // 👈 Empêche d'être traité comme Edge Function
+
 export async function POST(request: Request) {
   try {
     const data: ReservationPayload = await request.json();
