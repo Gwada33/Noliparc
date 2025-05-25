@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import client from "@/lib/db";
+import {client} from "@/lib/db";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const ONE_HOUR = 60 * 60;          // en secondes

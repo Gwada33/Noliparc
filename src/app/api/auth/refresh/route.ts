@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import  client  from '@/lib/db';
+import {client}  from '@/lib/db';
 import { verifyToken, signAccessToken, signRefreshToken } from '@/lib/jwt';
 
 export async function POST(req: NextRequest) {

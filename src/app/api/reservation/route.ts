@@ -4,7 +4,7 @@ export const runtime = 'nodejs'; // 👈 nécessaire pour utiliser Nodemailer sa
 
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import client from '@/lib/db';
+import {client} from '@/lib/db';
 
 function generateId() {
   return 'resv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
