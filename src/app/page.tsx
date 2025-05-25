@@ -18,7 +18,7 @@ import {
   CardContent,
   Box,
   Typography,
-  Grid,
+  Stack,
   Divider,
 } from "@mui/material";
 import HeroCarousel from "@/components/HeroCarrousel";
@@ -32,125 +32,126 @@ const icons: any = {
 
 export default function HomePage() {
   useEffect(() => {
-  AOS.init({
-    duration: 800,
-    once: true,
-  });
-}, []);
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
 
   return (
     <>
       <main className="home">
         <HeroCarousel />
-        <Card
-          elevation={4}
-          sx={{
-            maxWidth: 1200,
-            margin: "auto",
-            border: "none",
-            boxShadow: "none",
-            mt: 8,
-          }}
-        >
-          <CardContent>
-            <Box display="flex" alignItems="center" mb={3}>
-              <FaClock size={40} style={{ marginRight: 12 }} />
-              <Typography variant="h4" fontWeight="bold">
-                Horaires (1 à 10 ans)
-              </Typography>
-            </Box>
+       <Card
+  elevation={4}
+  sx={{
+    maxWidth: 1200,
+    margin: "auto",
+    border: "none",
+    boxShadow: "none",
+    mt: 8,
+  }}
+>
+  <CardContent>
+    <Stack direction="row" alignItems="center" spacing={1} mb={3}>
+      <FaClock size={40} />
+      <Typography variant="h4" fontWeight="bold">
+        Horaires
+      </Typography>
+    </Stack>
 
-          
-<Grid container spacing={4} alignItems="stretch">
-  {/* Partie gauche : horaires */}
-  <Grid xs={12} md={7}>
-    <Grid container spacing={4}>
-      {/* Vacances scolaires */}
-      <Grid xs={12} sm={6}>
-        <Box display="flex" alignItems="center" mb={1}>
-          <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
-          <Typography variant="h6" fontWeight="bold">
-            Vacances scolaires
-          </Typography>
-        </Box>
-        <Typography variant="body1" fontWeight={600} fontSize={22}>
-          Lun. <span style={{ color: "orange" }}>Fermé</span>
-          <br />
-          Mar. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Mer. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Jeu. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Ven. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Sam. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Dim. <span style={{ color: "orange" }}>Fermé</span>
-        </Typography>
-      </Grid>
-
-      {/* Périodes scolaires */}
-      <Grid  xs={12} sm={6}>
-        <Box display="flex" alignItems="center" mb={1}>
-          <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
-          <Typography variant="h6" fontWeight="bold">
-            Périodes scolaires
-          </Typography>
-        </Box>
-        <Typography variant="body1" fontWeight={600} fontSize={22}>
-          Lun. <span style={{ color: "orange" }}>Fermé</span>
-          <br />
-          Mar. <span style={{ color: "orange" }}>Fermé</span>
-          <br />
-          Mer. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Jeu. <span style={{ color: "orange" }}>Fermé</span>
-          <br />
-          Ven. <span style={{ color: "orange" }}>Fermé</span>
-          <br />
-          Sam. <span style={{ color: "orange" }}>10h-18h</span>
-          <br />
-          Dim. <span style={{ color: "orange" }}>Fermé</span>
-        </Typography>
-      </Grid>
-    </Grid>
-  </Grid>
-
-  {/* Partie droite : image */}
-  <Grid
-    xs={12}
-    md={5}
-    display="flex"
-    justifyContent="center"
-    alignItems="center"
-  >
-    <Box
-      component="img"
-      src="https://www.100gwada.com/wp-content/uploads/2024/08/NoliParc-6-1200x800.jpg"
-      alt="Enfants jouant au parc"
-      sx={{
-        width: "100%",
-        maxHeight: 280,
-        objectFit: "cover",
-        borderRadius: 4,
-      }}
-    />
-  </Grid>
-</Grid>
-
-            <Divider sx={{ my: 4 }} />
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              align="center"
-              fontSize={16}
-            >
-              Ces horaires peuvent être soumis à modification en cas d'événement
-              spécial.
+    <Stack
+      direction={{ xs: "column", md: "row" }}
+      spacing={4}
+      alignItems="stretch"
+    >
+      {/* Partie gauche : horaires */}
+      <Stack spacing={3} flex={1}>
+        {/* Vacances scolaires */}
+        <Stack spacing={1}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <FaCalendarAlt size={22} />
+            <Typography variant="h6" fontWeight="bold">
+              Vacances scolaires :
             </Typography>
-          </CardContent>
-        </Card>
+          </Stack>
+          <Typography variant="body1" fontSize={18}>
+            Lun. <span style={{ color: "orange" }}>Fermé</span>
+            <br />
+            Mar. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Mer. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Jeu. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Ven. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Sam. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Dim. <span style={{ color: "orange" }}>13h-17h</span> (7-99 ans)
+          </Typography>
+        </Stack>
+
+        {/* Périodes scolaires */}
+        <Stack spacing={1}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <FaCalendarAlt size={22} />
+            <Typography variant="h6" fontWeight="bold">
+              Périodes scolaires :
+            </Typography>
+          </Stack>
+          <Typography variant="body1" fontSize={18}>
+            Lun. <span style={{ color: "orange" }}>Fermé</span>
+            <br />
+            Mar. <span style={{ color: "orange" }}>Fermé</span>
+            <br />
+            Mer. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Jeu. <span style={{ color: "orange" }}>Fermé</span>
+            <br />
+            Ven. <span style={{ color: "orange" }}>Fermé</span>
+            <br />
+            Sam. <span style={{ color: "orange" }}>10h-12h</span> (3-6 ans),{" "}
+            <span style={{ color: "orange" }}>12h-18h</span> (7-99 ans)
+            <br />
+            Dim. <span style={{ color: "orange" }}>13h-17h</span> (7-99 ans)
+          </Typography>
+        </Stack>
+      </Stack>
+
+      {/* Partie droite : image */}
+      <Box
+        component="img"
+        src="https://www.100gwada.com/wp-content/uploads/2024/08/NoliParc-6-1200x800.jpg"
+        alt="Enfants jouant au parc"
+        sx={{
+          width: "100%",
+          maxHeight: 280,
+          objectFit: "cover",
+          borderRadius: 4,
+          boxShadow: 2,
+        }}
+      />
+    </Stack>
+
+    <Divider sx={{ my: 4 }} />
+    <Typography
+      variant="body1"
+      color="text.secondary"
+      align="center"
+      fontSize={16}
+    >
+      Ces horaires peuvent être soumis à modification en cas d'événement
+      spécial.
+    </Typography>
+  </CardContent>
+</Card>
 
         <div className="feature-container">
           {content.features.map((feature, i) => (
@@ -222,165 +223,124 @@ export default function HomePage() {
               des formules variées pour tous les niveaux d’énergie 🎉
             </p>
             <Card
-              elevation={4}
-              sx={{
-                maxWidth: 1200,
-                margin: "auto",
-                border: "none",
-                boxShadow: "none",
-                mt: 8,
-              }}
-            >
-              <CardContent>
-                <Box display="flex" alignItems="center" mb={3}>
-                  <FaClock size={40} style={{ marginRight: 12 }} />
-                  <Typography variant="h4" fontWeight="bold">
-                    Horaires
-                  </Typography>
-                </Box>
+  elevation={4}
+  sx={{
+    maxWidth: 1200,
+    margin: 'auto',
+    border: 'none',
+    boxShadow: 'none',
+    mt: 8,
+  }}
+>
+  <CardContent>
+    <Box display="flex" alignItems="center" mb={3}>
+      <FaClock size={40} style={{ marginRight: 12 }} />
+      <Typography variant="h4" fontWeight="bold">
+        Horaires
+      </Typography>
+    </Box>
 
-                <Grid container spacing={4} alignItems="stretch">
-                  {/* Partie gauche : horaires */}
-                  <Grid item xs={12} md={7}>
-                    <Box
-                      component="ul"
-                      sx={{ paddingLeft: 0, listStyle: "none", margin: 0 }}
-                    >
-                      {/* Vacances scolaires */}
-                      <Box component="li" mb={3}>
-                        <Box display="flex" alignItems="center" mb={1}>
-                          <FaCalendarAlt
-                            size={22}
-                            style={{ marginRight: 10 }}
-                          />
-                          <Typography variant="h6" fontWeight="bold">
-                            Vacances scolaires :
-                          </Typography>
-                        </Box>
-                        <Typography variant="body1" fontSize={18}>
-                          Lun. <span style={{ color: "orange" }}>Fermé</span>
-                          <br />
-                          Mar. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Mer. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Jeu. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Ven. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Sam. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Dim. <span style={{ color: "orange" }}>
-                            13h-17h
-                          </span>{" "}
-                          (7-99 ans)
-                        </Typography>
-                      </Box>
+    <Box
+      display="flex"
+      flexDirection={{ xs: 'column', md: 'row' }}
+      gap={4}
+      alignItems="stretch"
+    >
+      {/* Partie gauche : horaires */}
+      <Box flex={1}>
+        <Box component="ul" sx={{ paddingLeft: 0, listStyle: 'none', margin: 0 }}>
+          {/* Vacances scolaires */}
+          <Box component="li" mb={3}>
+            <Box display="flex" alignItems="center" mb={1}>
+              <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
+              <Typography variant="h6" fontWeight="bold">
+                Vacances scolaires :
+              </Typography>
+            </Box>
+            <Typography variant="body1" fontSize={18}>
+              Lun. <span style={{ color: 'orange' }}>Fermé</span>
+              <br />
+              Mar. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Mer. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Jeu. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Ven. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Sam. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Dim. <span style={{ color: 'orange' }}>13h-17h</span> (7-99 ans)
+            </Typography>
+          </Box>
 
-                      {/* Périodes scolaires */}
-                      <Box component="li">
-                        <Box display="flex" alignItems="center" mb={1}>
-                          <FaCalendarAlt
-                            size={22}
-                            style={{ marginRight: 10 }}
-                          />
-                          <Typography variant="h6" fontWeight="bold">
-                            Périodes scolaires :
-                          </Typography>
-                        </Box>
-                        <Typography variant="body1" fontSize={18}>
-                          Lun. <span style={{ color: "orange" }}>Fermé</span>
-                          <br />
-                          Mar. <span style={{ color: "orange" }}>Fermé</span>
-                          <br />
-                          Mer. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Jeu. <span style={{ color: "orange" }}>Fermé</span>
-                          <br />
-                          Ven. <span style={{ color: "orange" }}>Fermé</span>
-                          <br />
-                          Sam. <span style={{ color: "orange" }}>
-                            10h-12h
-                          </span>{" "}
-                          (3-6 ans),{" "}
-                          <span style={{ color: "orange" }}>12h-18h</span> (7-99
-                          ans)
-                          <br />
-                          Dim. <span style={{ color: "orange" }}>
-                            13h-17h
-                          </span>{" "}
-                          (7-99 ans)
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
+          {/* Périodes scolaires */}
+          <Box component="li">
+            <Box display="flex" alignItems="center" mb={1}>
+              <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
+              <Typography variant="h6" fontWeight="bold">
+                Périodes scolaires :
+              </Typography>
+            </Box>
+            <Typography variant="body1" fontSize={18}>
+              Lun. <span style={{ color: 'orange' }}>Fermé</span>
+              <br />
+              Mar. <span style={{ color: 'orange' }}>Fermé</span>
+              <br />
+              Mer. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Jeu. <span style={{ color: 'orange' }}>Fermé</span>
+              <br />
+              Ven. <span style={{ color: 'orange' }}>Fermé</span>
+              <br />
+              Sam. <span style={{ color: 'orange' }}>10h-12h</span> (3-6 ans),{' '}
+              <span style={{ color: 'orange' }}>12h-18h</span> (7-99 ans)
+              <br />
+              Dim. <span style={{ color: 'orange' }}>13h-17h</span> (7-99 ans)
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
 
-                  {/* Partie droite : image */}
-                  <Grid
-                    item
-                    xs={12}
-                    md={5}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Box
-                      component="img"
-                      src="https://www.100gwada.com/wp-content/uploads/2024/08/NoliParc-6-1200x800.jpg"
-                      alt="Enfants jouant au parc"
-                      sx={{
-                        width: "100%",
-                        maxHeight: 280,
-                        objectFit: "cover",
-                        borderRadius: 4,
-                        boxShadow: 2,
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+      {/* Partie droite : image */}
+      <Box
+        flex={1}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box
+          component="img"
+          src="https://www.100gwada.com/wp-content/uploads/2024/08/NoliParc-6-1200x800.jpg"
+          alt="Enfants jouant au parc"
+          sx={{
+            width: '100%',
+            maxHeight: 280,
+            objectFit: 'cover',
+            borderRadius: 4,
+            boxShadow: 2,
+          }}
+        />
+      </Box>
+    </Box>
 
-                <Divider sx={{ my: 4 }} />
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  align="center"
-                  fontSize={16}
-                >
-                  Ces horaires peuvent être soumis à modification en cas
-                  d'événement spécial.
-                </Typography>
-              </CardContent>
-            </Card>
+    <Divider sx={{ my: 4 }} />
+    <Typography
+      variant="body1"
+      color="text.secondary"
+      align="center"
+      fontSize={16}
+    >
+      Ces horaires peuvent être soumis à modification en cas d'événement spécial.
+    </Typography>
+  </CardContent>
+</Card>
 
             <div
               className="jump-pricing"
