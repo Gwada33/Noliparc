@@ -60,85 +60,84 @@ export default function HomePage() {
               </Typography>
             </Box>
 
-            <Grid container spacing={4} alignItems="stretch">
-              {/* Partie gauche : horaires */}
-              <Grid item xs={12} md={7}>
-                <Grid container spacing={4}>
-                  {/* Vacances scolaires */}
-                  <Grid item xs={12} sm={6}>
-                    <Box display="flex" alignItems="center" mb={1}>
-                      <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
-                      <Typography variant="h6" fontWeight="bold">
-                        Vacances scolaires
-                      </Typography>
-                    </Box>
-                    <Typography variant="body1" fontWeight={600} fontSize={22}>
-                      Lun. <span style={{ color: "orange" }}>Fermé</span>
-                      <br />
-                      Mar. <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Mer. <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Jeu. <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Ven. <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Sam. <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Dim. <span style={{ color: "orange" }}>Fermé</span>
-                    </Typography>
-                  </Grid>
+          
+<Grid container spacing={4} alignItems="stretch">
+  {/* Partie gauche : horaires */}
+  <Grid xs={12} md={7}>
+    <Grid container spacing={4}>
+      {/* Vacances scolaires */}
+      <Grid xs={12} sm={6}>
+        <Box display="flex" alignItems="center" mb={1}>
+          <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
+          <Typography variant="h6" fontWeight="bold">
+            Vacances scolaires
+          </Typography>
+        </Box>
+        <Typography variant="body1" fontWeight={600} fontSize={22}>
+          Lun. <span style={{ color: "orange" }}>Fermé</span>
+          <br />
+          Mar. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Mer. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Jeu. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Ven. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Sam. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Dim. <span style={{ color: "orange" }}>Fermé</span>
+        </Typography>
+      </Grid>
 
-                  {/* Périodes scolaires */}
-                  <Grid item xs={12} sm={6}>
-                    <Box display="flex" alignItems="center" mb={1}>
-                      <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
-                      <Typography variant="h6" fontWeight="bold">
-                        Périodes scolaires
-                      </Typography>
-                    </Box>
-                    <Typography variant="body1" fontWeight={600} fontSize={22}>
-                      Lun. <span style={{ color: "orange" }}>Fermé</span>
-                      <br />
-                      Mar. <span style={{ color: "orange" }}>Fermé</span>
-                      <br />
-                      Mer.
-                      <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Jeu. <span style={{ color: "orange" }}>Fermé</span>
-                      <br />
-                      Ven. <span style={{ color: "orange" }}>Fermé</span>
-                      <br />
-                      Sam. <span style={{ color: "orange" }}>10h-18h</span>
-                      <br />
-                      Dim. <span style={{ color: "orange" }}>Fermé</span>
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
+      {/* Périodes scolaires */}
+      <Grid  xs={12} sm={6}>
+        <Box display="flex" alignItems="center" mb={1}>
+          <FaCalendarAlt size={22} style={{ marginRight: 10 }} />
+          <Typography variant="h6" fontWeight="bold">
+            Périodes scolaires
+          </Typography>
+        </Box>
+        <Typography variant="body1" fontWeight={600} fontSize={22}>
+          Lun. <span style={{ color: "orange" }}>Fermé</span>
+          <br />
+          Mar. <span style={{ color: "orange" }}>Fermé</span>
+          <br />
+          Mer. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Jeu. <span style={{ color: "orange" }}>Fermé</span>
+          <br />
+          Ven. <span style={{ color: "orange" }}>Fermé</span>
+          <br />
+          Sam. <span style={{ color: "orange" }}>10h-18h</span>
+          <br />
+          Dim. <span style={{ color: "orange" }}>Fermé</span>
+        </Typography>
+      </Grid>
+    </Grid>
+  </Grid>
 
-              {/* Partie droite : image */}
-              <Grid
-                item
-                xs={12}
-                md={5}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Box
-                  component="img"
-                  src="https://www.100gwada.com/wp-content/uploads/2024/08/NoliParc-6-1200x800.jpg"
-                  alt="Enfants jouant au parc"
-                  sx={{
-                    width: "100%",
-                    maxHeight: 280,
-                    objectFit: "cover",
-                    borderRadius: 4,
-                  }}
-                />
-              </Grid>
-            </Grid>
+  {/* Partie droite : image */}
+  <Grid
+    xs={12}
+    md={5}
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+  >
+    <Box
+      component="img"
+      src="https://www.100gwada.com/wp-content/uploads/2024/08/NoliParc-6-1200x800.jpg"
+      alt="Enfants jouant au parc"
+      sx={{
+        width: "100%",
+        maxHeight: 280,
+        objectFit: "cover",
+        borderRadius: 4,
+      }}
+    />
+  </Grid>
+</Grid>
 
             <Divider sx={{ my: 4 }} />
             <Typography
