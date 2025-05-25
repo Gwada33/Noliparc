@@ -1,35 +1,62 @@
+// src/app/api/reservation/route.ts
+
+export const runtime = 'nodejs'; // 👈 nécessaire pour utiliser Nodemailer sans erreurs Vercel
+
 import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 import client from '@/lib/db';
-import { sendEmail } from '@/lib/sendMail';
 
 function generateId() {
   return 'resv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
 }
 
-export const runtime = 'nodejs'; // 👈 Empêche d'être traité comme Edge Function
+type EmailPayload = {
+  to: string;
+  subject: string;
+  html: string;
+};
+
+async function sendEmail({ to, subject, html }: EmailPayload): Promise<void> {
+  if (!to || !subject || !html) {
+    throw new Error('Champs manquants pour l\'envoi de mail');
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: '"Noliparc Contact" <contact@noliparc.com>',
+    to,
+    subject,
+    html,
+  });
+}
 
 export async function POST(request: Request) {
   try {
     const data: ReservationPayload = await request.json();
 
     const date = new Date(data.date);
-const formattedDate = date.toLocaleDateString('fr-FR', {
-  weekday: 'long', // enlève cette ligne si tu veux juste la date
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric',
-});
+    const formattedDate = date.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
 
-
-    
     if (typeof data.extras === 'string') {
-  data.extras = data.extras.split(',').map(e => e.trim()).filter(Boolean);
-}
+      data.extras = data.extras.split(',').map(e => e.trim()).filter(Boolean);
+    }
 
-const extrasText =
-  Array.isArray(data.extras) && data.extras.length > 0
-    ? data.extras.join(', ')
-    : 'Aucun';
+    const extrasText =
+      Array.isArray(data.extras) && data.extras.length > 0
+        ? data.extras.join(', ')
+        : 'Aucun';
 
     if (!data.userId) {
       return NextResponse.json({ message: 'userId manquant' }, { status: 400 });
@@ -75,13 +102,11 @@ const extrasText =
 
     // 📨 Construction de l'email HTML
     const subject = 'Confirmation de votre réservation';
-    const logoUrl = 'https://i.imgur.com/ahQpl7N.png'; // 🖼️ Remplace par le vrai lien de ton logo
-   const host = request.headers.get('host');
-const protocol = host?.startsWith('localhost') ? 'http' : 'https';
-const baseUrl = `${protocol}://${host}`;
-
-const imageUrl = `${baseUrl}/images/carte-anniversaire.jpeg`;
-
+    const logoUrl = 'https://i.imgur.com/ahQpl7N.png';
+    const host = request.headers.get('host');
+    const protocol = host?.startsWith('localhost') ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
+    const imageUrl = `${baseUrl}/images/carte-anniversaire.jpeg`;
 
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
@@ -103,7 +128,7 @@ const imageUrl = `${baseUrl}/images/carte-anniversaire.jpeg`;
         ${
           imageUrl
             ? `<div style="margin-top: 20px;">
-                 <p>📎 La carte d'anniversaire à télécharger! :</p>
+                 <p>📎 La carte d'anniversaire à télécharger :</p>
                  <a href="${imageUrl}" download style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; border-radius: 5px; text-decoration: none;">Télécharger l'image</a>
                </div>`
             : ''
