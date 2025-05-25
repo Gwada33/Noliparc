@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Link from "next/link";
 import { FaEuroSign, FaChild, FaClipboardList } from "react-icons/fa";
 import { BsDot } from "react-icons/bs";
@@ -18,7 +18,9 @@ interface FormuleCardProps {
   variant?: "noliparc-anniv" | "nolijump-anniv" | "nolijump-entree";
   showIcons?: boolean;
   highlightPrice?: boolean;
+  children?: ReactNode;  // <-- ici on ajoute children
 }
+
 
 const Formule: React.FC<FormuleCardProps> = ({
   title,
