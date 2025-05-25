@@ -19,7 +19,7 @@ const slides = [
 
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const videoRefs = useRef([])
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
   const handleNextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length)
@@ -39,7 +39,10 @@ export default function HeroCarousel() {
         {slides.map((slide, index) => (
           <div className="hero-slide" key={index}>
             <video
-              ref={(el) => (videoRefs.current[index] = el)}
+              ref={(el) => {
+  videoRefs.current[index] = el
+}}
+
               className="hero-bg-video"
               src={slide.video}
               muted
