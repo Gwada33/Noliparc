@@ -1,6 +1,6 @@
 import { Client } from 'pg';
 
-const client = new Client({
+export const client = new Client({
   connectionString: process.env.DATABASE_URL, // Exemple : 'postgresql://user:password@host:port/database'
 });
 
