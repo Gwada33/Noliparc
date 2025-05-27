@@ -32,7 +32,7 @@ bw==
 export const client = new Client({
   connectionString: process.env.DATABASE_URL, // ex: 'postgresql://user:pass@host:5432/dbname'
   ssl: {
-    rejectUnauthorized: true, // sécurise la connexion en vérifiant le certificat du serveur
+    rejectUnauthorized: false, // sécurise la connexion en vérifiant le certificat du serveur
     ca: ca, // charge le certificat CA
   },
 });
