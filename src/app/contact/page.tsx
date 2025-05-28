@@ -1,28 +1,44 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import emailjs from "emailjs-com";
+import { useForm, SubmitHandler } from "react-hook-form";
+import emailjs from "@emailjs/browser";
 import { useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Alert,
+  CircularProgress,
+  Paper,
+} from "@mui/material";
 
-type FormData = {
+interface FormData {
   name: string;
   email: string;
   message: string;
-};
+}
 
 export default function ContactPage() {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setLoading(true);
     try {
       await emailjs.send(
-        "service_xxxxxx", // Remplace par ton service ID
-        "template_xxxxxx", // Remplace par ton template ID
+        "service_xxxxxx", // Replace with your EmailJS service ID
+        "template_xxxxxx", // Replace with your EmailJS template ID
         data,
-        "publicKey_xxxxxx" // Remplace par ta clé publique
+        "publicKey_xxxxxx" // Replace with your EmailJS public key
       );
       setSuccess(true);
       reset();
@@ -34,77 +50,62 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="container">
-      <h1>Contacte-nous</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Nom</label>
-        <input {...register("name", { required: true })} placeholder="Votre nom" />
-        {errors.name && <span>Ce champ est requis</span>}
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 4, mt: 8 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Contacte-nous
+        </Typography>
 
-        <label>Email</label>
-        <input {...register("email", { required: true })} type="email" placeholder="Votre email" />
-        {errors.email && <span>Email invalide</span>}
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <TextField
+            label="Nom"
+            fullWidth
+            margin="normal"
+            {...register("name", { required: "Nom requis" })}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
 
-        <label>Message</label>
-        <textarea {...register("message", { required: true })} placeholder="Votre message" />
-        {errors.message && <span>Ce champ est requis</span>}
+          <TextField
+            label="Email"
+            type="email"
+            fullWidth
+            margin="normal"
+            {...register("email", {
+              required: "Email requis",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Email invalide",
+              },
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Envoi..." : "Envoyer"}
-        </button>
-      </form>
+          <TextField
+            label="Message"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
+            {...register("message", { required: "Message requis" })}
+            error={!!errors.message}
+            helperText={errors.message?.message}
+          />
 
-      {success && <p className="success">Message envoyé avec succès 🎉</p>}
+          <Box mt={2} display="flex" justifyContent="center">
+            <Button type="submit" variant="contained" disabled={loading}>
+              {loading ? <CircularProgress size={24} color="inherit" /> : "Envoyer"}
+            </Button>
+          </Box>
 
-      <style jsx>{`
-        .container {
-          max-width: 600px;
-          margin: 60px auto;
-          font-family: sans-serif;
-          padding: 1rem;
-        }
-        h1 {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-        form {
-          display: flex;
-          flex-direction: column;
-        }
-        label {
-          margin-top: 1rem;
-        }
-        input, textarea {
-          padding: 0.5rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          margin-top: 0.3rem;
-        }
-        textarea {
-          height: 120px;
-        }
-        button {
-          margin-top: 1.5rem;
-          padding: 0.7rem;
-          background: #0070f3;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        }
-        button:disabled {
-          background: #aaa;
-        }
-        .success {
-          margin-top: 1rem;
-          color: green;
-          text-align: center;
-        }
-        span {
-          color: red;
-          font-size: 0.9rem;
-        }
-      `}</style>
-    </div>
+          {success && (
+            <Alert severity="success" sx={{ mt: 2 }}>
+              Message envoyé avec succès 🎉
+            </Alert>
+          )}
+        </form>
+      </Paper>
+    </Container>
   );
 }

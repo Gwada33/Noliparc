@@ -8,12 +8,14 @@ const slides = [
     image: '/images/image-noliparc.png',
     subtitle: 'Le plus grand parc indoor de Guadeloupe',
     cta: 'Réserver maintenant',
+    link: '#noliparc'
   },
   {
     video: '/videos/noli2.mp4',
     image: '/images/image-nolijump-texte.png',
     subtitle: 'Viens t\'amuser dans le premier parc de trampoline de Guadeloupe!',
-    cta: 'Découvrir les activités',
+    cta: 'Découvrir l\'espace',
+    link: "/nolijump"
   },
 ]
 
@@ -60,7 +62,7 @@ export default function HeroCarousel() {
               />
               <div className="hero-summary">
                 <h1 className="hero-title">{slide.subtitle}</h1>
-                <Link href="/reservation" className="btn-primary">
+                <Link href={slide.link} className="btn-primary">
                   {slide.cta}
                 </Link>
               </div>

@@ -11,7 +11,7 @@
     "nav": {
             "Nolijump": {
         "label": "Nolijump",
-        "link": "#nolijump",
+        "link": "/nolijump",
         "button": false
       },
       "Noliparc": {
@@ -68,7 +68,28 @@
     "internalTitle": "Pied de page"
   },
 
- "informations": {
+ "informations_noliparc": {
+  "items": [
+    {
+      "icon": "FaRulerCombined",
+      "text": "450m² de surface"
+    },
+    {
+      "icon": "FaUsers",
+      "text": "Capacité de 80 personnes"
+    },
+    {
+      "icon": "FaClock",
+      "text": "Chaussettes obligatoire"
+    },
+    {
+      "icon": "FaGavel",
+      "text": "Pas de nourriture autorisée"
+    }
+  ]
+},
+
+ "informations_nolijump": {
   "items": [
     {
       "icon": "FaRulerCombined",
@@ -88,5 +109,4 @@
     }
   ]
 }
-
 }
