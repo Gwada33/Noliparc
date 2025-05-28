@@ -34,12 +34,6 @@
   font-weight: bold;
 }
 
-.logo-img {
-  height: 50px;
-  width: auto;
-  object-fit: contain;
-}
-
 .nav-links {
   list-style: none;
   display: flex;

@@ -2,7 +2,6 @@
 .hero {
   position: relative;
   height: 100vh;
-  overflow: hidden;
   width: 100vw;
   overflow: hidden;
   display: flex;
@@ -12,11 +11,10 @@
 
 /* Carrousel */
 .hero-carousel {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  overflow: hidden; /* Empêche les débordements horizontaux */
 }
 
 .hero-slide-container {
@@ -37,7 +35,9 @@
 .hero-bg-video {
   width: 100%;
   height: 100%;
-  filter:brightness( 70%);
+  max-width: 100%;
+  max-height: 100%;
+  filter: brightness(70%);
   object-fit: cover;
   position: absolute;
   top: 0;
@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centre tout verticalement */
+  justify-content: center; /* Centre verticalement */
   height: 100%;
   width: 100%;
   padding: 1rem;
@@ -64,8 +64,8 @@
 .image-noliparc,
 .image-nolijump {
   height: auto;
-  max-height: 30vh;
-  scale: 1.8;
+  max-height: 50vh;
+  max-width: 90%; /* Empêche le débordement horizontal */
   object-fit: contain;
   margin-bottom: 1.5rem;
 }
@@ -92,11 +92,6 @@
 @media (max-width: 768px) {
   .hero-title {
     font-size: 1.4rem;
-  }
-
-  .image-noliparc,
-  .image-nolijump {
-    max-height: 20vh;
   }
 
   .hero-summary {
