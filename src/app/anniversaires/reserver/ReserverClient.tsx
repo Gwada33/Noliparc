@@ -33,25 +33,25 @@ type FormData = {
 };
 
 const formules = [
-  { value: "formule-grenouille", label: "Formule Grenouille", enfantMin: 8 },
+  { value: "formule-grenouille", label: "Formule Grenouille", enfantMin: 14 },
   {
     value: "formule-foumi-manioc",
     label: "Formule Foumi Manioc",
-    enfantMin: 28,
+    enfantMin: 15,
   },
   {
     value: "formule-mangouste-(privatisation-dimanche)",
     label: "Formule Mangouste (privatisation dimanche)",
-    enfantMin: 18,
+    enfantMin: 20,
     isPrivatisation: true,
   },
-  { value: "happyjump-birthday", label: "HappyJump Birthday", enfantMin: 18 },
-  { value: "partyjump-birthday", label: "PartyJump Birthday", enfantMin: 58 },
-  { value: "fiestajump-birthday", label: "FiestaJump Birthday", enfantMin: 28 },
+  { value: "happyjump-birthday", label: "HappyJump Birthday", enfantMin: 8 },
+  { value: "partyjump-birthday", label: "PartyJump Birthday", enfantMin: 8 },
+  { value: "fiestajump-birthday", label: "FiestaJump Birthday", enfantMin: 8 },
   {
     value: "golden-birthday-(privatisation-dimanche)",
     label: "GOLDEN Birthday (privatisation dimanche)",
-    enfantMin: 48,
+    enfantMin: 15,
     isPrivatisation: true,
   },
 ];
