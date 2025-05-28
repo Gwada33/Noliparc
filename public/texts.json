@@ -45,6 +45,15 @@
       "href": "/quad"
     },
     "image": "/images/image-quad.png"
+  },
+  {
+    "title": "QUAD",
+    "paragraph": "Offrez à vos enfants une expérience inoubliable avec notre parcours Quad sécurisé et fun ! Encadrés par notre équipe, les enfants pourront piloter de vrais mini-quads sur un circuit adapté, dans un cadre 100% sécurisé.",
+    "link": {
+      "label": "Voir les quads",
+      "href": "/quad"
+    },
+    "image": "/images/image-quad.png"
   }
 ],
   "quote": {
