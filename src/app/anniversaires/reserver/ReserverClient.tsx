@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/AuthContext";
 import ReactDatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+
 import {
   Box,
   TextField,
@@ -64,6 +65,32 @@ export default function ReserverClient() {
   const { user } = useAuth();
   const [confirmation, setConfirmation] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [shapes, setShapes] = useState<React.ReactNode[]>([]);
+
+  useEffect(() => {
+    const newShapes = [...Array(20)].map((_, i) => {
+      const size = Math.floor(Math.random() * 300) + 50; // 50–200px
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 10;
+
+      return (
+        <div
+          key={i}
+          className="pattern-shape-login"
+          style={{
+            width: size,
+            height: size,
+            top: `${top}%`,
+            left: `${left}%`,
+            animationDelay: `${delay}s`,
+          }}
+        />
+      );
+    });
+
+    setShapes(newShapes);
+  }, []);
 
   const formuleFromUrl = searchParams.get("formule") || "";
 
@@ -71,6 +98,7 @@ export default function ReserverClient() {
     control,
     register,
     watch,
+    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
@@ -87,6 +115,32 @@ export default function ReserverClient() {
   const selectedFormule = formules.find((f) => f.value === watchFormule);
   const formuleDetails = selectedFormule;
   const onlySunday = formuleDetails?.isPrivatisation;
+
+  useEffect(() => {
+  if (!selectedFormule) return;
+
+  const isPrivatisation = selectedFormule.isPrivatisation;
+  const currentDate = watch("date");
+
+  if (!currentDate) return;
+
+  const currentDay = currentDate.getDay();
+
+  if (isPrivatisation && currentDay !== 0) {
+    // Trouve le dimanche suivant
+    const nextSunday = new Date(currentDate);
+    const daysToAdd = (7 - currentDay) % 7;
+    nextSunday.setDate(currentDate.getDate() + daysToAdd);
+
+    setValue("date", nextSunday);
+  }
+
+  if (!isPrivatisation && currentDay === 0) {
+    // Optionnel : on peut réinitialiser la date si c'était un dimanche pour une formule non-privatisation
+    // setValue("date", null);
+  }
+}, [watchFormule, setValue, watch, selectedFormule]);
+
 
   // Cherche les infos de la formule choisie
 
@@ -124,7 +178,7 @@ export default function ReserverClient() {
   if (!user) return <p>Utilisateur non trouvé.</p>;
 
   return (
-    <Box sx={{ padding: 4, maxWidth: 500, margin: "auto" }}>
+    <Box sx={{ padding: 4, maxWidth: 700, margin: "auto" }}>
       <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
         <DialogTitle>Demande envoyée !</DialogTitle>
         <DialogContent dividers>
@@ -148,7 +202,7 @@ export default function ReserverClient() {
             </Typography>
           )}
           <Typography>
-            <Link href="https://mail.google.com/mail/u/0/#inbox/" >
+            <Link href="https://mail.google.com/mail/u/0/#inbox/">
               Voir l'email de confirmation
             </Link>
           </Typography>
@@ -164,8 +218,8 @@ export default function ReserverClient() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Typography variant="h5" gutterBottom>
-        Faire une demande pour un anniversaire
+      <Typography variant="h4" color="#000" gutterBottom>
+        Demande pour un anniversaire
       </Typography>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -208,6 +262,7 @@ export default function ReserverClient() {
                 customInput={
                   <TextField
                     label="Date"
+                    autoComplete="off" // 👉 ajoute ceci ici
                     error={!!errors.date}
                     helperText={errors.date?.message}
                     fullWidth
@@ -284,6 +339,7 @@ export default function ReserverClient() {
           {confirmation}
         </Typography>
       )}
+      <div className="magicpattern-container">{shapes}</div>
     </Box>
   );
 }

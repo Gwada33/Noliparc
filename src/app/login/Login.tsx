@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 
@@ -12,6 +12,7 @@ import {
   Paper,
   CircularProgress,
 } from "@mui/material";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,6 +21,33 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [shapes, setShapes] = useState<React.ReactNode[]>([]);
+
+useEffect(() => {
+    const newShapes = [...Array(20)].map((_, i) => {
+      const size = Math.floor(Math.random() * 150) + 50; // 50–200px
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 10;
+
+      return (
+        <div
+          key={i}
+          className="pattern-shape-login"
+          style={{
+            width: size,
+            height: size,
+            top: `${top}%`,
+            left: `${left}%`,
+            animationDelay: `${delay}s`,
+          }}
+        />
+      );
+    });
+
+    setShapes(newShapes);
+  }, []);
+
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -53,10 +81,9 @@ export default function LoginPage() {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      className="bg-gradient" // à styliser via CSS si besoin
     >
-      <Paper elevation={6} sx={{ padding: 4, width: "100%", maxWidth: 400 }}>
-        <Typography variant="h5" align="center" gutterBottom>
+      <Paper elevation={6} sx={{ padding: 4, width: "100%", background: 'none', boxShadow: 'none', maxWidth: 400 }}>
+        <Typography variant="h3" align="center" gutterBottom>
           Connexion
         </Typography>
 
@@ -93,6 +120,18 @@ export default function LoginPage() {
               {loading ? <CircularProgress size={24} color="inherit" /> : "Se connecter"}
             </Button>
 
+            <Typography align="center" mt={2} fontSize={14}>
+  Pas encore de compte ?{" "}
+  <Link href="/register" passHref>
+    <Typography
+      component="span"
+      sx={{ color: "primary.main", fontWeight: 600, cursor: "pointer" }}
+    >
+      Inscrivez-vous
+    </Typography>
+  </Link>
+</Typography>
+
             {error && (
               <Typography color="error" align="center" fontSize={14}>
                 {error}
@@ -101,6 +140,7 @@ export default function LoginPage() {
           </Box>
         </form>
       </Paper>
+  <div className="magicpattern-container">{shapes}</div>
     </Box>
   );
 }

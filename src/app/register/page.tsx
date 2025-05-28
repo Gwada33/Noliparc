@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useRouter } from "next/navigation";
 import {
   Box,
@@ -9,7 +9,11 @@ import {
   Typography,
   Alert,
   CircularProgress,
+  Checkbox,
+  FormControlLabel,
+  Link,
 } from "@mui/material";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -22,18 +26,58 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [acceptedCGU, setAcceptedCGU] = useState(false);
+  const [shapes, setShapes] = useState<React.ReactNode[]>([]);
+
+  useEffect(() => {
+    const newShapes = [...Array(20)].map((_, i) => {
+      const size = Math.floor(Math.random() * 150) + 50; // 50–200px
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 10;
+
+      return (
+        <div
+          key={i}
+          className="pattern-shape"
+          style={{
+            width: size,
+            height: size,
+            top: `${top}%`,
+            left: `${left}%`,
+            animationDelay: `${delay}s`,
+          }}
+        />
+      );
+    });
+
+    setShapes(newShapes);
+  }, []);
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+
+    if (!captchaToken) {
+      setError("Veuillez valider le Captcha.");
+      return;
+    }
+
+    if (!acceptedCGU) {
+      setError("Veuillez accepter les conditions d'utilisation.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, captcha: captchaToken }),
       });
 
       const data = await res.json();
@@ -52,9 +96,10 @@ export default function RegisterPage() {
   }
 
   return (
-    <Box sx={{ maxWidth: 500, mx: "auto", mt: 20 }}>
-      <Typography variant="h2" color="black" gutterBottom>
-        Inscription
+    <>
+    <Box sx={{ maxWidth: 500, padding: "1rem 1rem", borderRadius: "20px",  maxHeight: "100vh", mx: "auto", mt: 10 }}>
+      <Typography variant="h3" color="black" gutterBottom>
+        Créez votre compte
       </Typography>
 
       <form onSubmit={handleSubmit}>
@@ -77,7 +122,7 @@ export default function RegisterPage() {
         />
 
         <TextField
-          label="Email"
+          label="Adresse email"
           type="email"
           fullWidth
           required
@@ -96,6 +141,38 @@ export default function RegisterPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
+        <Box mt={2}>
+          <ReCAPTCHA
+            sitekey="6LdB4E0rAAAAAIVszAj02dyiKJnOmAyPKPB0eykR"
+
+            onChange={(token) => setCaptchaToken(token)}
+          />
+        </Box>
+
+       <FormControlLabel
+  control={
+    <Checkbox
+      checked={acceptedCGU}
+      onChange={(e) => setAcceptedCGU(e.target.checked)}
+      required
+    />
+  }
+  label={
+    <Box display="inline" component="span">
+      <Typography variant="body2" component="span" color="black">
+        J'accepte les{" "}
+        <Link href="/legal#cgu" target="_blank" underline="hover">
+          conditions d'utilisation
+        </Link>
+        <Typography component="span" color="error" sx={{ ml: 0 }}>
+          *
+        </Typography>
+      </Typography>
+    </Box>
+  }
+  sx={{ mt: 2 }}
+/>
+
         <Button
           type="submit"
           variant="contained"
@@ -106,10 +183,16 @@ export default function RegisterPage() {
         >
           {loading ? <CircularProgress size={24} /> : "S’inscrire"}
         </Button>
+
+        <Typography variant="body2" textAlign="center" color="#000" mt={2}>
+          Déjà un compte ? <Link href="/login">Connectez-vous</Link>
+        </Typography>
       </form>
 
       {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
       {success && <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert>}
     </Box>
+  <div className="magicpattern-container">{shapes}</div>
+    </>
   );
 }

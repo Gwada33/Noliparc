@@ -135,14 +135,6 @@ export default function Nolijump() {
                 showIcons={false}
                 highlightPrice={true}
               />
-
-              <Formule
-                title="Carnet de 10h"
-                variant="nolijump-entree"
-                durations={[{ time: "", price: "110€" }]}
-                showIcons={false}
-                highlightPrice={true}
-              />
             </div>
           </div>
           <div className="nolijump-btn" data-aos="zoom-in" data-aos-delay="400">

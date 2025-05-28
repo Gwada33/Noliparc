@@ -86,11 +86,11 @@ export default function HomePage() {
               data-aos-delay={i * 100}
             >
               {feature.image && (
-                <div className="feature-image">
+                <div  className="feature-image">
                   <Image
-                    alt="image-noliparc"
                     className="rounded"
                     width={1269}
+                    alt={feature.alt}
                     height={906}
                     src={feature.image}
                   />

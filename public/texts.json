@@ -38,7 +38,7 @@
     "image": "/images/image-toboggan.jpeg"
   },
   {
-    "title": "QUAD",
+    "title": "LES QUADS",
     "paragraph": "Offrez à vos enfants une expérience inoubliable avec notre parcours Quad sécurisé et fun ! Encadrés par notre équipe, les enfants pourront piloter de vrais mini-quads sur un circuit adapté, dans un cadre 100% sécurisé.",
     "link": {
       "label": "Voir les quads",
@@ -47,13 +47,14 @@
     "image": "/images/image-quad.png"
   },
   {
-    "title": "QUAD",
-    "paragraph": "Offrez à vos enfants une expérience inoubliable avec notre parcours Quad sécurisé et fun ! Encadrés par notre équipe, les enfants pourront piloter de vrais mini-quads sur un circuit adapté, dans un cadre 100% sécurisé.",
+    "title": "LE SNACK",
+     "paragraph": "Envie d'une pause gourmande ? Rendez-vous au snack pour savourer nos délicieux hamburgers, frites croustillantes, gaufres, crêpes, granitas rafraîchissants et une sélection de boissons. Toutes ces douceurs sont disponibles à l'achat directement à la caisse tout au long de la journée.",
     "link": {
-      "label": "Voir les quads",
-      "href": "/quad"
+      "label": "Carte des snacks",
+      "href": "/snack"
     },
-    "image": "/images/image-quad.png"
+    "image": "/images/snack.png",
+    "alt": "Image par @pngtree"
   }
 ],
   "quote": {
