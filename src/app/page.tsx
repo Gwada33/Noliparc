@@ -90,7 +90,7 @@ export default function HomePage() {
                   <Image
                     className="rounded"
                     width={1269}
-                    alt={feature.alt}
+                    alt={feature.alt ?? "Noliparc.fr"}
                     height={906}
                     src={feature.image}
                   />
