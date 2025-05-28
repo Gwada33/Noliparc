@@ -15,8 +15,8 @@
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  padding: 2rem; /* Ajoute un espacement entre les cartes */
-  min-height: 60vh; /* Facultatif, assure une taille correcte sans forcer */
+  padding: 2rem;
+  color: #000;
 }
 
 .feature-image img {
@@ -27,11 +27,13 @@
 
 .feature-content {
   display: flex;
-  justify-content: left;
   flex-direction: column;
-  align-items: flex-start;
-  color: #000000;
+  justify-content: center;
+  align-items: center; /* centrage horizontal du contenu */
+  text-align: center;
   gap: 20px;
+  padding: 1rem;
+  width: 100%;
 }
 
 .feature-content h2 {
@@ -52,8 +54,10 @@
   text-decoration: none;
   font-weight: bold;
 }
+/* Le texte centré à gauche mais non écrasé */
 
-/* Responsive */
+
+/* Responsive desktop */
 @media (min-width: 768px) {
   .feature-card {
     flex-direction: row;
@@ -62,6 +66,14 @@
 
   .feature-card:nth-child(odd) {
     flex-direction: row-reverse;
+  }
+
+  .feature-content {
+    align-items: flex-start;
+    text-align: left;
+    justify-content: center;
+    padding: 2rem;
+    width: 100%;
   }
 
   .feature-image,
