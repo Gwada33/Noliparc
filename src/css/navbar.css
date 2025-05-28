@@ -21,6 +21,7 @@
 
 .logo {
   display: flex;
+  height: auto;
   align-items: center;
   gap: 0.5rem;
 }
