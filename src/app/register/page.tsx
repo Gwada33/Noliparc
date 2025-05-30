@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Box,
@@ -14,14 +14,15 @@ import {
   Link,
 } from "@mui/material";
 import ReCAPTCHA from "react-google-recaptcha";
+import MaterialUiPhoneNumber from "mui-phone-number";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
+    phone: "",
   });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -55,6 +56,9 @@ export default function RegisterPage() {
     setShapes(newShapes);
   }, []);
 
+    const handlePhoneChange = (value: string) => {
+    setForm({ ...form, phone: value });
+  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -83,8 +87,10 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Inscription réussie ! Vous pouvez maintenant vous connecter.");
-        setTimeout(() => window.location.href = "/login", 1500);
+        setSuccess(
+          "Inscription réussie ! Vous pouvez maintenant vous connecter."
+        );
+        setTimeout(() => (window.location.href = "/login"), 1500);
       } else {
         setError(data.message || "Erreur lors de l’inscription");
       }
@@ -97,102 +103,132 @@ export default function RegisterPage() {
 
   return (
     <>
-    <Box sx={{ maxWidth: 500, padding: "1rem 1rem", borderRadius: "20px",  maxHeight: "100vh", mx: "auto", mt: 10 }}>
-      <Typography variant="h3" color="black" gutterBottom>
-        Créez votre compte
-      </Typography>
+      <Box
+        sx={{
+          maxWidth: 500,
+          padding: "1rem 1rem",
+          borderRadius: "20px",
+          maxHeight: "100vh",
+          mx: "auto",
+          mt: 10,
+        }}
+      >
+        <Typography variant="h3" color="black" gutterBottom>
+          Créez votre compte
+        </Typography>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Prénom"
-          fullWidth
-          required
-          margin="normal"
-          value={form.firstName}
-          onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-        />
+        <form onSubmit={handleSubmit}>
+          <Box display="flex" gap={2} mt={2}>
+            <TextField
+              label="Prénom"
+              fullWidth
+              required
+              value={form.firstName}
+              onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+            />
 
-        <TextField
-          label="Nom"
-          fullWidth
-          required
-          margin="normal"
-          value={form.lastName}
-          onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-        />
+            <TextField
+              label="Nom"
+              fullWidth
+              required
+              value={form.lastName}
+              onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+            />
+          </Box>
 
-        <TextField
-          label="Adresse email"
-          type="email"
-          fullWidth
-          required
-          margin="normal"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-
-        <TextField
-          label="Mot de passe"
-          type="password"
-          fullWidth
-          required
-          margin="normal"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
-
-        <Box mt={2}>
-          <ReCAPTCHA
-            sitekey="6LdB4E0rAAAAAIVszAj02dyiKJnOmAyPKPB0eykR"
-
-            onChange={(token) => setCaptchaToken(token)}
+          <TextField
+            label="Adresse email"
+            type="email"
+            fullWidth
+            required
+            margin="normal"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
-        </Box>
 
-       <FormControlLabel
-  control={
-    <Checkbox
-      checked={acceptedCGU}
-      onChange={(e) => setAcceptedCGU(e.target.checked)}
-      required
-    />
-  }
-  label={
-    <Box display="inline" component="span">
-      <Typography variant="body2" component="span" color="black">
-        J'accepte les{" "}
-        <Link href="/legal#cgu" target="_blank" underline="hover">
-          conditions d'utilisation
-        </Link>
-        <Typography component="span" color="error" sx={{ ml: 0 }}>
-          *
-        </Typography>
-      </Typography>
-    </Box>
-  }
-  sx={{ mt: 2 }}
-/>
+          <TextField
+            label="Mot de passe"
+            type="password"
+            fullWidth
+            required
+            margin="normal"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
 
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
+           <MaterialUiPhoneNumber
+          defaultCountry="gp"
+          preferredCountries={["fr", "be", "ch", "gp"]}
+          label="Numéro de téléphone"
           fullWidth
-          sx={{ mt: 2 }}
-          disabled={loading}
-        >
-          {loading ? <CircularProgress size={24} /> : "S’inscrire"}
-        </Button>
+          required
+          margin="normal"
+          value={form.phone}
+          onChange={(value: string) =>
+            setForm((prev) => ({ ...prev, phone: value }))
+          }
+          disableAreaCodes={false}
+        />
 
-        <Typography variant="body2" textAlign="center" color="#000" mt={2}>
-          Déjà un compte ? <Link href="/login">Connectez-vous</Link>
-        </Typography>
-      </form>
+          <Box mt={2}>
+            <ReCAPTCHA
+              sitekey="6LdB4E0rAAAAAIVszAj02dyiKJnOmAyPKPB0eykR"
+              onChange={(token) => setCaptchaToken(token)}
+            />
+          </Box>
 
-      {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
-      {success && <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert>}
-    </Box>
-  <div className="magicpattern-container">{shapes}</div>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={acceptedCGU}
+                onChange={(e) => setAcceptedCGU(e.target.checked)}
+                required
+              />
+            }
+            label={
+              <Box display="inline" component="span">
+                <Typography variant="body2" component="span" color="black">
+                  J'accepte les{" "}
+                  <Link href="/legal#cgu" target="_blank" underline="hover">
+                    conditions d'utilisation
+                  </Link>
+                  <Typography component="span" color="error" sx={{ ml: 0 }}>
+                    *
+                  </Typography>
+                </Typography>
+              </Box>
+            }
+            sx={{ mt: 2 }}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} /> : "S’inscrire"}
+          </Button>
+
+          <Typography variant="body2" textAlign="center" color="#000" mt={2}>
+            Déjà un compte ? <Link href="/login">Connectez-vous</Link>
+          </Typography>
+        </form>
+
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert severity="success" sx={{ mt: 2 }}>
+            {success}
+          </Alert>
+        )}
+      </Box>
+      <div className="magicpattern-container">{shapes}</div>
     </>
   );
 }

@@ -32,8 +32,8 @@
     "title": "NOLIPARC À SAINTE ROSE",
     "paragraph": "Parc de loisirs indoor, un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profite de nos diverses activités,nous vous proposons 2 structures de jeux dans une surface de 250m2 avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants escalader, ramper et s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n On propose aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
     "link": {
-      "label": "Reserver à l'avance",
-      "href": "/reservation"
+      "label": "Voir les images",
+      "href": "/preview"
     },
     "image": "/images/image-toboggan.jpeg"
   },
@@ -73,39 +73,77 @@
   "items": [
     {
       "icon": "FaRulerCombined",
-      "text": "450m² de surface"
+      "text": "250m² de surface"
     },
     {
       "icon": "FaUsers",
-      "text": "Capacité de 80 personnes"
+      "text": "Capacité de 110 personnes"
     },
     {
-      "icon": "FaClock",
+      "icon": "FaSocks",
       "text": "Chaussettes obligatoire"
     },
     {
-      "icon": "FaGavel",
-      "text": "Pas de nourriture autorisée"
+      "icon": "MdNoFood",
+      "text": "Nourriture extérieure interdite"
     }
   ]
 },
+
+  "quads": [
+    {
+      "original": "/images/quad/quad-1.jpeg",
+      "originalAlt": "Enfant sur un quad"
+    },
+    {
+      "original": "/images/quad/quad-2.jpeg",
+      "originalAlt": "Parcours quad sécurisé"
+    },
+    {
+      "original": "/images/quad/quad-3.jpeg",
+      "originalAlt": "Mini-quad en action"
+    },
+    {
+      "original": "/images/quad/quad-4.jpeg",
+      "originalAlt": "Mini-quad en action"
+    }
+  ],
+
+  "noliparc": [
+    {
+      "original": "/images/noliparc/noliparc-1.jpeg",
+      "originalAlt": "Enfant sur un trampoline"
+    },
+    {
+      "original": "/images/noliparc/noliparc-2.jpeg",
+      "originalAlt": "Enfant sur un trampoline"
+    },
+    {
+      "original": "/images/noliparc/noliparc-3.jpeg",
+      "originalAlt": "Toboggan"
+    },
+    {
+      "original": "/images/noliparc/noliparc-4.jpeg",
+      "originalAlt": "Piscine à balle"
+    }
+  ],
 
  "informations_nolijump": {
   "items": [
     {
       "icon": "FaRulerCombined",
-      "text": "950m² de surface"
+      "text": "250m² de surface"
     },
     {
       "icon": "FaUsers",
-      "text": "Capacité de 20 personnes"
+      "text": "Capacité de 30 personnes"
     },
     {
-      "icon": "FaClock",
+      "icon": "FaSocks",
       "text": "Chaussettes anti-dérapantes obligatoire"
     },
     {
-      "icon": "FaGavel",
+      "icon": "MdNoFood",
       "text": "Pas de nourriture autorisée"
     }
   ]

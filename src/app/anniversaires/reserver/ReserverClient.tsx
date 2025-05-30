@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/AuthContext";
 import ReactDatePicker from "react-datepicker";
 
-import "react-datepicker/dist/react-datepicker.css";
+import "./react-date-picker.css"
 
 import {
   Box,
@@ -62,7 +62,9 @@ export default function ReserverClient() {
   const searchParams = useSearchParams();
   const [modalOpen, setModalOpen] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { user } = useAuth();
+  const [finalModalOpen, setFinalModalOpen] = useState(false);
   const [confirmation, setConfirmation] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [shapes, setShapes] = useState<React.ReactNode[]>([]);
@@ -117,112 +119,147 @@ export default function ReserverClient() {
   const onlySunday = formuleDetails?.isPrivatisation;
 
   useEffect(() => {
-  if (!selectedFormule) return;
+    if (!selectedFormule) return;
 
-  const isPrivatisation = selectedFormule.isPrivatisation;
-  const currentDate = watch("date");
+    const isPrivatisation = selectedFormule.isPrivatisation;
+    const currentDate = watch("date");
 
-  if (!currentDate) return;
+    if (!currentDate) return;
 
-  const currentDay = currentDate.getDay();
+    const currentDay = currentDate.getDay();
 
-  if (isPrivatisation && currentDay !== 0) {
-    // Trouve le dimanche suivant
-    const nextSunday = new Date(currentDate);
-    const daysToAdd = (7 - currentDay) % 7;
-    nextSunday.setDate(currentDate.getDate() + daysToAdd);
+    if (isPrivatisation && currentDay !== 0) {
+      // Trouve le dimanche suivant
+      const nextSunday = new Date(currentDate);
+      const daysToAdd = (7 - currentDay) % 7;
+      nextSunday.setDate(currentDate.getDate() + daysToAdd);
 
-    setValue("date", nextSunday);
-  }
+      setValue("date", nextSunday);
+    }
 
-  if (!isPrivatisation && currentDay === 0) {
-    // Optionnel : on peut réinitialiser la date si c'était un dimanche pour une formule non-privatisation
-    // setValue("date", null);
-  }
-}, [watchFormule, setValue, watch, selectedFormule]);
+    if (!isPrivatisation && currentDay === 0) {
+      // Optionnel : on peut réinitialiser la date si c'était un dimanche pour une formule non-privatisation
+      // setValue("date", null);
+    }
+  }, [watchFormule, setValue, watch, selectedFormule]);
+
+const handleFormSubmit = (data: FormData) => {
+  setSubmittedData(data);
+  setModalOpen(true);
+};
 
 
   // Cherche les infos de la formule choisie
 
   // Valeurs dynamiques selon la formule
   const enfantMin = selectedFormule?.enfantMin || 0;
-  const enfantMax = selectedFormule ? enfantMin + 10 : 20; // ex: max = min + 10
-  const adulteMax = selectedFormule ? enfantMin / 2 : 10; // ex: max adulte = min enfants / 2
 
   const onSubmit = async (data: FormData) => {
-    if (!user?.id) {
-      setErrorMsg("Identifiant utilisateur manquant.");
-      return;
-    }
+  if (!user?.id || hasSubmitted) return;
 
-    setConfirmation(null);
-    setErrorMsg(null);
+  setHasSubmitted(true);
+  setErrorMsg(null);
 
-    try {
-      const resp = await fetch("/api/reservation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, ...data }),
-      });
+  try {
+    const resp = await fetch("/api/reservation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id, ...data }),
+    });
 
-      if (!resp.ok) throw new Error(`Erreur ${resp.status}`);
+    if (!resp.ok) throw new Error(`Erreur ${resp.status}`);
 
-      // Stocke les données pour les afficher dans le modal
-      setSubmittedData(data);
-      setModalOpen(true);
-    } catch (err: any) {
-      setErrorMsg(`Impossible d’enregistrer la réservation. ${err.message}`);
-    }
-  };
+    setModalOpen(false);       // Ferme 1er modal
+    setFinalModalOpen(true);   // Ouvre 2e modal
+  } catch (err: any) {
+    setErrorMsg(`Erreur de réservation : ${err.message}`);
+    setHasSubmitted(false); // Permet de réessayer
+  }
+};
+
 
   if (!user) return <p>Utilisateur non trouvé.</p>;
 
   return (
     <Box sx={{ padding: 4, maxWidth: 700, margin: "auto" }}>
-      <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-        <DialogTitle>Demande envoyée !</DialogTitle>
-        <DialogContent dividers>
-          <Typography>
-            <strong>Formule :</strong>{" "}
-            {formules.find((f) => f.value === submittedData?.formule)?.label}
-          </Typography>
-          <Typography>
-            <strong>Date :</strong>{" "}
-            {submittedData?.date?.toLocaleDateString("fr-FR")}
-          </Typography>
-          <Typography>
-            <strong>Enfants :</strong> {submittedData?.childrenCount}
-          </Typography>
-          <Typography>
-            <strong>Adultes :</strong> {submittedData?.adultsCount}
-          </Typography>
-          {submittedData?.extras && (
-            <Typography>
-              <strong>Infos :</strong> {submittedData.extras}
-            </Typography>
-          )}
-          <Typography>
-            <Link href="https://mail.google.com/mail/u/0/#inbox/">
-              Voir l'email de confirmation
-            </Link>
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setModalOpen(false);
-              window.location.href = "/";
-            }}
-          >
-            Fermer
-          </Button>
-        </DialogActions>
-      </Dialog>
+    <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
+  <DialogTitle>Confirmer votre demande</DialogTitle>
+  <DialogContent dividers>
+    <Typography>
+      <strong>Formule :</strong>{" "}
+      {formules.find((f) => f.value === submittedData?.formule)?.label}
+    </Typography>
+    <Typography>
+      <strong>Date :</strong>{" "}
+      {submittedData?.date?.toLocaleDateString("fr-FR")}
+    </Typography>
+    <Typography>
+      <strong>Enfants :</strong> {submittedData?.childrenCount}
+    </Typography>
+    <Typography>
+      <strong>Adultes :</strong> {submittedData?.adultsCount}
+    </Typography>
+    {submittedData?.extras && (
+      <Typography>
+        <strong>Infos :</strong> {submittedData.extras}
+      </Typography>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setModalOpen(false)}>Modifier</Button>
+    <Button
+      onClick={() => onSubmit(submittedData!)}
+      variant="contained"
+      disabled={hasSubmitted}
+    >
+      Confirmer et envoyer
+    </Button>
+  </DialogActions>
+</Dialog>
+<Dialog open={finalModalOpen} onClose={() => setFinalModalOpen(false)}>
+  <DialogTitle>Demande envoyée !</DialogTitle>
+  <DialogContent dividers>
+    <Typography gutterBottom>
+      ✅ Votre demande a bien été enregistrée.
+    </Typography>
+    <Typography whiteSpace="pre-line" gutterBottom>
+      ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en cas
+      d'annulation, mais échangeable contre un report ou des entrées.
+      {"\n"}🚫 Boissons et aliments extérieurs interdits.
+      {"\n"}🧦 Chaussettes obligatoires pour tous.
+    </Typography>
+    <Typography mt={2}>
+      📧{" "}
+      <Link
+        href="https://mail.google.com/mail/u/0/#inbox/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ textDecoration: "underline" }}
+      >
+        Voir l'email de confirmation sur Gmail
+      </Link>
+    </Typography>
+  </DialogContent>
+  <DialogActions>
+    <Button
+      onClick={() => {
+        setFinalModalOpen(false);
+        router.push("/");
+      }}
+    >
+      Fermer
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
+
       <Typography variant="h4" color="#000" gutterBottom>
         Demande pour un anniversaire
       </Typography>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+<form onSubmit={handleSubmit(handleFormSubmit)}>
+
         {/* Date */}
         {/* Formule */}
         <FormControl fullWidth margin="normal" error={!!errors.formule}>
@@ -278,11 +315,10 @@ export default function ReserverClient() {
           fullWidth
           margin="normal"
           type="number"
-          label={`Nombre d'enfants (min ${enfantMin}, max ${enfantMax})`}
+          label={`Nombre d'enfants (min ${enfantMin})`}
           {...register("childrenCount", {
             required: "Nombre requis",
             min: { value: enfantMin, message: `Minimum ${enfantMin} enfants` },
-            max: { value: enfantMax, message: `Maximum ${enfantMax} enfants` },
             valueAsNumber: true,
           })}
           error={!!errors.childrenCount}
@@ -298,7 +334,6 @@ export default function ReserverClient() {
           {...register("adultsCount", {
             required: "Nombre requis",
             min: { value: 0, message: "Min 0" },
-            max: { value: 20, message: "Max 20" },
             valueAsNumber: true,
           })}
           error={!!errors.adultsCount}

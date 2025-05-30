@@ -10,8 +10,9 @@ import {
   FaUsers,
   FaClock,
   FaGavel,
-  FaCalendarAlt,
+  FaSocks
 } from "react-icons/fa";
+import { MdNoFood } from 'react-icons/md'
 import {
   Box,
   Typography,
@@ -23,6 +24,8 @@ import { ScheduleTable } from "@/components/ScheduleTable";
 const icons: any = {
   FaRulerCombined: FaRulerCombined,
   FaUsers: FaUsers,
+  FaSocks: FaSocks,
+  MdNoFood: MdNoFood,
   FaClock: FaClock,
   FaGavel: FaGavel,
 };
@@ -58,7 +61,7 @@ export default function HomePage() {
                     ["Jeu.", "10h-18h"],
                     ["Ven.", "10h-18h"],
                     ["Sam.", "10h-18h"],
-                    ["Dim.", "-"],
+                    ["Dim.", "Fermé"],
                   ]}
                 />
     
@@ -72,12 +75,12 @@ export default function HomePage() {
                     ["Jeu.", "Fermé"],
                     ["Ven.", "Fermé"],
                     ["Sam.", "10h-18h"],
-                    ["Dim.", "-"],
+                    ["Dim.", "Fermé"],
                   ]}
                 />
               </Box>
 
-        <div className="feature-container">
+        <div className="feature-container" id="noliparc">
           {content.features.map((feature, i) => (
             <section
               className="feature-card"

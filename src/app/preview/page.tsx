@@ -4,10 +4,10 @@ import React from "react";
 import content from "../../../public/texts.json";
 import GridGallery from "@/components/GridGallery";
 
-export default function QuadPage() {
+export default function Preview() {
   return (
     <main>
-      <GridGallery images={content.quads} title="Quad" subtitle="Images de Quad" />
+      <GridGallery images={content.noliparc} title="Espace de jeux Noliparc" subtitle="Images de Quad" />
     </main>
   );
 }

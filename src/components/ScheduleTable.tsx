@@ -30,7 +30,9 @@ export const ScheduleTable = ({ title, headers, data }: ScheduleTableProps) => {
         </Typography>
       </Box>
 
-      <Table>
+      <Table sx={{
+    fontWeight: "700"
+      }}>
         <TableHead>
           <TableRow>
             <TableCell>Jour</TableCell>

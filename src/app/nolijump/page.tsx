@@ -7,22 +7,27 @@ import content from "../../../public/texts.json";
 import Formule from "@/components/Formule";
 import {
   FaClock,
-  FaCalendarAlt,
   FaRulerCombined,
   FaUsers,
+  FaSocks,
   FaGavel,
 } from "react-icons/fa";
 import { useEffect } from "react";
 import Footer from "@/components/Footer";
 import { ScheduleTable } from "@/components/ScheduleTable";
 import { Box } from "@mui/material";
+import { MdNoFood } from "react-icons/md";
+
 
 const icons: any = {
   FaRulerCombined: FaRulerCombined,
   FaUsers: FaUsers,
+  FaSocks: FaSocks,
+  MdNoFood: MdNoFood,
   FaClock: FaClock,
   FaGavel: FaGavel,
 };
+
 
 export default function Nolijump() {
   useEffect(() => {
@@ -71,7 +76,7 @@ export default function Nolijump() {
                 ["Jeu.", "10h-12h", "12h-18h"],
                 ["Ven.", "10h-12h", "12h-18h"],
                 ["Sam.", "10h-12h", "12h-18h"],
-                ["Dim.", "-", "13h-17h"],
+                ["Dim.", "Fermé", "13h-17h"],
               ]}
             />
 
@@ -85,7 +90,7 @@ export default function Nolijump() {
                 ["Jeu.", "Fermé", "Fermé"],
                 ["Ven.", "Fermé", "Fermé"],
                 ["Sam.", "10h-12h", "12h-18h"],
-                ["Dim.", "-", "13h-17h"],
+                ["Dim.", "Fermé", "13h-17h"],
               ]}
             />
           </Box>
@@ -96,7 +101,7 @@ export default function Nolijump() {
               <Formule
                 title="Mini Jump 1h"
                 variant="nolijump-entree"
-                subtitle="(2-6 ans, 10h-12h)"
+                subtitle="(3-6 ans, 10h-12h)"
                 durations={[{ time: "", price: "10€" }]}
                 showIcons={false}
                 highlightPrice={true}
@@ -128,8 +133,8 @@ export default function Nolijump() {
                 variant="nolijump-entree"
                 subtitle="(à partir de 12h)"
                 durations={[
-                  { time: "1h : ", price: "8€" },
-                  { time: "2h30 : ", price: "18€" },
+                  { time: "1h (périodes scolaires)", price: "8€" },
+                  { time: "1h (vacances scolaires)", price: "18€" },
                 ]}
                 notes={["(Justificatif demandé)"]}
                 showIcons={false}

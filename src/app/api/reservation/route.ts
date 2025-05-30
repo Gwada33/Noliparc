@@ -17,6 +17,7 @@ type ReservationPayload = {
 };
 
 
+
 function generateId() {
   return 'resv_' + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
 }
@@ -74,14 +75,14 @@ export async function POST(request: Request) {
     }
 
     // 🔍 Récupération de l'email de l'utilisateur
-    const userQuery = `SELECT email FROM users WHERE id = $1 LIMIT 1;`;
-    const userResult = await client.query(userQuery, [data.userId]);
+  const userQuery = `SELECT email, first_name, last_name, phone FROM users WHERE id = $1 LIMIT 1;`;
+const userResult = await client.query(userQuery, [data.userId]);
 
-    if (userResult.rows.length === 0) {
-      return NextResponse.json({ message: 'Utilisateur non trouvé' }, { status: 404 });
-    }
+if (userResult.rows.length === 0) {
+  return NextResponse.json({ message: 'Utilisateur non trouvé' }, { status: 404 });
+}
 
-    const userEmail = userResult.rows[0].email;
+const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
 
     // 🛠 Insertion de la réservation
     const id = generateId();
@@ -112,7 +113,7 @@ export async function POST(request: Request) {
     const reservation = rows[0];
 
     // 📨 Construction de l'email HTML
-    const subject = 'Confirmation de votre réservation';
+    const subject = 'Votre demande à été pris en compte';
     const logoUrl = 'https://i.imgur.com/ahQpl7N.png';
     const host = request.headers.get('host');
     const protocol = host?.startsWith('localhost') ? 'http' : 'https';
@@ -124,9 +125,9 @@ export async function POST(request: Request) {
         <div style="text-align: center;">
           <img src="${logoUrl}" alt="Noliparc Logo" style="max-height: 120px; margin-bottom: 20px;" />
         </div>
-        <h2 style="color: #4CAF50;">🎉 Votre réservation a bien été prise en compte !</h2>
-        <p>Bonjour,</p>
-        <p>Nous vous confirmons la réception de votre demande de réservation. Voici un récapitulatif :</p>
+        <h2 style="color: #4CAF50;">🎉 Votre demande a bien été prise en compte !</h2>
+        <p>Bonjour ${first_name} ${last_name},</p>
+        <p>Nous vous confirmons la réception de votre demande. Voici un récapitulatif :</p>
 
         <ul style="list-style: none; padding-left: 0;">
           <li><strong>🗓️ Date :</strong> ${formattedDate}</li>
@@ -135,6 +136,13 @@ export async function POST(request: Request) {
           <li><strong>🧒 Enfants :</strong> ${data.childrenCount}</li>
           <li><strong>🧩 Infos supplémentaires :</strong> ${extrasText}</li>
         </ul>
+
+        <p>
+         ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en cas
+      d'annulation, mais échangeable contre un report ou des entrées.<br />
+      🚫 Boissons et aliments extérieurs interdits.<br />
+      🧦 Chaussettes obligatoires pour tous.
+      <p>
 
         ${
           imageUrl
@@ -148,13 +156,30 @@ export async function POST(request: Request) {
         <p style="margin-top: 30px;">Merci pour votre confiance,<br>L’équipe Noliparc.</p>
       </div>
     `;
-
     // ✉️ Envoi de l'email HTML
     await sendEmail({
       to: userEmail,
       subject,
       html,
     });
+
+    await sendEmail({
+  to: 'magdala.galinat@noliparc.com',
+  subject: `[DEMANDE-NOLIPARC] Nouvelle demande - ${formattedDate}`,
+  html: `
+    <p>Nouvelle réservation reçue :</p>
+    <li><strong>Nom du client :</strong> ${first_name} ${last_name}</li>
+    <li><strong>Numéro de téléphone du client :</strong> ${phone}</li>
+    <ul>
+      <li><strong>Date :</strong> ${formattedDate}</li>
+      <li><strong>Formule :</strong> ${data.formule}</li>
+      <li><strong>Enfants :</strong> ${data.childrenCount}</li>
+      <li><strong>Adultes :</strong> ${data.adultsCount}</li>
+      <li><strong>Extras :</strong> ${extrasText}</li>
+      <li><strong>Email client :</strong> ${userEmail}</li>
+    </ul>
+  `,
+});
 
     return NextResponse.json({
       message: 'Réservation enregistrée et email envoyé avec succès',

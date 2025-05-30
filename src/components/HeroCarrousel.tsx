@@ -7,7 +7,7 @@ const slides = [
     video: '/videos/noli1.mp4',
     image: '/images/image-noliparc.png',
     subtitle: 'Le plus grand parc indoor de Guadeloupe',
-    cta: 'Réserver maintenant',
+    cta: 'Découvrir l\'espace',
     link: '#noliparc'
   },
   {
