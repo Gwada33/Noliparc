@@ -97,7 +97,9 @@ export default function Nolijump() {
           </Box>
 
           <div className="jump-pricing" data-aos="fade-up" data-aos-delay="300">
-            <h3 className="formule-title">Nos formules</h3>
+            <h3 className="formule-title">Tarifs</h3>
+
+
             <div className="formule-grid">
               <Formule
                 title="Mini Jump 1h"
@@ -106,6 +108,7 @@ export default function Nolijump() {
                 durations={[{ time: "", price: "10€" }]}
                 showIcons={false}
                 highlightPrice={true}
+                showButton={false}
               />
 
               <Formule
@@ -118,6 +121,7 @@ export default function Nolijump() {
                 ]}
                 showIcons={false}
                 highlightPrice={true}
+                showButton={false}
               />
 
               <Formule
@@ -127,6 +131,7 @@ export default function Nolijump() {
                 durations={[{ time: "", price: "23€" }]}
                 showIcons={false}
                 highlightPrice={true}
+                showButton={false}
               />
 
               
@@ -136,20 +141,43 @@ export default function Nolijump() {
                 variant="nolijump-entree"
                 subtitle="(à partir de 12h)"
                 durations={[
-                  { time: "1h (périodes scolaires)", price: "8€" },
-                  { time: "1h (vacances scolaires)", price: "18€" },
+                  { time: "1h (Hors vacance scolaire) : ", price: "10.50€" },
+                  { time: "1h (pendant les vacances) : ", price: "8€" },
                 ]}
                 notes={["(Justificatif demandé)"]}
                 showIcons={false}
                 highlightPrice={true}
+                showButton={false}
+              />
+
+              <Formule
+                title="Pass 10 entrées"
+                variant="nolijump-entree"
+                durations={[
+                  { time: "", price: "110€" },
+                ]}
+                showIcons={false}
+                highlightPrice={true}
+                showButton={false}
+              />
+
+              <Formule
+                title="Chaussetes anti-dérapantes"
+                variant="nolijump-entree"
+                durations={[
+                  { time: "", price: "2€" },
+                ]}
+                showIcons={false}
+                highlightPrice={true}
+                showButton={false}
               />
             </div>
           </div>
-          <div className="nolijump-btn" data-aos="zoom-in" data-aos-delay="400">
+         {/*<div className="nolijump-btn" data-aos="zoom-in" data-aos-delay="400">
             <Link href="/reservation" className="btn-primary">
               Réserver une session
             </Link>
-          </div>
+          </div>*/}
         </div>
       </section>
 
@@ -167,7 +195,7 @@ export default function Nolijump() {
         </ul>
       </section>
 
-          <GridGallery images={content.nolijump} title="Grand espace pour vos enfants" />
+          <GridGallery images={content.nolijump} title="Un grand espace pour vos enfants" />
 
       <Footer />
     </main>

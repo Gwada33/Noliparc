@@ -40,11 +40,12 @@ footer.cta {
     justify-content: center;
     align-items: center;
     padding-left: 2rem;
-    transform: translateY(-4rem);
+    margin-top: 5rem;
+    transform: translateY(-8rem);
   }
   
   .footer-logos img{
-    margin-bottom: -5rem;
+    margin-bottom: -8rem;
   }
 }
 
@@ -81,7 +82,7 @@ footer.cta {
 .footer-links ul {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 2rem 0;
@@ -102,7 +103,7 @@ footer.cta {
 .footer-bottom {
   font-size: 0.9rem;
   color: #aaa;
-  margin-top: 2rem;
+  margin-top: 1rem;
   text-align: center;
 }
 
@@ -113,7 +114,7 @@ footer.cta {
     justify-content: center;
     padding-left: 0;
     border-top: 1px solid #444;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding-top: 1rem;
   }
 

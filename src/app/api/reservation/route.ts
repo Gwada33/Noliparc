@@ -153,7 +153,7 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
             : ''
         }
 
-        <p style="margin-top: 30px;">Merci pour votre confiance,<br>L’équipe Noliparc.</p>
+        <p style="margin-top: 30px;">Nous reviendrons très vite vers vous<br />Merci pour votre confiance,<br>L’équipe Noliparc.</p>
       </div>
     `;
     // ✉️ Envoi de l'email HTML

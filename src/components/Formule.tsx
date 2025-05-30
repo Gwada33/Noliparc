@@ -15,6 +15,7 @@ interface FormuleCardProps {
   notes?: string[];
   details?: string[];
   age?: string;
+  showButton?: boolean,
   variant?: "noliparc-anniv" | "nolijump-anniv" | "nolijump-entree";
   showIcons?: boolean;
   highlightPrice?: boolean;
@@ -29,6 +30,7 @@ const Formule: React.FC<FormuleCardProps> = ({
   notes,
   details,
   age,
+  showButton = true,
   variant = "noliparc-anniv",
   showIcons = true,
   highlightPrice = false,
@@ -79,9 +81,9 @@ const Formule: React.FC<FormuleCardProps> = ({
           </small>
         ))}
 
-      <Link className="btn-reserver" href={`/anniversaires/reserver?${queryParams}`}>
+      {showButton ? <Link className="btn-reserver" href={`/anniversaires/reserver?${queryParams}`}>
         Envoyer ma demande
-      </Link>
+      </Link> : ""}
     </div>
   );
 };
