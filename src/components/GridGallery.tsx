@@ -55,7 +55,7 @@ export default function ImageGallery({ images, title, subtitle }: ImageGalleryPr
             clickable: true,
             dynamicBullets: true,
           }}
-          thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+          thumbs={{ swiper: thumbsSwiper && !thumbsSwiper ? thumbsSwiper : null }}
           breakpoints={{
             640: {
               slidesPerView: 1,
