@@ -72,8 +72,8 @@ export default function ImageGallery({ images, title, subtitle }: ImageGalleryPr
           }}
           className="main-swiper"
         >
-          {images.map((image) => (
-            <SwiperSlide key={image}>
+          {images.map((image, idx) => (
+          <SwiperSlide key={`${image.original}-${idx}`}>
               <div className="gallery-slide">
                 <div className="gallery-image-container">
                   <Image
