@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { useEffect } from "react";
 import Footer from "@/components/Footer";
+import GridGallery from "@/components/GridGallery";
 import { ScheduleTable } from "@/components/ScheduleTable";
 import { Box } from "@mui/material";
 import { MdNoFood } from "react-icons/md";
@@ -128,6 +129,8 @@ export default function Nolijump() {
                 highlightPrice={true}
               />
 
+              
+
               <Formule
                 title="Offre Étudiant"
                 variant="nolijump-entree"
@@ -149,7 +152,8 @@ export default function Nolijump() {
           </div>
         </div>
       </section>
-      <section className="informations-section">
+
+       <section className="informations-section">
         <ul className="informations-list">
           {content.informations_nolijump.items.map((item, index) => {
             const Icon = icons[item.icon];
@@ -162,6 +166,8 @@ export default function Nolijump() {
           })}
         </ul>
       </section>
+
+          <GridGallery images={content.nolijump} title="Grand espace pour vos enfants" />
 
       <Footer />
     </main>

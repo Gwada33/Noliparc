@@ -128,6 +128,26 @@
     }
   ],
 
+    "nolijump": [
+    {
+      "original": "/images/nolijump/nolijump-1.jpeg",
+      "originalAlt": "Enfant sur un trampoline"
+    },
+    {
+      "original": "/images/nolijump/nolijump-2.jpeg",
+      "originalAlt": "Enfant sur un trampoline"
+    },
+    {
+      "original": "/images/nolijump/nolijump-3.jpeg",
+      "originalAlt": "Toboggan"
+    },
+    {
+      "original": "/images/nolijump/nolijump-4.jpeg",
+      "originalAlt": "Piscine à balle"
+    }
+  ],
+
+
  "informations_nolijump": {
   "items": [
     {

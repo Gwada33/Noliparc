@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -14,7 +13,7 @@ import {
   Link,
 } from "@mui/material";
 import ReCAPTCHA from "react-google-recaptcha";
-import MaterialUiPhoneNumber from "mui-phone-number";
+import { MuiTelInput } from 'mui-tel-input'
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -156,9 +155,9 @@ export default function RegisterPage() {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
 
-           <MaterialUiPhoneNumber
-          defaultCountry="gp"
-          preferredCountries={["fr", "be", "ch", "gp"]}
+           <MuiTelInput
+          defaultCountry="GP"
+          preferredCountries={["FR", "BE", "CH", "GP"]}
           label="Numéro de téléphone"
           fullWidth
           required
@@ -167,7 +166,6 @@ export default function RegisterPage() {
           onChange={(value: string) =>
             setForm((prev) => ({ ...prev, phone: value }))
           }
-          disableAreaCodes={false}
         />
 
           <Box mt={2}>
