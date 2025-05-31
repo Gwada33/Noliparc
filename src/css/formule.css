@@ -126,23 +126,23 @@
 .jump-pricing {
   padding: 5rem;
 }
-
 .tarifs-section {
-  padding: 2rem;
   color: #000;
-  width: 80%;
-  max-width: 90%;
+  width: 100%;
+  max-width: 800px;
   margin: auto;
+  box-sizing: border-box;
 }
 
 .tarifs-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   position: relative;
+  flex-wrap: wrap;
 }
 
 .tarifs-title::after {
@@ -155,26 +155,56 @@
 .tarif-item {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   padding: 1rem 0;
   border-bottom: 1px solid #eee;
 }
 
 .tarif-label {
   font-weight: 600;
-  font-size: 1.2rem;
-
+  font-size: 1.1rem;
+  flex: 1 1 60%;
 }
 
 .tarif-value {
   text-align: right;
+  flex: 1 1 35%;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
 .tarif-sub {
-  font-size: 1rem;
-  color: #000000;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+/* 📱 Responsive : Ajustements pour écrans ≤ 768px */
+@media (max-width: 768px) {
+  .tarifs-title {
+    font-size: 1.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tarif-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .tarif-label,
+  .tarif-value {
+    flex: 1 1 100%;
+    text-align: left;
+    font-size: 1rem;
+  }
+
+  .tarif-sub {
+    font-size: 0.85rem;
+  }
 }
 
 

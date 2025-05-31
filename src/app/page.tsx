@@ -163,6 +163,7 @@ export default function HomePage() {
                 <span className="tarif-sub">
                   1 adulte accompagnateur gratuit
                 </span>
+                <br />
                 <span className="tarif-sub">5€ par  adulte supplémentaire</span>
               </span>
             </div>
@@ -171,6 +172,7 @@ export default function HomePage() {
               <span className="tarif-label">Chaussettes</span>
               <span className="tarif-value">
                 <span className="tarif-sub">Adulte : 3€</span>
+                <br />
                 <span className="tarif-sub">Enfant : 2.50€</span>
               </span>
             </div>
@@ -201,7 +203,7 @@ export default function HomePage() {
 
 
  <Box sx={{ maxWidth: "1200px", margin: "0 auto", padding: 4 }}>
-      <Typography variant="h2" fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
+      <Typography variant="h2" fontFamily={"Rubik, sans-serif"} fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
         Règlement intérieur
       </Typography>
       <List>
