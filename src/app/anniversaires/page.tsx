@@ -23,11 +23,6 @@ function buildQuery(pack: { title: string }) {
   }).toString();
 }
 
-export const metadata = {
-  title: 'Anniversaires - Fêtez chez Noliparc',
-  description: 'Organisez une fête d’anniversaire inoubliable pour vos enfants à Noliparc, avec animations, salle dédiée et plus !',
-}
-
 
 const noliparcPackages = formule.noliparcPackages
 const nolijumpPackages = formule.nolijumpPackages
