@@ -10,7 +10,7 @@ const slides = [
   {
     video: "/videos/noli1.mp4",
     image: "/images/image-noliparc.png",
-    subtitle: "Le plus grand parc indoor de Guadeloupe (1000 m²)",
+    subtitle: "Le plus grand parc indoor de Guadeloupe (1000m²)",
     cta: "Découvrir l'espace",
     link: "#noliparc",
     label: "Nolijump",
@@ -148,7 +148,7 @@ export default function HeroCarousel() {
                       style={{
                         fontSize: "2rem",
                         textShadow: "0 2px 4px rgba(0,0,0,0.7)",
-                        marginBottom: "1rem",
+                        marginBottom: "1rem", 
                       }}
                     >
                       {slide.subtitle}

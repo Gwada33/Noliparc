@@ -83,7 +83,7 @@ height={226}
 
        <div className="footer-bottom">
               <p>
-                &copy; {new Date().getFullYear()} Noliparc — Site conçu par Sund Productions. Tous droits réservés.
+                &copy; {new Date().getFullYear()} Site conçu par Noliparc. Tous droits réservés.
               </p>
               <p>Téléphone : 0690759848 | Mail : contact@noliparc.fr</p>
             </div>

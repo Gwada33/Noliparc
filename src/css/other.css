@@ -39,6 +39,10 @@
   }
   
 
+.no-bg{
+  background: none !important;
+  margin-top: 6.5rem !important;
+}
 /* Gallery Container */
 .gallery-container {
   width: 100%;

@@ -16,9 +16,8 @@ import { useEffect } from "react";
 import Footer from "@/components/Footer";
 import GridGallery from "@/components/GridGallery";
 import { ScheduleTable } from "@/components/ScheduleTable";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { MdNoFood } from "react-icons/md";
-
 
 const icons: any = {
   FaRulerCombined: FaRulerCombined,
@@ -28,7 +27,6 @@ const icons: any = {
   FaClock: FaClock,
   FaGavel: FaGavel,
 };
-
 
 export default function Nolijump() {
   useEffect(() => {
@@ -58,6 +56,13 @@ export default function Nolijump() {
             en Guadeloupe ! Adapté à tous les âges, Nolijump te propose des
             formules variées pour tous les niveaux d’énergie 🎉
           </p>
+
+          <GridGallery
+            images={content.nolijump}
+            background={false}
+            title="Un grand espace pour vos enfants"
+          />
+
           <Box
             display="flex"
             flexDirection={{ xs: "column", md: "row" }}
@@ -96,9 +101,48 @@ export default function Nolijump() {
             />
           </Box>
 
+          <div className="feature-container" id="noliparc">
+            {content.features_nolijump.map((feature, i) => (
+              <section
+                className="feature-card"
+                key={i}
+                data-aos="fade-up"
+                data-aos-delay={i * 100}
+              >
+                {feature?.image && (
+                  <div className="feature-image">
+                    <Image
+                      className="rounded"
+                      width={1269}
+                      alt={feature?.alt ?? "Noliparc.fr"}
+                      height={906}
+                      src={feature.image}
+                    />
+                  </div>
+                )}
+                <div className="feature-content">
+                  <h2>{feature?.title}</h2>
+                  <Typography
+                    sx={{
+                      whiteSpace: "pre-line",
+                      whiteSpaceTrim: "discard-after",
+                    }}
+                  >
+                    <p>{feature?.paragraph}</p>
+                  </Typography>
+
+                  {feature?.link?.href && feature?.link?.label && (
+                    <Link href={feature.link.href} className="btn-secondary">
+                      {feature.link.label}
+                    </Link>
+                  )}
+                </div>
+              </section>
+            ))}
+          </div>
+
           <div className="jump-pricing" data-aos="fade-up" data-aos-delay="300">
             <h3 className="formule-title">Tarifs</h3>
-
 
             <div className="formule-grid">
               <Formule
@@ -134,8 +178,6 @@ export default function Nolijump() {
                 showButton={false}
               />
 
-              
-
               <Formule
                 title="Offre Étudiant"
                 variant="nolijump-entree"
@@ -152,11 +194,9 @@ export default function Nolijump() {
 
               <Formule
                 title="Pass 10 entrées"
-              subtitle="(Valable pour la prochaine visite)"
+                subtitle="(Valable pour la prochaine visite)"
                 variant="nolijump-entree"
-                durations={[
-                  { time: "", price: "110€" },
-                ]}
+                durations={[{ time: "", price: "110€" }]}
                 showIcons={false}
                 highlightPrice={true}
                 showButton={false}
@@ -165,16 +205,14 @@ export default function Nolijump() {
               <Formule
                 title="Chaussetes anti-dérapantes"
                 variant="nolijump-entree"
-                durations={[
-                  { time: "", price: "2€" },
-                ]}
+                durations={[{ time: "", price: "2€" }]}
                 showIcons={false}
                 highlightPrice={true}
                 showButton={false}
               />
             </div>
           </div>
-         {/*<div className="nolijump-btn" data-aos="zoom-in" data-aos-delay="400">
+          {/*<div className="nolijump-btn" data-aos="zoom-in" data-aos-delay="400">
             <Link href="/reservation" className="btn-primary">
               Réserver une session
             </Link>
@@ -182,7 +220,7 @@ export default function Nolijump() {
         </div>
       </section>
 
-       <section className="informations-section">
+      <section className="informations-section">
         <ul className="informations-list">
           {content.informations_nolijump.items.map((item, index) => {
             const Icon = icons[item.icon];
@@ -195,8 +233,6 @@ export default function Nolijump() {
           })}
         </ul>
       </section>
-
-          <GridGallery images={content.nolijump} title="Un grand espace pour vos enfants" />
 
       <Footer />
     </main>

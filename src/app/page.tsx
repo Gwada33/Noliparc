@@ -203,7 +203,7 @@ export default function HomePage() {
 
 
  <Box sx={{ maxWidth: "1200px", margin: "0 auto", padding: 4 }}>
-      <Typography variant="h2" fontFamily={"Rubik, sans-serif"} fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
+      <Typography data-aos="fade-down" data-aos-delay="300" variant="h2" fontFamily={"Rubik, sans-serif"} fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
         Règlement intérieur
       </Typography>
       <List>
@@ -214,7 +214,7 @@ export default function HomePage() {
             </ListItemIcon>
             <ListItemText
               primary={
-                <Typography variant="body1" color="text.primary">
+                <Typography variant="body1" data-aos="fade-down" data-aos-delay="100" color="text.primary">
                   {regle}
                 </Typography>
               }

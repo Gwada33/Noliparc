@@ -31,7 +31,8 @@ export const ScheduleTable = ({ title, headers, data }: ScheduleTableProps) => {
       </Box>
 
       <Table sx={{
-    fontWeight: "700"
+            fontWeight: "600",
+            fontFamily: "Rubik, sans-serif"
       }}>
         <TableHead>
           <TableRow>
@@ -52,7 +53,8 @@ export const ScheduleTable = ({ title, headers, data }: ScheduleTableProps) => {
                   sx={{
                     color: h.toLowerCase() === "fermé" ? "#d32f2f" : "orange",
                     fontSize: 18,
-                    fontWeight: 500,
+                    fontFamily: 'Rubik',
+                    fontWeight: 600,
                   }}
                 >
                   {h}

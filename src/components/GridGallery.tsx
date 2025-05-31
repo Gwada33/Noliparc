@@ -23,9 +23,10 @@ interface ImageGalleryProps {
   images: GalleryImage[];
   title?: string;
   subtitle?: string;
+  background?: boolean;
 }
 
-export default function ImageGallery({ images, title, subtitle }: ImageGalleryProps) {
+export default function ImageGallery({ images, title, subtitle, background }: ImageGalleryProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   if (!images || images.length === 0) {
@@ -33,7 +34,7 @@ export default function ImageGallery({ images, title, subtitle }: ImageGalleryPr
   }
 
   return (
-    <div className="gallery-container">
+    <div className={`gallery-container ${background==false ? "no-bg" : ""}`}>
       {(title || subtitle) && (
         <div className="gallery-header">
           {title && <h1 className="gallery-title">{title}</h1>}

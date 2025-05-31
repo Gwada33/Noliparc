@@ -30,7 +30,7 @@
 "features": [
   {
     "title": "NOLIPARC À SAINTE ROSE",
-    "paragraph": "Parc de loisirs indoor, Noliparc est un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profitez de nos diverses activités, nous vous proposons 2 structures de jeux avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants escalader, ramper et s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n On propose aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
+    "paragraph": "Parc de loisirs indoor, Noliparc est un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profitez de nos diverses activités, nous vous proposons 2 structures de jeux avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants d'escalader, de ramper et de s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n Nous proposons aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
     "link": {
       "label": "Voir les images",
       "href": "/preview"
@@ -45,6 +45,24 @@
       "href": "/quad"
     },
     "image": "/images/image-quad.png"
+  },
+  {
+    "title": "LE SNACK",
+     "paragraph": "Envie d'une pause gourmande ? Rendez-vous au snack pour savourer nos délicieux hamburgers, frites croustillantes, gaufres, crêpes, granitas rafraîchissants et une sélection de boissons. Toutes ces douceurs sont disponibles à l'achat directement à la caisse tout au long de la journée.",
+    "link": {
+      "label": "Carte des snacks",
+      "href": "/snack"
+    },
+    "image": "/images/snack.png",
+    "alt": "Image par @pngtree"
+  }
+],
+
+"features_nolijump": [
+  {
+    "title": "NOLIJUMP À SAINTE ROSE",
+    "paragraph": "Parc de trampolines indoor,  Nolijump entièrement dédié aux enfants, mais aussi aux adultes prêts à relever le défi!\n\n Dans un espace décoré avec soin pour stimuler l’imaginaire et l’amusement. L’ambiance y est chaleureuse, ludique et sécurisée, idéale pour se dépenser, jouer et partager des moments en famille. Le parc propose plusieurs zones de jeux adaptées à tous les âges, avec des trampolines interconnectés, des parcours de motricité, des mini trampolines et des piscines à balles. Les enfants peuvent grimper, sauter, explorer et se dépenser librement sous la surveillance de leurs parents.\n\n Pour les événements spéciaux, NOLIJUMP dispose également d’une salle d’anniversaire avec différentes formules, animations encadrées et un service de snack sur place. C’est l’endroit rêvé pour offrir aux plus jeunes une expérience à la fois festive, sportive et inoubliable.",
+    "image": "/images/image-toboggan.jpeg"
   },
   {
     "title": "LE SNACK",
@@ -73,7 +91,7 @@
   "items": [
     {
       "icon": "FaRulerCombined",
-      "text": "350m² de surface"
+      "text": "350m² de surface de jeu"
     },
     {
       "icon": "FaUsers",
@@ -81,7 +99,7 @@
     },
     {
       "icon": "FaSocks",
-      "text": "Chaussettes obligatoire"
+      "text": "Chaussettes obligatoires"
     },
     {
       "icon": "MdNoFood",
@@ -152,7 +170,7 @@
   "items": [
     {
       "icon": "FaRulerCombined",
-      "text": "650m² de surface"
+      "text": "650m² de surface de jeu"
     },
     {
       "icon": "FaUsers",
@@ -160,7 +178,7 @@
     },
     {
       "icon": "FaSocks",
-      "text": "Chaussettes anti-dérapantes obligatoire"
+      "text": "Chaussettes anti-dérapantes obligatoires"
     },
     {
       "icon": "MdNoFood",
