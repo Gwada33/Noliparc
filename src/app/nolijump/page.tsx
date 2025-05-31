@@ -28,10 +28,6 @@ const icons: any = {
   FaGavel: FaGavel,
 };
 
-export const metadata = {
-  title: 'Nolijump - Trampolines pour enfants à Noliparc',
-  description: 'Découvrez notre espace Nolijump dédié aux enfants avec trampolines, jeux et parcours d’escalade en toute sécurité.',
-}
 
 
 export default function Nolijump() {

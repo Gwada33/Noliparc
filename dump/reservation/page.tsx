@@ -1,6 +1,6 @@
 import '@/css/reservation.css'
 import Link from 'next/link';
-import content  from '../../../public/texts.json'
+import content  from '../../public/texts.json'
 
 const Reservation: React.FC = () => {
   return (
