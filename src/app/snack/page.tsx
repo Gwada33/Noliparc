@@ -56,6 +56,12 @@ const categories: Category[] = [
   },
 ];
 
+export const metadata = {
+  title: "Snack",
+  description: 'Découvrez nos délicieuses offres pour tout les gouts',
+}
+
+
 export default function MenuTables() {
   return (
     <section className="menu-container">

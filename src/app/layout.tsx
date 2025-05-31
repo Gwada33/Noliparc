@@ -20,35 +20,17 @@ export const metadata: Metadata = {
   // Open Graph (réseaux sociaux)
   openGraph: {
     title: "Noliparc - Accueil",
-    description: "Le plus grand parc de trampolines indoor de Guadeloupe",
-    url: "https://noliparc.com",
+    description: "Le plus grand parc indoor de Guadeloupe",
+    url: "https://noliparc.fr",
     siteName: "Noliparc",
-    images: [
-      {
-        url: "https://noliparc.fr/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Vue du parc de trampolines",
-      },
-    ],
     locale: "fr_FR",
     type: "website",
   },
-
-  // Twitter Card
-  twitter: {
-    card: "summary_large_image",
-    title: "Noliparc - Accueil",
-    description: "Le plus grand parc de trampolines indoor de Guadeloupe",
-    images: ["https://noliparc.com/og-image.jpg"],
-    creator: "@noliparc",
-  },
-
   // Icones
   icons: {
-    icon: "/image/noli.png",
-    shortcut: "/image/noli.png",
-    apple: "/image/noli.png",
+    icon: "/public/icons/favicon.ico",
+    shortcut: "/public/icons/favicon-32x32.png",
+    apple: "/public/icons/apple-touch-icon.png",
   },
 
   // Robots
@@ -67,7 +49,7 @@ export const metadata: Metadata = {
 
   // Alternates (pour i18n ou mobile)
   alternates: {
-    canonical: "https://noliparc.cfr",
+    canonical: "https://noliparc.fr",
   },
 
 };
