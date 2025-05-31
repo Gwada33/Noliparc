@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   },
   // Icones
   icons: {
-    icon: "/public/icons/favicon.ico",
-    shortcut: "/public/icons/favicon-32x32.png",
-    apple: "/public/icons/apple-touch-icon.png",
+    icon: "/icons/favicon.ico",
+    shortcut: "/icons/favicon-32x32.png",
+    apple: "/icons/apple-touch-icon.png",
   },
 
   // Robots
