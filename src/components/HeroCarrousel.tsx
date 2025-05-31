@@ -18,7 +18,8 @@ const slides = [
   {
     video: "/videos/noli2.mp4",
     image: "/images/image-nolijump-texte.png",
-    subtitle: "Viens t'amuser dans le premier parc de trampoline de Guadeloupe !",
+    subtitle:
+      "Viens t'amuser dans le premier parc de trampoline de Guadeloupe !",
     cta: "Découvrir l'espace",
     link: "/nolijump",
     label: "Noliparc",
@@ -69,7 +70,12 @@ export default function HeroCarousel() {
     <>
       <header
         className="hero-carousel"
-        style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
+        }}
       >
         <Swiper
           loop={false}
@@ -82,10 +88,15 @@ export default function HeroCarousel() {
         >
           {slides.map((slide, index) => (
             <SwiperSlide key={index}>
-              <div className="hero-slide" style={{ position: "relative", width: "100%", height: "100%" }}>
+              <div
+                className="hero-slide"
+                style={{ position: "relative", width: "100%", height: "100%" }}
+              >
                 {/* Vidéo en arrière‐plan */}
                 <video
-                  ref={(el) => (videoRefs.current[index] = el)}
+                  ref={(el) => {
+                    videoRefs.current[index] = el;
+                  }}
                   className="hero-bg-video"
                   src={slide.video}
                   muted
@@ -125,7 +136,11 @@ export default function HeroCarousel() {
                     width={1000}
                     height={1050}
                     className="image-noliparc"
-                    style={{ maxWidth: "80%", height: "auto", marginBottom: "2rem" }}
+                    style={{
+                      maxWidth: "80%",
+                      height: "auto",
+                      marginBottom: "2rem",
+                    }}
                   />
                   <div className="hero-summary" style={{ color: "#fff" }}>
                     <h1
@@ -138,11 +153,12 @@ export default function HeroCarousel() {
                     >
                       {slide.subtitle}
                     </h1>
-                    <Link href={slide.link} className="btn-primary" style={{ textDecoration: "none" }}>
-                      <span
-                      >
-                        {slide.cta}
-                      </span>
+                    <Link
+                      href={slide.link}
+                      className="btn-primary"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span>{slide.cta}</span>
                     </Link>
                   </div>
                 </div>
@@ -155,7 +171,13 @@ export default function HeroCarousel() {
                     className="glass-button"
                   >
                     <span>{slide.label}</span>
-                    <svg className="arrow-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <svg
+                      className="arrow-svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
                       <path d="M10 17l5-5-5-5v10z" fill="#fff" />
                     </svg>
                   </button>
@@ -166,7 +188,13 @@ export default function HeroCarousel() {
                     aria-label="Retour à Noliparc"
                     className="noliparc-button"
                   >
-                    <svg className="arrow-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <svg
+                      className="arrow-svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
                       <path d="M14 7l-5 5 5 5V7z" fill="#fff" />
                     </svg>
                     <span>{slide.label}</span>
