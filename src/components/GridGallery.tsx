@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Navigation, Pagination, Thumbs, FreeMode } from "swiper/modules"
+import { Navigation, Pagination, Thumbs } from "swiper/modules"
 import Image from "next/image"
 
 // Import Swiper styles
@@ -11,7 +11,6 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "swiper/css/thumbs"
 import "swiper/css/free-mode"
-import Footer from "./Footer"
 
 export interface GalleryImage {
   original: string;
@@ -28,13 +27,14 @@ interface ImageGalleryProps {
 
 export default function ImageGallery({ images, title, subtitle, background }: ImageGalleryProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 
   if (!images || images.length === 0) {
     return <div className="gallery-empty">No images to display</div>;
   }
 
   return (
-    <div className={`gallery-container ${background==false ? "no-bg" : ""}`}>
+    <div className={`gallery-container ${background === false ? "no-bg" : ""}`}>
       {(title || subtitle) && (
         <div className="gallery-header">
           {title && <h1 className="gallery-title">{title}</h1>}
@@ -74,14 +74,15 @@ export default function ImageGallery({ images, title, subtitle, background }: Im
           className="main-swiper"
         >
           {images.map((image, idx) => (
-          <SwiperSlide key={`${image.original}-${idx}`}>
+            <SwiperSlide key={`${image.original}-${idx}`}>
               <div className="gallery-slide">
                 <div className="gallery-image-container">
                   <Image
                     src={image.original || "/placeholder.svg"}
                     alt={image.originalAlt}
                     fill
-                    className="gallery-image"
+                    onClick={() => setFullscreenImage(image.original)}
+                    className="gallery-image cursor-pointer"
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                   />
                   <div className="gallery-image-overlay" />
@@ -99,17 +100,17 @@ export default function ImageGallery({ images, title, subtitle, background }: Im
         {/* Custom Navigation Buttons */}
         <button className="swiper-button-prev-custom gallery-nav-button gallery-nav-prev">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m15 18-6-6 6-6"/>
+            <path d="m15 18-6-6 6-6" />
           </svg>
         </button>
         <button className="swiper-button-next-custom gallery-nav-button gallery-nav-next">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m9 18 6-6-6-6"/>
+            <path d="m9 18 6-6-6-6" />
           </svg>
         </button>
       </div>
 
-      {/* Mobile-optimized single image view */}
+      {/* Mobile Swiper */}
       <div className="gallery-mobile">
         <Swiper
           modules={[Pagination]}
@@ -122,14 +123,15 @@ export default function ImageGallery({ images, title, subtitle, background }: Im
           className="mobile-swiper"
         >
           {images.map((image, index) => (
-            <SwiperSlide key={`mobile-${image}`}>
+            <SwiperSlide key={`mobile-${image.original}-${index}`}>
               <div className="gallery-mobile-slide">
                 <div className="gallery-mobile-image-container">
                   <Image
                     src={image.original || "/placeholder.svg"}
                     alt={image.originalAlt}
                     fill
-                    className="gallery-mobile-image"
+                    onClick={() => setFullscreenImage(image.original)}
+                    className="gallery-mobile-image cursor-pointer"
                     sizes="100vw"
                     priority={index === 0}
                   />
@@ -144,6 +146,32 @@ export default function ImageGallery({ images, title, subtitle, background }: Im
           ))}
         </Swiper>
       </div>
+
+      {/* Fullscreen Modal */}
+     {fullscreenImage && (
+  <div
+    className="fullscreen-modal"
+    onClick={() => setFullscreenImage(null)}
+  >
+    <div className="fullscreen-image-container">
+      <Image
+        src={fullscreenImage}
+        alt="Fullscreen"
+        fill
+        className="fullscreen-image"
+      />
+      <button
+        className="fullscreen-close-btn"
+        onClick={(e) => {
+          e.stopPropagation()
+          setFullscreenImage(null)
+        }}
+      >
+        &times;
+      </button>
+    </div>
+  </div>
+)}
     </div>
   )
 }

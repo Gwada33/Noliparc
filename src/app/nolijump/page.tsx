@@ -5,6 +5,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import content from "../../../public/texts.json";
 import Formule from "@/components/Formule";
+
+const imageCount = 27; // ou le nombre exact d'images
+const images = Array.from({ length: imageCount }, (_, i) => ({
+  original: `/images/nolijump/nolijump-${i + 1}.jpeg`,
+  originalAlt: `nolijump-${i + 1}.jpeg`,
+}));
+
 import {
   FaClock,
   FaRulerCombined,
@@ -60,7 +67,7 @@ export default function Nolijump() {
           </p>
 
           <GridGallery
-            images={content.nolijump}
+            images={images}
             background={false}
             title="Un grand espace pour vos enfants"
           />

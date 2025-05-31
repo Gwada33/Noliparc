@@ -5,6 +5,13 @@ import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import content from "../../public/texts.json";
+
+import dynamic from 'next/dynamic';
+
+const MapView = dynamic(() => import('@/components/MapView'), {
+  ssr: false,
+});
+
 import {
   FaRulerCombined,
   FaUsers,
@@ -200,7 +207,6 @@ export default function HomePage() {
             />
           </div>
         </div>
-
 
  <Box sx={{ maxWidth: "1200px", margin: "0 auto", padding: 4 }}>
       <Typography data-aos="fade-down" data-aos-delay="300" variant="h2" fontFamily={"Rubik, sans-serif"} fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
