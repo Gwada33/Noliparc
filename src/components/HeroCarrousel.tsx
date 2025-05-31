@@ -133,6 +133,9 @@ export default function HeroCarousel() {
                   <Image
                     alt="logo"
                     src={slide.image}
+                    fetchPriority="high"
+                    blurDataURL=""
+                    loading="lazy"
                     width={1000}
                     height={1050}
                     className="image-noliparc"

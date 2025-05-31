@@ -62,6 +62,12 @@ export default function RootLayout({
 
   return (
     <html lang="fr">
+      <head>
+         <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+      </head>
       <body className={`${RubikSANS.variable} body-main `}>
         <AuthProvider>
           <Navbar />
