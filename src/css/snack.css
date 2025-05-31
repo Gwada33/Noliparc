@@ -1,0 +1,69 @@
+.menu-container {
+    width: 100%;
+    height: 100%;
+  margin: 0 auto;
+  padding: 60px 20px;
+  background-color: #fff7f0;
+  color: #000;
+}
+
+.menu-title {
+  font-size: 3rem;
+  text-align: center;
+  color: #e65100;
+  margin-top: 20px;
+  margin-bottom: 80px;
+  font-weight: bold;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  width: 100%;
+}
+
+/* Étendre le dernier élément si le nombre d’éléments est impair */
+@media (min-width: 768px) {
+  .menu-card:nth-last-child(1):nth-child(odd) {
+    grid-column: span 2;
+  }
+}
+
+
+.menu-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.menu-card-title {
+  font-size: 1.8rem;
+  color: #c62828;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ffe0b2;
+  padding-bottom: 10px;
+}
+
+.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.menu-table tr {
+  border-bottom: 1px dashed #ddd;
+}
+
+.item-name {
+  text-align: left;
+  padding: 10px 0;
+  font-size: 1.1rem;
+}
+
+.item-price {
+  text-align: right;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+}

@@ -63,11 +63,18 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
+  
   
   @media (min-width: 900px) {
     .packages {
+      
       grid-template-columns: repeat(3, 1fr);
     }
+
+     .packages-3 .photo-desktop {
+    display: none;
+  }
 
     .packages {
       grid-template-columns: repeat(3, 1fr);

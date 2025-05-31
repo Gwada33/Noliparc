@@ -58,7 +58,7 @@ export default function LegalPage() {
           Mentions légales
         </Typography>
 
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" >
           Conformément aux articles 6-III et 19 de la Loi pour la Confiance dans l'Économie Numérique, voici les informations légales :
         </Typography>
 
@@ -66,7 +66,7 @@ export default function LegalPage() {
           <Typography variant="h5" fontWeight="bold" gutterBottom color="black">
             Éditeur du site
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" >
             Nom : Noliparc<br />
             Adresse : 10 ZAC DE NOLIVIER 97115 SAINTE-ROSE<br />
             Email : contact@noliparc.fr<br />

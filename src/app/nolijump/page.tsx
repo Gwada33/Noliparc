@@ -152,6 +152,7 @@ export default function Nolijump() {
 
               <Formule
                 title="Pass 10 entrées"
+              subtitle="(Valable pour la prochaine visite)"
                 variant="nolijump-entree"
                 durations={[
                   { time: "", price: "110€" },

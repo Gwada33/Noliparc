@@ -93,6 +93,7 @@ export default function AnniversairesPage() {
               </Link>
             </Formule>
           ))}
+          
         </div>
       </section>
 

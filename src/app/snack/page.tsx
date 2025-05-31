@@ -1,18 +1,6 @@
 "use client";
 
-import * as React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-  useMediaQuery,
-} from "@mui/material";
+import React from "react";
 
 type Item = {
   name: string;
@@ -28,82 +16,67 @@ const categories: Category[] = [
   {
     title: "Pause Salée",
     items: [
-      { name: "Sandwich jambon-fromage", price: "4.00€" },
-      { name: "Panini poulet", price: "4.50€" },
-      { name: "Croque-monsieur", price: "3.50€" },
-      { name: "Salade César", price: "5.50€" },
-      { name: "Frites", price: "2.50€" },
+      { name: "Menu Adulte", price: "12.50€" },
+      { name: "Menu Enfant", price: "8.50€" },
+      { name: "Hamburger/Frites", price: "9.50€" },
+      { name: "Panini Jambon-fromage", price: "7.50€" },
+      { name: "Panini Fromage", price: "6.50€" },
+      { name: "Panini Thon", price: "8.50€" },
+      { name: "Popcorn Grand", price: "4.50€" },
+      { name: "Popcorn Petit", price: "3.50€" },
     ],
   },
   {
+    title: "Boissons",
+    items: [
+      { name: "Eau 50CL", price: "2.00€" },
+      { name: "Eau 1.5L", price: "3.50€" },
+      { name: "Canettes", price: "2.50€" },
+      { name: "Cannette 50CL", price: "1.50€" },
+      { name: "Jus MAAZA", price: "3.50€" },
+      { name: "Caprisun / Banga", price: "1.50€" },
+      { name: "Café", price: "2.00€" },
+      { name: "Ice Tea", price: "3.50€" },
+    ],
+  },
+   {
     title: "Pause Sucrée",
     items: [
-      { name: "Brownie", price: "2.50€" },
-      { name: "Cookie maison", price: "2.00€" },
-      { name: "Glace 2 boules", price: "3.00€" },
-      { name: "Pain au chocolat", price: "1.80€" },
-    ],
-  },
-  {
-    title: "Boissons Froides",
-    items: [
-      { name: "Coca-Cola", price: "2.00€" },
-      { name: "Fanta Orange", price: "2.00€" },
-      { name: "Jus d’orange", price: "2.50€" },
-      { name: "Eau minérale", price: "1.50€" },
-    ],
-  },
-  {
-    title: "Boissons Chaudes",
-    items: [
-      { name: "Café", price: "1.80€" },
-      { name: "Thé", price: "1.80€" },
-      { name: "Chocolat chaud", price: "2.20€" },
+      { name: "Bonbon 0.30€", price: "0.30€" },
+      { name: "Bonbon 0.50€", price: "0.50€" },
+      { name: "Bonbon 0.80€", price: "0.80€" },
+      { name: "Bonbon 1.30€", price: "1.30€" },
+      { name: "Gaufrette S.Glace", price: "3.00€" },
+      { name: "Gaufrette Nutella", price: "3.50€" },
+      { name: "Crêpes Sucrée", price: "3.00€" },
+      { name: "Crêpes Nutella", price: "3.50€" },
+      { name: "Granita Grand", price: "3.00€" },
+      { name: "Granita Petit", price: "2.00€" },
     ],
   },
 ];
 
 export default function MenuTables() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-        gap: 4,
-        px: 2,
-        py: 4,
-        maxWidth: 1200,
-        margin: "0 auto",
-      }}
-    >
-      {categories.map((category, index) => (
-        <TableContainer key={index} component={Paper} sx={{ boxShadow: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{ p: 2, backgroundColor: "#f5f5f5", borderBottom: "1px solid #ddd" }}
-          >
-            {category.title}
-          </Typography>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Produit</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Prix</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {category.items.map((item, idx) => (
-                <TableRow key={idx}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.price}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ))}
-    </Box>
+    <section className="menu-container">
+      <h2 className="menu-title">Découvrez nos délicieuses offres</h2>
+      <div className="menu-grid">
+        {categories.map((category, index) => (
+          <div key={index} className="menu-card">
+            <h3 className="menu-card-title">{category.title}</h3>
+            <table className="menu-table">
+              <tbody>
+                {category.items.map((item, idx) => (
+                  <tr key={idx}>
+                    <td className="item-name">{item.name}</td>
+                    <td className="item-price">{item.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

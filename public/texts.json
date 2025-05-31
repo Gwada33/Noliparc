@@ -6,7 +6,7 @@
     "image-nolijump": "/images/image-nolijump.png",
     "image-nolijump-texte": "/images/image-nolijump-texte.png",
     "brand": "Noliparc",
-    "subtitle": "Le plus grand parc indoor de Guadeloupe",
+    "subtitle": "Le plus grand parc indoor de Guadeloupe (1000m²)",
     "cta": "Réserver maintenant",
     "nav": {
             "Nolijump": {
@@ -16,7 +16,7 @@
       },
       "Noliparc": {
         "label" :"Noliparc",
-        "link": "#noliparc",
+        "link": "/",
         "button": false
       },
       "anniversaires": {
@@ -30,7 +30,7 @@
 "features": [
   {
     "title": "NOLIPARC À SAINTE ROSE",
-    "paragraph": "Parc de loisirs indoor, Noliparc est un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profitez de nos diverses activités, nous vous proposons 2 structures de jeux dans une surface de 450m2 avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants escalader, ramper et s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n On propose aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
+    "paragraph": "Parc de loisirs indoor, Noliparc est un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profitez de nos diverses activités, nous vous proposons 2 structures de jeux avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants escalader, ramper et s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n On propose aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
     "link": {
       "label": "Voir les images",
       "href": "/preview"
@@ -73,7 +73,7 @@
   "items": [
     {
       "icon": "FaRulerCombined",
-      "text": "250m² de surface"
+      "text": "350m² de surface"
     },
     {
       "icon": "FaUsers",
@@ -152,7 +152,7 @@
   "items": [
     {
       "icon": "FaRulerCombined",
-      "text": "250m² de surface"
+      "text": "650m² de surface"
     },
     {
       "icon": "FaUsers",

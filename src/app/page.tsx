@@ -11,9 +11,10 @@ import {
   FaClock,
   FaGavel,
   FaSocks,
+  FaCircle
 } from "react-icons/fa";
 import { MdNoFood } from "react-icons/md";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, ListItem, ListItemText, ListItemIcon, List } from "@mui/material";
 import HeroCarousel from "@/components/HeroCarrousel";
 import Footer from "@/components/Footer";
 import { ScheduleTable } from "@/components/ScheduleTable";
@@ -27,6 +28,21 @@ const icons: any = {
   FaClock: FaClock,
   FaGavel: FaGavel,
 };
+
+const regles = [
+    "Les enfants sont sous la responsabilité des accompagnateurs, vous devez donc en prévoir un nombre suffisant pour le groupe, Noliparc décline toute responsabilité, en cas d’accident, de vol ou de dommage.",
+    "Les enfants doivent être munis obligatoirement de chaussettes par mesure d’hygiène sinon l’accès sera interdit (achat possible sur place).",
+    "L’âge et la capacité indiqués sur chaque aire de jeux doivent être respectés.",
+    "Il est interdit de manger ou de boire dans les aires de jeux.",
+    "Les bijoux et accessoires sont interdits dans les aires de jeux.",
+    "L’équipe de Noliparc se réserve le droit de refuser l’entrée au parc ou d’exclure du parc sans remboursement tout client ayant un mauvais comportement.",
+    "Nos amis les animaux ne sont pas acceptés dans le parc par mesure d’hygiène.",
+    "Il est interdit de grimper sur les filets des aires de jeux, de monter sur les toboggans en sens inverse, de sortir les jeux mobiles de leur parc.",
+    "Pour des raisons de sécurité, il est interdit de courir dans le parc.",
+    "Toute sortie est définitive.",
+    "Goûter, boissons, aliments personnels sont strictement interdits dans l’enceinte du parc, sauf eau et aliments pour bébés.",
+    "Toute entrée dans le parc, entraîne obligatoirement l’acceptation du présent règlement. En cas de non respect, l’accès au parc vous sera interdit et des dédommagements pourront vous être demandés."
+  ];
 
 export default function HomePage() {
   useEffect(() => {
@@ -69,7 +85,7 @@ export default function HomePage() {
             data={[
               ["Lun.", "Fermé"],
               ["Mar.", "Fermé"],
-              ["Mer.", "10h-18h"],
+              ["Mer.", "10h-17h"],
               ["Jeu.", "Fermé"],
               ["Ven.", "Fermé"],
               ["Sam.", "10h-18h"],
@@ -147,7 +163,7 @@ export default function HomePage() {
                 <span className="tarif-sub">
                   1 adulte accompagnateur gratuit
                 </span>
-                <span className="tarif-sub">5€ par adulte supplémentaire</span>
+                <span className="tarif-sub">5€ par  adulte supplémentaire</span>
               </span>
             </div>
 
@@ -164,7 +180,7 @@ export default function HomePage() {
             <Formule
               title="Pass 4 entrées "
               variant="noliparc-anniv"
-              subtitle=""
+              subtitle="(Valable pour la prochaine visite)"
               durations={[{ time: "", price: "36€" }]}
               showIcons={false}
               highlightPrice={true}
@@ -174,7 +190,7 @@ export default function HomePage() {
             <Formule
               title="Pass 7 entrées "
               variant="noliparc-anniv"
-              subtitle=""
+              subtitle="(Valable pour la prochaine visite)"
               durations={[{ time: "", price: "60€" }]}
               showIcons={false}
               highlightPrice={true}
@@ -183,6 +199,28 @@ export default function HomePage() {
           </div>
         </div>
 
+
+ <Box sx={{ maxWidth: "1200px", margin: "0 auto", padding: 4 }}>
+      <Typography variant="h2" fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
+        Règlement intérieur
+      </Typography>
+      <List>
+        {regles.map((regle, index) => (
+          <ListItem key={index} alignItems="flex-start">
+            <ListItemIcon sx={{ minWidth: 30 }}>
+              <FaCircle color="#000" />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography variant="body1" color="text.primary">
+                  {regle}
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
         <Footer />
       </main>
     </>

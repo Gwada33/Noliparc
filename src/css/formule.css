@@ -63,7 +63,8 @@
 
 .formule-card .subtitle {
   font-size: 0.95rem;
-  color: #555;
+  color: #ff0000;
+  font-weight: 700;
   margin-bottom: 0.8rem;
 }
 
