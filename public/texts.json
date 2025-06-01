@@ -30,7 +30,7 @@
 "features": [
   {
     "title": "NOLIPARC À SAINTE ROSE",
-    "paragraph": "Parc de loisirs indoor, Noliparc est un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profitez de nos diverses activités, nous vous proposons 2 structures de jeux avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants d'escalader, de ramper et de s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n Nous proposons aussi une salle d'anniversaire  avec des formules et animations, ainsi que d’un service de snack sur place. ",
+    "paragraph": "Parc de loisirs indoor, Noliparc est un site thématisé sur l'univers des enfants dans une ambiance magnifiquement décorée et unique dans la région. \n\n Profitez de nos diverses activités, nous vous proposons 2 structures de jeux avec des parcours de psychomotricité, piscine à balle, mini trampoline pour permettre aux enfants d'escalader, de ramper et de s'amuser sous la surveillance de leurs parents accompagnateurs.\n\n Nous proposons aussi une salle d'anniversaire  avec des formules et animations, ainsi qu’un service de snack sur place. ",
     "link": {
       "label": "Voir les images",
       "href": "/preview"
@@ -60,9 +60,9 @@
 
 "features_nolijump": [
   {
-    "title": "NOLIJUMP À SAINTE ROSE",
-    "paragraph": "Parc de trampolines indoor,  Nolijump entièrement dédié aux enfants, mais aussi aux adultes prêts à relever le défi!\n\n Dans un espace décoré avec soin pour stimuler l’imaginaire et l’amusement. L’ambiance y est chaleureuse, ludique et sécurisée, idéale pour se dépenser, jouer et partager des moments en famille. Le parc propose plusieurs zones de jeux adaptées à tous les âges, avec des trampolines interconnectés, des parcours de motricité, des mini trampolines et des piscines à balles. Les enfants peuvent grimper, sauter, explorer et se dépenser librement sous la surveillance de leurs parents.\n\n Pour les événements spéciaux, NOLIJUMP dispose également d’une salle d’anniversaire avec différentes formules, animations encadrées et un service de snack sur place. C’est l’endroit rêvé pour offrir aux plus jeunes une expérience à la fois festive, sportive et inoubliable.",
-    "image": "/images/image-toboggan.jpeg"
+    "title": "NOUVEAU EN GUADELOUPE",
+    "paragraph": "Bondir sur des trampolines, c’est échapper quelques secondes à la gravité. Avec un peu d’entraînement, petits et grands pourront commencer à faire des figures et cabrioles, sans parler des nombreuses activités amusantes déclinées comme le basket aérien ou le dodgeball.\n\n Pour pratiquer, pas besoin de chaussures spécifiques, il suffit de bonnes chaussettes antidérapantes, et surtout une tenue de sport dans laquelle vous êtes bien.",
+    "image": "/images/saut-nolijump.jpeg"
   },
   {
     "title": "LE SNACK",

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export const metadata = {
-  title: "Snack",
+  title: "Noliparc - Snack",
   description: 'Découvrez nos délicieuses offres pour tout les gouts',
 }
 
