@@ -113,19 +113,18 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
     const reservation = rows[0];
 
     // 📨 Construction de l'email HTML
-    const subject = 'Votre demande à été pris en compte';
+    const subject = 'Réception de votre demande';
     const logoUrl = 'https://i.imgur.com/ahQpl7N.png';
     const host = request.headers.get('host');
     const protocol = host?.startsWith('localhost') ? 'http' : 'https';
     const baseUrl = `${protocol}://${host}`;
-    const imageUrl = `${baseUrl}/images/carte-anniversaire.jpeg`;
 
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
         <div style="text-align: center;">
           <img src="${logoUrl}" alt="Noliparc Logo" style="max-height: 120px; margin-bottom: 20px;" />
         </div>
-        <h2 style="color: #4CAF50;">🎉 Votre demande a bien été prise en compte !</h2>
+        <h2 style="color: #4CAF50;">🎉 Votre demande a été recu <strong style="color:rgb(224, 22, 22)">et elle est en cours d'instruction ‼️</strong></h2>
         <p>Bonjour ${first_name} ${last_name},</p>
         <p>Nous vous confirmons la réception de votre demande. Voici un récapitulatif :</p>
 
@@ -136,22 +135,6 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
           <li><strong>🧒 Enfants :</strong> ${data.childrenCount}</li>
           <li><strong>🧩 Infos supplémentaires :</strong> ${extrasText}</li>
         </ul>
-
-        <p>
-         ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en cas
-      d'annulation, mais échangeable contre un report ou des entrées.<br />
-      🚫 Boissons et aliments extérieurs interdits.<br />
-      🧦 Chaussettes obligatoires pour tous.
-      <p>
-
-        ${
-          imageUrl
-            ? `<div style="margin-top: 20px;">
-                 <p>📎 La carte d'anniversaire à télécharger :</p>
-                 <a href="${imageUrl}" download style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; border-radius: 5px; text-decoration: none;">Télécharger l'image</a>
-               </div>`
-            : ''
-        }
 
         <p style="margin-top: 30px;">Nous reviendrons très vite vers vous<br />Merci pour votre confiance,<br>L’équipe Noliparc.</p>
       </div>
