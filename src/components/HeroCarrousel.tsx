@@ -8,7 +8,7 @@ import "swiper/css";
 
 const slides = [
   {
-    video: "/videos/noli1.mp4",
+    video: "https://ia600709.us.archive.org/25/items/noli1/noli1.mp4",
     image: "/images/image-noliparc.png",
     subtitle: "Le plus grand parc indoor de Guadeloupe (1000m²)",
     cta: "Découvrir l'espace",
@@ -16,7 +16,7 @@ const slides = [
     label: "Nolijump",
   },
   {
-    video: "/videos/noli2.mp4",
+    video: "https://ia600709.us.archive.org/25/items/noli1/noli2.mp4",
     image: "/images/image-nolijump-texte.png",
     subtitle:
       "Viens t'amuser dans le premier parc de trampoline de Guadeloupe !",
