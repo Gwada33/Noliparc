@@ -95,7 +95,7 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
       INSERT INTO reservations
         (id, user_id, date, formule, children_name, children_count, adults_count, extras, status, created_at, creneau)
       VALUES
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING *;
     `;
 
