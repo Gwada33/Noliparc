@@ -48,10 +48,10 @@ export default function ReserverClient() {
   const { user } = useAuth();
 
   const [activeStep, setActiveStep] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [finalModalOpen, setFinalModalOpen] = useState(false);
+  const [isSingleSlot, setIsSingleSlot] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Titres des étapes pour le Stepper
@@ -106,6 +106,18 @@ export default function ReserverClient() {
       }
     }
   }, [watchFormule, watchDate, selectedFormule, setValue]);
+
+  useEffect(() => {
+  if (selectedFormule?.timeSlots?.length === 1) {
+    const uniqueSlot = selectedFormule.timeSlots[0];
+    setValue("timeSlot", uniqueSlot);
+    setIsSingleSlot(true);
+  } else {
+    setIsSingleSlot(false);
+    setValue("timeSlot", ""); // pour reset si on change de formule
+  }
+}, [selectedFormule, setValue]);
+
 
   // Navigation du Stepper
   const handleNext = () => setActiveStep((prev) => prev + 1);
@@ -218,7 +230,7 @@ export default function ReserverClient() {
                 fullWidth
                 margin="normal"
                 error={!!errors.timeSlot}
-                disabled={!selectedFormule}
+                disabled={!selectedFormule || isSingleSlot}
               >
                 <InputLabel>Créneau horaire</InputLabel>
                 <Controller
@@ -226,7 +238,7 @@ export default function ReserverClient() {
                   control={control}
                   rules={{ required: "Créneau requis" }}
                   render={({ field }) => (
-                    <Select {...field} label="Créneau horaire">
+                    <Select {...field} label="Créneau horaire" disabled={isSingleSlot}>
                       {selectedFormule?.timeSlots?.map((slot: string) => (
                         <MenuItem key={slot} value={slot}>
                           {slot}
@@ -289,7 +301,7 @@ export default function ReserverClient() {
               {...register("adultsCount", {
                 required: "Nombre requis",
                 min: { value: 0, message: "Minimum 0" },
-                max: {value: 4, message: "Maximum 4"},
+                max: { value: 4, message: "Maximum 4"},
                 valueAsNumber: true,
               })}
               error={!!errors.adultsCount}
