@@ -198,7 +198,8 @@ export default function ReserverClient() {
                     shouldDisableDate={(date) =>
                       onlySunday ? date.getDay() !== 0 : false
                     }
-                    renderInput={(params) => (
+                    slots={{
+                      textField: (params) =>
                       <TextField
                         {...params}
                         fullWidth
@@ -206,7 +207,7 @@ export default function ReserverClient() {
                         error={!!errors.date}
                         helperText={errors.date?.message}
                       />
-                    )}
+                    }}
                   />
                 )}
               />
