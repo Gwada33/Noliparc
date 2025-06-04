@@ -13,3 +13,14 @@
                </div>`
             : ''
         }
+
+         /* {
+    "title": "ANNIVERSAIRES",
+     "paragraph": "Envie d'une pause gourmande ? Rendez-vous au snack pour savourer nos délicieux hamburgers, frites croustillantes, gaufres, crêpes, granitas rafraîchissants et une sélection de boissons. Toutes ces douceurs sont disponibles à l'achat directement à la caisse tout au long de la journée.",
+    "link": {
+      "label": "Carte des snacks",
+      "href": "/anniversaires"
+    },
+    "image": "/images/snack.png",
+    "alt": "Image par @pngtree"
+  }*/
