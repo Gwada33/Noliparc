@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "@/css/globals.css";
 import Navbar from "../components/Navbar"
+import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from "./context/AuthContext";
 const RubikSANS = Rubik({
   variable: "--font-rubik-sans",
@@ -106,6 +107,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </AuthProvider>
+          <Analytics />
       </body>
     </html>
   );

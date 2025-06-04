@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/AuthContext";
-import ReactDatePicker from "react-datepicker";
 
-import "./react-date-picker.css"
+import { formules } from "@/lib/formules";
 
 import {
   Box,
@@ -22,80 +21,48 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Stepper,
+  Step,
+  StepLabel,
+  Grid,
 } from "@mui/material";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import {fr} from "date-fns/locale/fr";
+
 import Link from "next/link";
 
 type FormData = {
-  date: Date;
   formule: string;
+  date: Date | null;
+  timeSlot: string;
+  childrenName: string;
   childrenCount: number;
   adultsCount: number;
   extras: string;
 };
 
-const formules = [
-  { value: "formule-grenouille", label: "Formule Grenouille", enfantMin: 14 },
-  {
-    value: "formule-foumi-manioc",
-    label: "Formule Foumi Manioc",
-    enfantMin: 15,
-  },
-  {
-    value: "formule-mangouste-(privatisation-dimanche)",
-    label: "Formule Mangouste (privatisation dimanche)",
-    enfantMin: 20,
-    isPrivatisation: true,
-  },
-  { value: "happyjump-birthday", label: "HappyJump Birthday", enfantMin: 8 },
-  { value: "partyjump-birthday", label: "PartyJump Birthday", enfantMin: 8 },
-  { value: "fiestajump-birthday", label: "FiestaJump Birthday", enfantMin: 8 },
-  {
-    value: "golden-birthday-(privatisation-dimanche)",
-    label: "GOLDEN Birthday (privatisation dimanche)",
-    enfantMin: 15,
-    isPrivatisation: true,
-  },
-];
-
 export default function ReserverClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
+
+  const [activeStep, setActiveStep] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const { user } = useAuth();
   const [finalModalOpen, setFinalModalOpen] = useState(false);
-  const [confirmation, setConfirmation] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [shapes, setShapes] = useState<React.ReactNode[]>([]);
 
-  useEffect(() => {
-    const newShapes = [...Array(20)].map((_, i) => {
-      const size = Math.floor(Math.random() * 300) + 50; // 50–200px
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const delay = Math.random() * 10;
+  // Titres des étapes pour le Stepper
+  const steps = [
+    "Choisir la formule",
+    "Sélectionner date & créneau",
+    "Participants & Infos",
+    "Récapitulatif",
+  ];
 
-      return (
-        <div
-          key={i}
-          className="pattern-shape-login"
-          style={{
-            width: size,
-            height: size,
-            top: `${top}%`,
-            left: `${left}%`,
-            animationDelay: `${delay}s`,
-          }}
-        />
-      );
-    });
-
-    setShapes(newShapes);
-  }, []);
-
-  const formuleFromUrl = searchParams.get("formule") || "";
-
+  // Initialisation de react-hook-form
   const {
     control,
     register,
@@ -105,8 +72,10 @@ export default function ReserverClient() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     defaultValues: {
-      date: undefined,
-      formule: formuleFromUrl,
+      formule: searchParams.get("formule") || "",
+      date: null,
+      timeSlot: "",
+      childrenName: "",
       childrenCount: 0,
       adultsCount: 0,
       extras: "",
@@ -114,267 +83,343 @@ export default function ReserverClient() {
   });
 
   const watchFormule = watch("formule");
+  const watchDate = watch("date");
+  const watchTimeSlot = watch("timeSlot");
+
+  // On récupère l’objet 'Formule' sélectionné dans formules.ts
   const selectedFormule = formules.find((f) => f.value === watchFormule);
-  const formuleDetails = selectedFormule;
-  const onlySunday = formuleDetails?.isPrivatisation;
-
-  useEffect(() => {
-    if (!selectedFormule) return;
-
-    const isPrivatisation = selectedFormule.isPrivatisation;
-    const currentDate = watch("date");
-
-    if (!currentDate) return;
-
-    const currentDay = currentDate.getDay();
-
-    if (isPrivatisation && currentDay !== 0) {
-      // Trouve le dimanche suivant
-      const nextSunday = new Date(currentDate);
-      const daysToAdd = (7 - currentDay) % 7;
-      nextSunday.setDate(currentDate.getDate() + daysToAdd);
-
-      setValue("date", nextSunday);
-    }
-
-    if (!isPrivatisation && currentDay === 0) {
-      // Optionnel : on peut réinitialiser la date si c'était un dimanche pour une formule non-privatisation
-      // setValue("date", null);
-    }
-  }, [watchFormule, setValue, watch, selectedFormule]);
-
-const handleFormSubmit = (data: FormData) => {
-  setSubmittedData(data);
-  setModalOpen(true);
-};
-
-
-  // Cherche les infos de la formule choisie
-
-  // Valeurs dynamiques selon la formule
+  const onlySunday = selectedFormule?.isPrivatisation ?? false;
   const enfantMin = selectedFormule?.enfantMin || 0;
 
+  // Si privatisation, on force la date au prochain dimanche
+  useEffect(() => {
+    if (!selectedFormule) return;
+    if (!watchDate) return;
+
+    if (selectedFormule.isPrivatisation) {
+      const currentDay = watchDate.getDay();
+      if (currentDay !== 0) {
+        const nextSunday = new Date(watchDate);
+        const daysToAdd = (7 - currentDay) % 7;
+        nextSunday.setDate(watchDate.getDate() + daysToAdd);
+        setValue("date", nextSunday);
+      }
+    }
+  }, [watchFormule, watchDate, selectedFormule, setValue]);
+
+  // Navigation du Stepper
+  const handleNext = () => setActiveStep((prev) => prev + 1);
+  const handleBack = () => setActiveStep((prev) => prev - 1);
+
+  // Soumission finale vers l’API
   const onSubmit = async (data: FormData) => {
-  if (!user?.id || hasSubmitted) return;
+    if (!user?.id || hasSubmitted) return;
+    setHasSubmitted(true);
+    setErrorMsg(null);
 
-  setHasSubmitted(true);
-  setErrorMsg(null);
+    try {
+      const resp = await fetch("/api/reservation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, ...data }),
+      });
+      if (!resp.ok) throw new Error(`Erreur ${resp.status}`);
 
-  try {
-    const resp = await fetch("/api/reservation", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user.id, ...data }),
-    });
+      setSubmittedData(data);
+      handleConfirm()
+    } catch (err: any) {
+      setErrorMsg(`Erreur de réservation : ${err.message}`);
+      setHasSubmitted(false);
+    }
+  };
 
-    if (!resp.ok) throw new Error(`Erreur ${resp.status}`);
+  const handleConfirm = () => {
+    setFinalModalOpen(true);
+  };
 
-    setModalOpen(false);       // Ferme 1er modal
-    setFinalModalOpen(true);   // Ouvre 2e modal
-  } catch (err: any) {
-    setErrorMsg(`Erreur de réservation : ${err.message}`);
-    setHasSubmitted(false); // Permet de réessayer
-  }
-};
-
-
-  if (!user) return <p>Utilisateur non trouvé.</p>;
+  if (!user) return <Typography>Utilisateur non trouvé.</Typography>;
 
   return (
-    <Box sx={{ padding: 4, maxWidth: 700, margin: "auto" }}>
-    <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-  <DialogTitle>Confirmer votre demande</DialogTitle>
-  <DialogContent dividers>
-    <Typography>
-      <strong>Formule :</strong>{" "}
-      {formules.find((f) => f.value === submittedData?.formule)?.label}
-    </Typography>
-    <Typography>
-      <strong>Date :</strong>{" "}
-      {submittedData?.date?.toLocaleDateString("fr-FR")}
-    </Typography>
-    <Typography>
-      <strong>Enfants :</strong> {submittedData?.childrenCount}
-    </Typography>
-    <Typography>
-      <strong>Adultes :</strong> {submittedData?.adultsCount}
-    </Typography>
-    {submittedData?.extras && (
-      <Typography>
-        <strong>Infos :</strong> {submittedData.extras}
-      </Typography>
-    )}
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={() => setModalOpen(false)}>Modifier</Button>
-    <Button
-      onClick={() => onSubmit(submittedData!)}
-      variant="contained"
-      disabled={hasSubmitted}
-    >
-      Confirmer et envoyer
-    </Button>
-  </DialogActions>
-</Dialog>
-<Dialog open={finalModalOpen} onClose={() => setFinalModalOpen(false)}>
-  <DialogTitle>Demande envoyée !</DialogTitle>
-  <DialogContent dividers>
-    <Typography gutterBottom>
-      ✅ Votre demande a bien été enregistrée.
-    </Typography>
-    <Typography whiteSpace="pre-line" gutterBottom>
-      ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en cas
-      d'annulation, mais échangeable contre un report ou des entrées.
-      {"\n"}🚫 Boissons et aliments extérieurs interdits.
-      {"\n"}🧦 Chaussettes obligatoires pour tous.
-    </Typography>
-    <Typography mt={2}>
-      📧{" "}
-      <Link
-        href="https://mail.google.com/mail/u/0/#inbox/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ textDecoration: "underline" }}
-      >
-        Voir l'email de confirmation sur Gmail
-      </Link>
-    </Typography>
-  </DialogContent>
-  <DialogActions>
-    <Button
-      onClick={() => {
-        setFinalModalOpen(false);
-        router.push("/");
-      }}
-    >
-      Fermer
-    </Button>
-  </DialogActions>
-</Dialog>
-
-
-
-      <Typography variant="h4" color="#000" gutterBottom>
+    <Box sx={{ p: 4, maxWidth: 700, mx: "auto" }}>
+      <Typography variant="h4" color="#000000" gutterBottom>
         Demande pour un anniversaire
       </Typography>
 
-<form onSubmit={handleSubmit(handleFormSubmit)}>
+      {/* ---------- STEPper MUI ---------- */}
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
 
-        {/* Date */}
-        {/* Formule */}
-        <FormControl fullWidth margin="normal" error={!!errors.formule}>
-          <InputLabel>Formule</InputLabel>
-          <Controller
-            name="formule"
-            control={control}
-            rules={{ required: "Formule requise" }}
-            render={({ field }) => (
-              <Select {...field} label="Formule">
-                {formules.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-          <FormHelperText>{errors.formule?.message}</FormHelperText>
-        </FormControl>
-
-        <Controller
-          control={control}
-          name="date"
-          rules={{ required: "Date requise" }}
-          render={({ field }) => (
-            <FormControl fullWidth margin="normal">
-              <ReactDatePicker
-                placeholderText="Choisir une date"
-                selected={field.value}
-                onChange={field.onChange}
-                minDate={new Date()}
-                dateFormat="dd/MM/yyyy"
-                filterDate={
-                  onlySunday ? (date) => date.getDay() === 0 : undefined
-                }
-                customInput={
-                  <TextField
-                    label="Date"
-                    autoComplete="off" // 👉 ajoute ceci ici
-                    error={!!errors.date}
-                    helperText={errors.date?.message}
-                    fullWidth
-                  />
-                }
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* ---------- Étape 0 : Choisir la formule ---------- */}
+        {activeStep === 0 && (
+          <Box>
+            <FormControl fullWidth margin="normal" error={!!errors.formule}>
+              <InputLabel>Formule</InputLabel>
+              <Controller
+                name="formule"
+                control={control}
+                rules={{ required: "Formule requise" }}
+                render={({ field }) => (
+                  <Select {...field} label="Formule">
+                    {formules.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
               />
+              <FormHelperText>{errors.formule?.message}</FormHelperText>
             </FormControl>
-          )}
-        />
+          </Box>
+        )}
 
-        {/* Enfants */}
-        <TextField
-          fullWidth
-          margin="normal"
-          type="number"
-          label={`Nombre d'enfants (min ${enfantMin})`}
-          {...register("childrenCount", {
-            required: "Nombre requis",
-            min: { value: enfantMin, message: `Minimum ${enfantMin} enfants` },
-            valueAsNumber: true,
-          })}
-          error={!!errors.childrenCount}
-          helperText={errors.childrenCount?.message}
-        />
+        {/* ---------- Étape 1 : Date & Créneau (issu de la formule) ---------- */}
+        {activeStep === 1 && (
+          <LocalizationProvider dateAdapter={AdapterDateFns} dateLibInstance={fr}
+          >
+            <Box>
+              {/* DatePicker de MUI */}
+              <Controller
+                name="date"
+                control={control}
+                rules={{ required: "Date requise" }}
+                render={({ field }) => (
+                  <DatePicker
+                    label="Date"
+                    value={field.value}
+                    onChange={field.onChange}
+                    minDate={new Date()}
+                    shouldDisableDate={(date) =>
+                      onlySunday ? date.getDay() !== 0 : false
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        fullWidth
+                        margin="normal"
+                        error={!!errors.date}
+                        helperText={errors.date?.message}
+                      />
+                    )}
+                  />
+                )}
+              />
 
-        {/* Adultes */}
-        <TextField
-          fullWidth
-          margin="normal"
-          type="number"
-          label="Nombre d'adultes"
-          {...register("adultsCount", {
-            required: "Nombre requis",
-            min: { value: 0, message: "Min 0" },
-            valueAsNumber: true,
-          })}
-          error={!!errors.adultsCount}
-          helperText={errors.adultsCount?.message}
-        />
+              {/* Sélection du créneau : on tire les créneaux de selectedFormule.timeSlots */}
+              <FormControl
+                fullWidth
+                margin="normal"
+                error={!!errors.timeSlot}
+                disabled={!selectedFormule}
+              >
+                <InputLabel>Créneau horaire</InputLabel>
+                <Controller
+                  name="timeSlot"
+                  control={control}
+                  rules={{ required: "Créneau requis" }}
+                  render={({ field }) => (
+                    <Select {...field} label="Créneau horaire">
+                      {selectedFormule?.timeSlots?.map((slot: string) => (
+                        <MenuItem key={slot} value={slot}>
+                          {slot}
+                        </MenuItem>
+                      )) || (
+                        <MenuItem value="">
+                          <em>Aucune formule sélectionnée</em>
+                        </MenuItem>
+                      )}
+                    </Select>
+                  )}
+                />
+                <FormHelperText>
+                  {errors.timeSlot?.message ||
+                    (!selectedFormule && "Choisissez d’abord une formule")}
+                </FormHelperText>
+              </FormControl>
+            </Box>
+          </LocalizationProvider>
+        )}
 
-        {/* Extras */}
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Informations supplémentaires"
-          multiline
-          rows={3}
-          {...register("extras")}
-        />
+        {/* ---------- Étape 2 : Participants & Infos supplémentaires ---------- */}
+        {activeStep === 2 && (
+          <Box>
 
-        {/* Submit */}
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{ mt: 2 }}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Envoi..." : "Envoyer ma demande"}
-        </Button>
+            <TextField
+              fullWidth
+              margin="normal"
+              type="text"
+              label={`Prénom de l'enfant`}
+              {...register("childrenName", {
+                required: "Prénom requis",
+              })}
+              error={!!errors.childrenName}
+              helperText={errors.childrenName?.message}
+            />
+
+            <TextField
+              fullWidth
+              margin="normal"
+              type="number"
+              label={`Nombre d'enfants (min ${enfantMin})`}
+              {...register("childrenCount", {
+                required: "Nombre requis",
+                min: {
+                  value: enfantMin,
+                  message: `Minimum ${enfantMin} enfant(s)`,
+                },
+                valueAsNumber: true,
+              })}
+              error={!!errors.childrenCount}
+              helperText={errors.childrenCount?.message}
+            />
+
+            <TextField
+              fullWidth
+              margin="normal"
+              type="number"
+              label="Nombre d'adultes (max 4)"
+              {...register("adultsCount", {
+                required: "Nombre requis",
+                min: { value: 0, message: "Minimum 0" },
+                max: {value: 4, message: "Maximum 4"},
+                valueAsNumber: true,
+              })}
+              error={!!errors.adultsCount}
+              helperText={errors.adultsCount?.message}
+            />
+
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Informations supplémentaires"
+              multiline
+              rows={3}
+              {...register("extras")}
+            />
+          </Box>
+        )}
+
+        {/* ---------- Étape 3 : Récapitulatif & envoi ---------- */}
+        {activeStep === 3 && (
+          <Box color={"#000000"}>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Formule :</strong>{" "}
+              {formules.find((f) => f.value === watchFormule)?.label}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Date :</strong>{" "}
+              {watchDate
+                ? watchDate.toLocaleDateString("fr-FR")
+                : "Non renseignée"}
+            </Typography>
+             <Typography variant="subtitle1" gutterBottom>
+              <strong>Nom de l'enfant :</strong> {watch("childrenName") || "Non renseigné"}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Créneau :</strong> {watchTimeSlot || "Non renseigné"}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Enfants :</strong> {watch("childrenCount")}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Adultes :</strong> {watch("adultsCount")}
+            </Typography>
+            {watch("extras") && (
+              <Typography variant="subtitle1" gutterBottom>
+                <strong>Infos :</strong> {watch("extras")}
+              </Typography>
+            )}
+          </Box>
+        )}
+
+        {/* ---------- Boutons Précédent / Suivant / Envoyer ---------- */}
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          <Grid>
+            {activeStep > 0 && (
+              <Button variant="outlined" onClick={handleBack}>
+                Précédent
+              </Button>
+            )}
+          </Grid>
+
+          <Grid>
+            {activeStep < steps.length - 1 && (
+              <Button
+                variant="contained"
+                onClick={handleNext}
+                disabled={
+                  (activeStep === 0 && !watchFormule) ||
+                  (activeStep === 1 &&
+                    (!watchDate || !watchTimeSlot || !selectedFormule)) ||
+                  (activeStep === 2 &&
+                    (watch("childrenCount") < enfantMin ||
+                      watch("adultsCount") < 0))
+                }
+              >
+                Suivant
+              </Button>
+            )}
+
+            {activeStep === steps.length - 1 && (
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Envoi..." : "Envoyer ma demande"}
+              </Button>
+            )}
+          </Grid>
+        </Grid>
       </form>
 
-      {/* Messages */}
+      <Dialog open={finalModalOpen} onClose={() => setFinalModalOpen(false)}>
+        <DialogTitle>Demande envoyée !</DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            ✅ Votre demande a bien été enregistrée.
+          </Typography>
+          <Typography whiteSpace="pre-line" gutterBottom>
+            ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en
+            cas d'annulation, mais échangeable contre un report ou des entrées.
+            {"\n"}🚫 Boissons et aliments extérieurs interdits.
+            {"\n"}🧦 Chaussettes obligatoires pour tous.
+          </Typography>
+          <Typography mt={2}>
+            📧{" "}
+            <Link
+              href="https://mail.google.com/mail/u/0/#inbox/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "underline" }}
+            >
+              Voir l'email de confirmation sur Gmail
+            </Link>
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setFinalModalOpen(false);
+              router.push("/");
+            }}
+          >
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       {errorMsg && (
         <Typography color="error" mt={2} whiteSpace="pre-line">
           {errorMsg}
         </Typography>
       )}
-
-      {confirmation && (
-        <Typography color="success.main" mt={2} whiteSpace="pre-line">
-          {confirmation}
-        </Typography>
-      )}
-      <div className="magicpattern-container">{shapes}</div>
     </Box>
   );
 }

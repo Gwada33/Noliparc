@@ -11,6 +11,8 @@ type ReservationPayload = {
   userId: string;
   date: string; // ou Date si tu préfères
   formule: string;
+  childrenName: string;
+  timeSlot: string[] | string;
   childrenCount: number;
   adultsCount: number;
   extras: string[] | string; // tu gères les deux cas dans ton code
@@ -91,9 +93,9 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
 
     const insertQuery = `
       INSERT INTO reservations
-        (id, user_id, date, formule, children_count, adults_count, extras, status, created_at)
+        (id, user_id, date, formule, children_name, children_count, adults_count, extras, status, created_at, creneau)
       VALUES
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *;
     `;
 
@@ -102,11 +104,13 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
       data.userId,
       data.date,
       data.formule,
+      data.childrenName,
       data.childrenCount,
       data.adultsCount,
       JSON.stringify(data.extras),
       status,
       createdAt,
+      data.timeSlot
     ];
 
     const { rows } = await client.query(insertQuery, insertValues);
@@ -124,12 +128,13 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
         <div style="text-align: center;">
           <img src="${logoUrl}" alt="Noliparc Logo" style="max-height: 120px; margin-bottom: 20px;" />
         </div>
-        <h2 style="color: #4CAF50;">🎉 Votre demande a été recu <strong style="color:rgb(224, 22, 22)">et elle est en cours d'instruction ‼️</strong></h2>
+        <h2 style="color: #4CAF50;">🎉 Votre demande a été recu et est <strong style="color:rgb(145, 192, 4)">en cours de traitement ‼️</strong></h2>
         <p>Bonjour ${first_name} ${last_name},</p>
-        <p>Nous vous confirmons la réception de votre demande. Voici un récapitulatif :</p>
+        <p>Nous vous confirmons la réception de votre demande pour l'anniversaire de ${data.childrenName}. Voici un récapitulatif :</p>
 
         <ul style="list-style: none; padding-left: 0;">
           <li><strong>🗓️ Date :</strong> ${formattedDate}</li>
+          <li><strong>⌚️ Heure :</strong> ${data.timeSlot}</li>
           <li><strong>📋 Formule :</strong> ${data.formule}</li>
           <li><strong>👨‍👩‍👧‍👦 Adultes :</strong> ${data.adultsCount}</li>
           <li><strong>🧒 Enfants :</strong> ${data.childrenCount}</li>
@@ -150,11 +155,13 @@ const { email: userEmail, first_name, last_name, phone } = userResult.rows[0];
   to: 'magdala.galinat@noliparc.com',
   subject: `[DEMANDE-NOLIPARC] Nouvelle demande - ${formattedDate}`,
   html: `
-    <p>Nouvelle réservation reçue :</p>
+    <p>Nouvelle demande reçue :</p>
     <li><strong>Nom du client :</strong> ${first_name} ${last_name}</li>
+    <li>C'est l'anniverssaire de ${data.childrenName} et se tro</li>
     <li><strong>Numéro de téléphone du client :</strong> ${phone}</li>
     <ul>
       <li><strong>Date :</strong> ${formattedDate}</li>
+      <li><strong>Heure :</strong> ${data.timeSlot}</li>
       <li><strong>Formule :</strong> ${data.formule}</li>
       <li><strong>Enfants :</strong> ${data.childrenCount}</li>
       <li><strong>Adultes :</strong> ${data.adultsCount}</li>
