@@ -198,6 +198,7 @@ export default function ReserverClient() {
                     shouldDisableDate={(date) =>
                       onlySunday ? date.getDay() !== 0 : false
                     }
+                    enableAccessibleFieldDOMStructure={false}
                     slots={{
                       textField: (params) =>
                       <TextField
