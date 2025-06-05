@@ -11,7 +11,6 @@ const nextConfig = {
   },
 
   experimental: {
-    optimizeCss: true,
     optimizeFonts: true,
     esmExternals: true,
     serverActions: true,
