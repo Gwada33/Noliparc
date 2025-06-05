@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "@/app/context/AuthContext";
-
+import generateShapes from "@/utils/GererateShapes";
 import { formules } from "@/lib/formules";
 
 import {
@@ -28,17 +28,21 @@ import {
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import {fr} from "date-fns/locale/fr";
+import { fr } from "date-fns/locale/fr";
 
 import Link from "next/link";
+import { ResponsiveStepper } from "@/components/ReactiveStepper";
+import BackgroundShapes from "@/utils/GererateShapes";
 
 type FormData = {
   formule: string;
   date: Date | null;
   timeSlot: string;
   childrenName: string;
+  childAge: number;
   childrenCount: number;
   adultsCount: number;
+  cake: string;
   extras: string;
 };
 
@@ -54,15 +58,17 @@ export default function ReserverClient() {
   const [isSingleSlot, setIsSingleSlot] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Titres des étapes pour le Stepper
+  // Titres des étapes pour le Stepper (6 étapes au total)
   const steps = [
     "Choisir la formule",
     "Sélectionner date & créneau",
-    "Participants & Infos",
+    "Infos enfant",
+    "Participants",
+    "Gâteau & Extras",
     "Récapitulatif",
   ];
 
-  // Initialisation de react-hook-form
+  // On initialise le form avec react-hook-form
   const {
     control,
     register,
@@ -76,8 +82,10 @@ export default function ReserverClient() {
       date: null,
       timeSlot: "",
       childrenName: "",
+      childAge: 0,
       childrenCount: 0,
       adultsCount: 0,
+      cake: "",
       extras: "",
     },
   });
@@ -85,8 +93,11 @@ export default function ReserverClient() {
   const watchFormule = watch("formule");
   const watchDate = watch("date");
   const watchTimeSlot = watch("timeSlot");
+  const watchChildAge = watch("childAge");
+  const watchChildrenCount = watch("childrenCount");
+  const watchAdultsCount = watch("adultsCount");
 
-  // On récupère l’objet 'Formule' sélectionné dans formules.ts
+  // Récupère la formule sélectionnée dans formules.ts
   const selectedFormule = formules.find((f) => f.value === watchFormule);
   const onlySunday = selectedFormule?.isPrivatisation ?? false;
   const enfantMin = selectedFormule?.enfantMin || 0;
@@ -95,7 +106,6 @@ export default function ReserverClient() {
   useEffect(() => {
     if (!selectedFormule) return;
     if (!watchDate) return;
-
     if (selectedFormule.isPrivatisation) {
       const currentDay = watchDate.getDay();
       if (currentDay !== 0) {
@@ -107,23 +117,23 @@ export default function ReserverClient() {
     }
   }, [watchFormule, watchDate, selectedFormule, setValue]);
 
+  // Si la formule ne propose qu'un seul créneau, on l'applique et on disable le Select
   useEffect(() => {
-  if (selectedFormule?.timeSlots?.length === 1) {
-    const uniqueSlot = selectedFormule.timeSlots[0];
-    setValue("timeSlot", uniqueSlot);
-    setIsSingleSlot(true);
-  } else {
-    setIsSingleSlot(false);
-    setValue("timeSlot", ""); // pour reset si on change de formule
-  }
-}, [selectedFormule, setValue]);
-
+    if (selectedFormule?.timeSlots?.length === 1) {
+      const uniqueSlot = selectedFormule.timeSlots[0];
+      setValue("timeSlot", uniqueSlot);
+      setIsSingleSlot(true);
+    } else {
+      setIsSingleSlot(false);
+      setValue("timeSlot", "");
+    }
+  }, [selectedFormule, setValue]);
 
   // Navigation du Stepper
   const handleNext = () => setActiveStep((prev) => prev + 1);
   const handleBack = () => setActiveStep((prev) => prev - 1);
 
-  // Soumission finale vers l’API
+  // Soumission finale vers l'API
   const onSubmit = async (data: FormData) => {
     if (!user?.id || hasSubmitted) return;
     setHasSubmitted(true);
@@ -138,7 +148,7 @@ export default function ReserverClient() {
       if (!resp.ok) throw new Error(`Erreur ${resp.status}`);
 
       setSubmittedData(data);
-      handleConfirm()
+      handleConfirm();
     } catch (err: any) {
       setErrorMsg(`Erreur de réservation : ${err.message}`);
       setHasSubmitted(false);
@@ -152,19 +162,16 @@ export default function ReserverClient() {
   if (!user) return <Typography>Utilisateur non trouvé.</Typography>;
 
   return (
-    <Box sx={{ p: 4, maxWidth: 700, mx: "auto" }}>
+    <>
+      <BackgroundShapes  variant="anniversaire" count={30} />
+    <Box sx={{ p: 4, maxWidth: 600, mx: "auto" }}>
       <Typography variant="h4" color="#000000" gutterBottom>
         Demande pour un anniversaire
       </Typography>
 
       {/* ---------- STEPper MUI ---------- */}
-      <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+     <ResponsiveStepper steps={steps} activeStep={activeStep} />
+
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* ---------- Étape 0 : Choisir la formule ---------- */}
@@ -193,8 +200,7 @@ export default function ReserverClient() {
 
         {/* ---------- Étape 1 : Date & Créneau (issu de la formule) ---------- */}
         {activeStep === 1 && (
-          <LocalizationProvider dateAdapter={AdapterDateFns} dateLibInstance={fr}
-          >
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fr}>
             <Box>
               {/* DatePicker de MUI */}
               <Controller
@@ -212,14 +218,15 @@ export default function ReserverClient() {
                     }
                     enableAccessibleFieldDOMStructure={false}
                     slots={{
-                      textField: (params) =>
-                      <TextField
-                        {...params}
-                        fullWidth
-                        margin="normal"
-                        error={!!errors.date}
-                        helperText={errors.date?.message}
-                      />
+                      textField: (params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          margin="normal"
+                          error={!!errors.date}
+                          helperText={errors.date?.message}
+                        />
+                      ),
                     }}
                   />
                 )}
@@ -238,7 +245,11 @@ export default function ReserverClient() {
                   control={control}
                   rules={{ required: "Créneau requis" }}
                   render={({ field }) => (
-                    <Select {...field} label="Créneau horaire" disabled={isSingleSlot}>
+                    <Select
+                      {...field}
+                      label="Créneau horaire"
+                      disabled={isSingleSlot}
+                    >
                       {selectedFormule?.timeSlots?.map((slot: string) => (
                         <MenuItem key={slot} value={slot}>
                           {slot}
@@ -260,15 +271,14 @@ export default function ReserverClient() {
           </LocalizationProvider>
         )}
 
-        {/* ---------- Étape 2 : Participants & Infos supplémentaires ---------- */}
+        {/* ---------- Étape 2 : Infos enfant (prénom + âge) ---------- */}
         {activeStep === 2 && (
           <Box>
-
             <TextField
               fullWidth
               margin="normal"
               type="text"
-              label={`Prénom de l'enfant`}
+              label="Prénom de l'enfant"
               {...register("childrenName", {
                 required: "Prénom requis",
               })}
@@ -276,6 +286,25 @@ export default function ReserverClient() {
               helperText={errors.childrenName?.message}
             />
 
+            <TextField
+              fullWidth
+              margin="normal"
+              type="number"
+              label="Âge que l'enfant aura le jour J"
+              {...register("childAge", {
+                required: "Âge requis",
+                min: { value: 0, message: "Âge min 0" },
+                valueAsNumber: true,
+              })}
+              error={!!errors.childAge}
+              helperText={errors.childAge?.message}
+            />
+          </Box>
+        )}
+
+        {/* ---------- Étape 3 : Participants (nombre d'enfants & adultes) ---------- */}
+        {activeStep === 3 && (
+          <Box>
             <TextField
               fullWidth
               margin="normal"
@@ -293,21 +322,57 @@ export default function ReserverClient() {
               helperText={errors.childrenCount?.message}
             />
 
-            <TextField
-              fullWidth
-              margin="normal"
-              type="number"
-              label="Nombre d'adultes (max 4)"
-              {...register("adultsCount", {
-                required: "Nombre requis",
-                min: { value: 0, message: "Minimum 0" },
-                max: { value: 4, message: "Maximum 4"},
-                valueAsNumber: true,
-              })}
-              error={!!errors.adultsCount}
-              helperText={errors.adultsCount?.message}
-            />
+            <FormControl fullWidth margin="normal" error={!!errors.adultsCount}>
+              <InputLabel>Nombre d'adultes (max 4)</InputLabel>
+              <Controller
+                name="adultsCount"
+                control={control}
+                rules={{
+                  required: "Nombre requis",
+                  min: { value: 0, message: "Minimum 0" },
+                  max: { value: 4, message: "Maximum 4" },
+                }}
+                render={({ field }) => (
+                  <Select {...field} label="Nombre d'adultes (max 4)">
+                    {[0, 1, 2, 3, 4].map((n) => (
+                      <MenuItem
+                        key={n}
+                        value={n}
+                        disabled={n > 4} /* inutile, mais explicite */
+                      >
+                        {n}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+              <FormHelperText>{errors.adultsCount?.message}</FormHelperText>
+            </FormControl>
+          </Box>
+        )}
 
+        {/* ---------- Étape 4 : Gâteau & Infos supplémentaires ---------- */}
+        {activeStep === 4 && (
+          <Box>
+            <FormControl fullWidth margin="normal" error={!!errors.cake}>
+              <InputLabel>Gâteau</InputLabel>
+              <Controller
+                name="cake"
+                control={control}
+                rules={{ required: "Précisez le gâteau" }}
+                render={({ field }) => (
+                  <Select {...field} label="Type de gâteau">
+                    <MenuItem value="gateau_yaourt">Gâteau au yaourt</MenuItem>
+                    <MenuItem value="gateau_chocolat">
+                      Gâteau au chocolat
+                    </MenuItem>
+                  </Select>
+                )}
+              />
+              <FormHelperText>{errors.cake?.message}</FormHelperText>
+            </FormControl>
+
+            {/* Champ d’informations supplémentaires */}
             <TextField
               fullWidth
               margin="normal"
@@ -319,9 +384,9 @@ export default function ReserverClient() {
           </Box>
         )}
 
-        {/* ---------- Étape 3 : Récapitulatif & envoi ---------- */}
-        {activeStep === 3 && (
-          <Box color={"#000000"}>
+        {/* ---------- Étape 5 : Récapitulatif & envoi ---------- */}
+        {activeStep === 5 && (
+          <Box color="#000">
             <Typography variant="subtitle1" gutterBottom>
               <strong>Formule :</strong>{" "}
               {formules.find((f) => f.value === watchFormule)?.label}
@@ -332,17 +397,23 @@ export default function ReserverClient() {
                 ? watchDate.toLocaleDateString("fr-FR")
                 : "Non renseignée"}
             </Typography>
-             <Typography variant="subtitle1" gutterBottom>
-              <strong>Nom de l'enfant :</strong> {watch("childrenName") || "Non renseigné"}
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Prénom enfant :</strong> {watch("childrenName") || "—"}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              <strong>Créneau :</strong> {watchTimeSlot || "Non renseigné"}
+              <strong>Âge enfant :</strong> {watchChildAge} {" ans"}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              <strong>Enfants :</strong> {watch("childrenCount")}
+              <strong>Créneau :</strong> {watchTimeSlot || "—"}
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              <strong>Adultes :</strong> {watch("adultsCount")}
+              <strong>Enfants :</strong> {watchChildrenCount}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Adultes :</strong> {watchAdultsCount}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              <strong>Gâteau :</strong> {watch("cake") || "—"}
             </Typography>
             {watch("extras") && (
               <Typography variant="subtitle1" gutterBottom>
@@ -352,7 +423,7 @@ export default function ReserverClient() {
           </Box>
         )}
 
-        {/* ---------- Boutons Précédent / Suivant / Envoyer ---------- */}
+        {/* ---------- Boutons “Précédent / Suivant / Envoyer” ---------- */}
         <Grid container spacing={2} sx={{ mt: 2 }}>
           <Grid>
             {activeStep > 0 && (
@@ -361,31 +432,29 @@ export default function ReserverClient() {
               </Button>
             )}
           </Grid>
-
           <Grid>
             {activeStep < steps.length - 1 && (
               <Button
                 variant="contained"
                 onClick={handleNext}
                 disabled={
+                  // Si on n'a pas rempli les champs obligatoires de l'étape courante
                   (activeStep === 0 && !watchFormule) ||
                   (activeStep === 1 &&
                     (!watchDate || !watchTimeSlot || !selectedFormule)) ||
                   (activeStep === 2 &&
-                    (watch("childrenCount") < enfantMin ||
-                      watch("adultsCount") < 0))
+                    (!watch("childrenName") || watchChildAge < 0)) ||
+                  (activeStep === 3 &&
+                    (watchChildrenCount < enfantMin ||
+                      watchAdultsCount < 0 ||
+                      watchAdultsCount > 4))
                 }
               >
                 Suivant
               </Button>
             )}
-
             {activeStep === steps.length - 1 && (
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" variant="contained" disabled={isSubmitting}>
                 {isSubmitting ? "Envoi..." : "Envoyer ma demande"}
               </Button>
             )}
@@ -393,6 +462,7 @@ export default function ReserverClient() {
         </Grid>
       </form>
 
+      {/* ---------- Modal de confirmation final ---------- */}
       <Dialog open={finalModalOpen} onClose={() => setFinalModalOpen(false)}>
         <DialogTitle>Demande envoyée !</DialogTitle>
         <DialogContent dividers>
@@ -435,5 +505,6 @@ export default function ReserverClient() {
         </Typography>
       )}
     </Box>
+    </>
   );
 }
