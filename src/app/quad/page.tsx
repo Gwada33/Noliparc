@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import content from "../../../public/texts.json";
+import content from "@/data/texts.json";
 import GridGallery from "@/components/GridGallery";
 
 export default function QuadPage() {

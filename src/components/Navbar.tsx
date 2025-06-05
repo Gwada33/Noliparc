@@ -3,16 +3,48 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import content from "../../public/texts.json";
-import { useAuth } from "@/app/context/AuthContext";
-import { FiUser } from 'react-icons/fi';
-import clsx from 'clsx'; // Si tu veux l'installer : npm i clsx
+import content from "@/data/texts.json";
+import { useAuth, User } from "@/app/context/AuthContext";
+import { FiUser, FiLogOut } from 'react-icons/fi';
+import clsx from 'clsx';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
+
+interface NavItem {
+  link: string;
+  label: string;
+  button?: boolean;
+}
+
+interface HeaderContent {
+  nav: Record<string, NavItem>;
+  brand: string;
+  'image-noli': string;
+}
+
+interface NavbarProps {
+  user: User | null;
+  logout: () => Promise<void>;
+}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
   const { user, logout } = useAuth();
+  const router = useRouter();
 
-  
+  const handleLogout = async () => {
+    if (confirmLogout) {
+      try {
+        await logout();
+        router.push('/login');
+      } catch (error) {
+        console.error('Error during logout:', error);
+      }
+    }
+    setConfirmLogout(!confirmLogout);
+  };
+
   return (
     <nav className="navbar" role="navigation" aria-label="Main navigation">
       <div className="logo">
@@ -20,7 +52,7 @@ export default function Navbar() {
           <Image
             src={content.header["image-noli"]}
             alt="Logo Noliparc"
-            width={50}  // adapte selon la taille souhaitée
+            width={50}
             height={50}
             className="logo-img"
           />
@@ -50,10 +82,10 @@ export default function Navbar() {
           <li key={key} role="none">
             <Link
               href={navItem.link}
-              className={navItem.button ? "btn-primary btn-nav" : "nav-link"}
+              className={navItem.button ? "btn-primary nav-link" : "nav-link"}
               onClick={() => setMenuOpen(false)}
               role="menuitem"
-              tabIndex={menuOpen ? 0 : -1} // accessibilité clavier
+              tabIndex={menuOpen ? 0 : -1}
             >
               {navItem.label}
             </Link>
@@ -64,7 +96,7 @@ export default function Navbar() {
           <li className="user-menu" role="none">
             <button
               className="btn-nav"
-              onClick={() => logout()}
+              onClick={() => setConfirmLogout(true)}
               role="menuitem"
               tabIndex={menuOpen ? 0 : -1}
               type="button"
@@ -94,12 +126,23 @@ export default function Navbar() {
                 tabIndex={menuOpen ? 0 : -1}
                 onClick={() => setMenuOpen(false)}
               >
-                S’inscrire
+                S'inscrire
               </Link>
             </li>
           </>
         )}
       </ul>
+
+      <Dialog open={confirmLogout} onClose={() => setConfirmLogout(false)}>
+        <DialogTitle>Confirmation de déconnexion</DialogTitle>
+        <DialogContent>
+          Êtes-vous sûr de vouloir vous déconnecter ?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmLogout(false)}>Annuler</Button>
+          <Button onClick={handleLogout} color="error">Déconnexion</Button>
+        </DialogActions>
+      </Dialog>
     </nav>
-  );
+  );  
 }

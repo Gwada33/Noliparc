@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import content from "../../../public/texts.json";
+import content from "@/data/texts.json";
 import Formule from "@/components/Formule";
 
 const imageCount = 27; // ou le nombre exact d'images

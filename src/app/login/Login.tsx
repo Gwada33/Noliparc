@@ -16,14 +16,12 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, error: authError, loading: authLoading } = useAuth();
   const searchParams = useSearchParams();
   const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [shapes, setShapes] = useState<React.ReactNode[]>([]);
 
-useEffect(() => {
+  useEffect(() => {
     const newShapes = [...Array(20)].map((_, i) => {
       const size = Math.floor(Math.random() * 150) + 50; // 50–200px
       const top = Math.random() * 100;
@@ -48,32 +46,17 @@ useEffect(() => {
     setShapes(newShapes);
   }, []);
 
-
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        const next = searchParams.get("next") ?? "/";
-        window.location.href = (next);
-      } else {
-        setError(data.message || "Identifiants incorrects");
-      }
-    } catch {
-      setError("Erreur réseau, veuillez réessayer");
-    } finally {
-      setLoading(false);
+      await login(form.email, form.password);
+      const next = searchParams.get("next") ?? "/";
+      router.push(next);
+    } catch (err) {
+      console.error('Login error:', err);
     }
-  }
+  };
 
   return (
     <Box
@@ -109,15 +92,24 @@ useEffect(() => {
               className="input input-bordered"
             />
 
+            {authError && (
+              <Typography color="error" align="center">
+                {authError}
+              </Typography>
+            )}
+            {authLoading && (
+              <Box display="flex" justifyContent="center" mt={2}>
+                <CircularProgress />
+              </Box>
+            )}
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               fullWidth
-              disabled={loading}
-              className="btn btn-primary"
+              disabled={authLoading}
+              sx={{ mt: 2 }}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : "Se connecter"}
+              Connexion
             </Button>
 
             <Typography align="center" mt={2} fontSize={14}>
@@ -132,11 +124,6 @@ useEffect(() => {
   </Link>
 </Typography>
 
-            {error && (
-              <Typography color="error" align="center" fontSize={14}>
-                {error}
-              </Typography>
-            )}
           </Box>
         </form>
       </Paper>

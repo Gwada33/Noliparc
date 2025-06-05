@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import content from "../../public/texts.json";
+import content from "@/data/texts.json";
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 
 export default function Footer() {

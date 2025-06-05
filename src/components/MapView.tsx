@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-lea
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Typography } from '@mui/material';
-import content from "../../public/texts.json"
+import content from "@/data/texts.json"
 
 // Icône rouge personnalisée (comme Google Maps)
 const redIcon = new L.Icon({

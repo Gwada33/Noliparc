@@ -3,6 +3,7 @@ import { Rubik } from "next/font/google";
 import "@/css/globals.css";
 import Navbar from "../components/Navbar"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AuthProvider } from "./context/AuthContext";
 const RubikSANS = Rubik({
   variable: "--font-rubik-sans",
@@ -108,6 +109,7 @@ export default function RootLayout({
           {children}
         </AuthProvider>
           <Analytics />
+      <SpeedInsights />
       </body>
     </html>
   );

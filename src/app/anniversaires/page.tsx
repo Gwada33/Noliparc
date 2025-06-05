@@ -2,8 +2,8 @@
 
 import React from "react";
 import Formule from "../../components/Formule";
-import content from "../../../public/texts.json";
-import formule from "../../../public/formule.json";
+import content from "@/data/texts.json";
+import formule from "@/data/formule.json";
 import Link from "next/link";
 
 function buildQuery(pack: { title: string }) {

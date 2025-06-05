@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import content from '../../public/texts.json'
+import content from '@/data/texts.json'
 
 export default function Loading() {
   return (

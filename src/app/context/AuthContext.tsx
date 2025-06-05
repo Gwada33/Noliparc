@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation"; 
 
-type User = {
+export type User = {
   id: string;
   email: string;
   firstName: string;
@@ -20,6 +20,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   loading: boolean;
+  error: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 };
@@ -29,47 +30,76 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-   const router = useRouter();                     // ← initialise le routeur
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const [cache, setCache] = useState<{ [key: string]: User | null }>({});
 
-
-  /* ------------------------------------------------------------------
-   * Interroge /api/me pour savoir si un cookie `accessToken` est présent
-   * ------------------------------------------------------------------ */
-  async function fetchUser() {
-    setLoading(true);
-    const res = await fetch("/api/me"); // le cookie est envoyé automatiquement
-    if (res.ok) {
-      const { user } = (await res.json()) as { user: User };
-      setUser(user);
-    } else {
-      setUser(null);
+  // Function to get user data from cache or fetch
+  const getUser = async (): Promise<User | null> => {
+    if (cache['user'] !== undefined) {
+      return cache['user'];
     }
-    setLoading(false);
-  }
+    
+    try {
+      const res = await fetch("/api/me");
+      if (!res.ok) {
+        setCache({ user: null });
+        return null;
+      }
+      
+      const { user } = await res.json();
+      setCache({ user });
+      return user;
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      setCache({ user: null });
+      return null;
+    }
+  };
 
+  // Initial fetch
   useEffect(() => {
-    fetchUser(); // au montage
+    const initialize = async () => {
+      try {
+        const userData = await getUser();
+        setUser(userData);
+      } catch (err) {
+        console.error('Initialization error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    initialize();
   }, []);
 
-  /* --------------------------- LOGIN -------------------------------- */
-/* --------------------------- LOGIN -------------------------------- */
-async function login(email: string, password: string) {
-  setLoading(true);
+  // Optimized login function
+  const login = async (email: string, password: string, loginUrl: string = '/api/auth/login'): Promise<void> => {
+    try {
+      setLoading(true);
+      setError(null);
 
-  const res = await fetch("/api/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
+      const res = await fetch(loginUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-  if (!res.ok) {
-    setLoading(false);
-    const { message } = await res.json();
-    throw new Error(message || "Échec de la connexion");
-  }
+      if (!res.ok) {
+        const { message } = await res.json();
+        throw new Error(message || "Échec de la connexion");
+      }
 
-  await fetchUser();                    // met l'utilisateur dans le contexte                    // rafraîchit la page/app
-}
+      // Get user data directly from response instead of calling fetchUser
+      const { user } = await res.json();
+      setUser(user);
+      setCache({ user });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue");
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   /* --------------------------- LOGOUT ------------------------------- */
@@ -82,7 +112,7 @@ async function login(email: string, password: string) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, error, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
