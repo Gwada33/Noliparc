@@ -1,7 +1,6 @@
 // middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
 import { AUTH_CONFIG } from '@/lib/constants';
 
 // Vérifie si une route est protégée
@@ -15,7 +14,22 @@ function isValidToken(token: string | undefined): boolean {
   if (!token) return false;
 
   try {
-    jwt.verify(token, AUTH_CONFIG.JWT_SECRET, { algorithms: ['HS256'] });
+    // Vérification simple du format du token
+    const parts = token.split('.');
+    if (parts.length !== 3) return false;
+    
+    // Vérification du header
+    const header = JSON.parse(atob(parts[0]));
+    if (header.alg !== 'HS256') return false;
+
+    // Vérification du payload
+    const payload = JSON.parse(atob(parts[1]));
+    if (!payload.sub || !payload.exp) return false;
+
+    // Vérification de l'expiration
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (payload.exp <= currentTime) return false;
+
     return true;
   } catch (error) {
     console.error('Erreur de vérification du token:', error);
@@ -50,4 +64,4 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: ['/admin/:path*', '/anniversaires/reserver/:path*'],
-}
+};
