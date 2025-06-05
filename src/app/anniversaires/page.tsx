@@ -34,7 +34,6 @@ export default function AnniversairesPage() {
         Pour nos formules, l'heure indiquée concerne la salle d'anniversaire. Le parc est
         accessible après !
       </p>
-
       <section>
         <h2 className="section-title">
           <img

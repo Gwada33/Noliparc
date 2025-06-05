@@ -3,22 +3,39 @@
 import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { Typography } from '@mui/material';
+import content from "../../public/texts.json"
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+// Icône rouge personnalisée (comme Google Maps)
+const redIcon = new L.Icon({
+  iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
 });
 
 export default function CarteLeaflet() {
-  const position = { lat: 16.295037, lng: -61.667341 };
+  const position = { lat: 16.295293, lng: -61.667341 };
 
- return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'center' }}>
+      <Typography
+        data-aos="fade-down"
+        data-aos-delay="300"
+        variant="h2"
+        fontFamily={"Rubik, sans-serif"}
+        fontWeight={600}
+        color="#DB7C26"
+        component="h2"
+        gutterBottom
+      >
+        NOTRE ADRESSE
+      </Typography>
+
       <MapContainer
         center={position}
         zoom={16}
+        maxZoom={19}
         scrollWheelZoom={false}
         style={{
           width: '80%',
@@ -26,28 +43,42 @@ export default function CarteLeaflet() {
           borderRadius: '1rem',
           overflow: 'hidden',
           boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)',
-          marginTop: '2rem',
+          marginTop: '4rem',
+          marginBottom: '4rem',
         }}
       >
         <LayersControl position="topright">
-          <LayersControl.BaseLayer checked name="Plan (OSM)">
+          <LayersControl.BaseLayer name="Plan (OSM)">
             <TileLayer
               attribution='&copy; OpenStreetMap contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              maxZoom={19}
             />
           </LayersControl.BaseLayer>
 
-          <LayersControl.BaseLayer name="Satellite (Esri)">
-               <TileLayer
-        attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-      />
+          {/* ✅ Satellite activé par défaut */}
+          <LayersControl.BaseLayer checked name="Satellite (Esri)">
+            <TileLayer
+              attribution='Tiles &copy; Esri'
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              maxZoom={19}
+              maxNativeZoom={17}
+            />
           </LayersControl.BaseLayer>
         </LayersControl>
 
-        <Marker position={position}>
-          <Popup>
-            Noliparc - Sainte-Rose<br />Venez nous voir !
+        {/* ✅ Marqueur rouge + popup avec image */}
+        <Marker position={position} icon={redIcon}>
+          <Popup maxWidth={250}>
+            <strong>10 ZAC DE NOLIVIER, Sainte-Rose 97115, Guadeloupe</strong>
+            <br />
+            Venez nous voir !
+            <br />
+            <img
+              alt="Noliparc"
+              src={content.header["image-ext"]}
+              style={{ width: '100%', marginTop: '0.5rem', borderRadius: '8px' }}
+            />
           </Popup>
         </Marker>
       </MapContainer>

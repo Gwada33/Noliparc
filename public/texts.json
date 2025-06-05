@@ -4,6 +4,7 @@
     "image-noliparc": "/images/image-noliparc.png",
     "image-nolitexte": "/images/image-noli-texte.png",
     "image-nolijump": "/images/image-nolijump.png",
+    "image-ext": "/images/noliparc/noliparc-ext.jpeg",
     "image-nolijump-texte": "/images/image-nolijump-texte.png",
     "brand": "Noliparc",
     "subtitle": "Le plus grand parc indoor de Guadeloupe (1000m²)",
@@ -55,7 +56,17 @@
     },
     "image": "/images/snack.png",
     "alt": "Image par @pngtree"
-  }
+  },
+  {
+  "title": "ANNIVERSAIRES à Noliparc",
+  "paragraph": "Fête ton anniversaire à Noliparc et offre à tes amis un moment inoubliable rempli de rires, de jeux et de gourmandises ! Nos formules comprennent l’accès aux structures de jeu, un espace réservé pour le goûter, ainsi qu’un délicieux gâteau d’anniversaire. Ajoute-y nos snacks sucrés ou salés pour un goûter encore plus festif !",
+  "link": {
+    "label": "Découvrir les formules",
+    "href": "/anniversaires"
+  },
+  "image": "/images/nolijump/nolijump-10.jpeg"
+}
+
 ],
 
 "features_nolijump": [
@@ -73,7 +84,17 @@
     },
     "image": "/images/snack.png",
     "alt": "Image par @pngtree"
-  }
+  },
+ {
+  "title": "ANNIVERSAIRES à Nolijump",
+  "paragraph": "Viens fêter ton anniversaire à Nolijump et fais le plein de fun avec tes amis ! Entre sauts spectaculaires, défis entre copains et fous rires garantis, ton anniversaire sera unique. Profite d’une formule complète avec accès aux trampolines, un espace réservé pour souffler tes bougies et un délicieux goûter. Ambiance énergique assurée !",
+  "link": {
+    "label": "Voir les formules",
+    "href": "/anniversaires"
+  },
+  "image": "/images/nolijump/nolijump-24.jpeg"
+}
+
 ],
   "quote": {
     "text": "Noliparc et NolijJump un lieu de fun, de défi et de partage.",
