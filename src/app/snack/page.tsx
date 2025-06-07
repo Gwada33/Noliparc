@@ -42,10 +42,10 @@ const categories: Category[] = [
    {
     title: "Pause Sucrée",
     items: [
-      { name: "Bonbon 0.30€", price: "" },
-      { name: "Bonbon 0.50€", price: "" },
-      { name: "Bonbon 0.80€", price: "" },
-      { name: "Bonbon 1.30€", price: "" },
+      { name: "Bonbon", price: "0.30€" },
+      { name: "Bonbon", price: "0.50€" },
+      { name: "Bonbon", price: "0.80€" },
+      { name: "Bonbon", price: "1.30€" },
       { name: "Gaufrette S.Glace", price: "3.00€" },
       { name: "Gaufrette Nutella", price: "3.50€" },
       { name: "Crêpes Sucrée", price: "3.00€" },
