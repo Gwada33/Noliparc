@@ -100,7 +100,7 @@ export default function AnniversairesPage() {
         ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en cas d'annulation,
         mais échangeable contre un report ou des entrées. <br />
         🚫 Boissons et aliments extérieurs interdits.<br />
-        🧦 Chaussettes obligatoires pour tous.
+        🧦 Chaussettes anti-dérapantes obligatoires pour l'espace trampoline.
       </p>
     </div>
   );

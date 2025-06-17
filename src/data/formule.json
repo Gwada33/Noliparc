@@ -40,7 +40,7 @@
         "subtitle": "10h00 - 13h00",
         "durations": [
           { "time": "", "price": "30€/enfant (min. 20 enfants)" },
-          { "time": "Privatisation :", "price": "50€/heure" }
+          { "time": "Privatisation : ", "price": "50€/heure" }
         ],
         "notes": [
           "Nuggets et frites",
@@ -72,7 +72,7 @@
       },
       {
         "title": "PartyJump Birthday",
-        "age": "Tous âges",
+        "age": "À partir de 7ans",
         "durations": [
           { "time": "", "price": "20€/enfant (min. 8 enfants)" }
         ],
@@ -87,7 +87,7 @@
       },
       {
         "title": "FiestaJump Birthday",
-        "age": "Tous âges",
+        "age": "À partir de 7ans",
         "durations": [
           { "time": "", "price": "25€/enfant (min. 8 enfants)" }
         ],
@@ -103,10 +103,10 @@
       {
         "title": "GOLDEN Birthday (privatisation dimanche)",
         "subtitle": "10h00 - 12h30",
-        "age": "Tous âges",
+        "age": "À partir de 7ans",
         "durations": [
           { "time": "", "price": "30€/enfant (min. 15 enfants)" },
-          { "time": "Privatisation :", "price": "50€/heure" }
+          { "time": "Privatisation : ", "price": "50€/heure" }
         ],
         "notes": [
           "Trampoline (1h30) inclus",
