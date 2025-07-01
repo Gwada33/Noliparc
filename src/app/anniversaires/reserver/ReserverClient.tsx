@@ -323,22 +323,22 @@ export default function ReserverClient() {
             />
 
             <FormControl fullWidth margin="normal" error={!!errors.adultsCount}>
-              <InputLabel>Nombre d'adultes (max 4)</InputLabel>
+              <InputLabel>Nombre d'adultes</InputLabel>
               <Controller
                 name="adultsCount"
                 control={control}
                 rules={{
                   required: "Nombre requis",
                   min: { value: 0, message: "Minimum 0" },
-                  max: { value: 4, message: "Maximum 4" },
+                  max: selectedFormule?.adultMax || 4,
                 }}
                 render={({ field }) => (
-                  <Select {...field} label="Nombre d'adultes (max 4)">
+                  <Select {...field} label="Nombre d'adultes">
                     {[0, 1, 2, 3, 4].map((n) => (
                       <MenuItem
                         key={n}
                         value={n}
-                        disabled={n > 4} /* inutile, mais explicite */
+                        disabled={selectedFormule?.adultMax && n > selectedFormule.adultMax}
                       >
                         {n}
                       </MenuItem>
@@ -447,8 +447,7 @@ export default function ReserverClient() {
                   (activeStep === 3 &&
                     (watchChildrenCount < enfantMin ||
                       watchAdultsCount < 0 ||
-                      (selectedFormule?.adultMax ? watchAdultsCount > selectedFormule.adultMax : watchAdultsCount > 4))
-                    )
+                      watchAdultsCount > 4))
                 }
               >
                 Suivant
