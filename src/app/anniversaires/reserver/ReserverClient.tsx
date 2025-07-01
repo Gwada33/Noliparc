@@ -331,7 +331,7 @@ export default function ReserverClient() {
                 control={control}
                 rules={{
                   required: "Nombre requis",
-                  min: { value: 0, message: "Minimum 0" },
+                  min: { value: 1, message: "Minimum 1 adulte" },
                   max: { 
                     value: selectedFormule?.adultMax || 4, 
                     message: `Maximum ${selectedFormule?.adultMax || 4}` 
@@ -340,7 +340,6 @@ export default function ReserverClient() {
                 render={({ field }) => (
                   <Select {...field} label="Nombre d'adultes">
                     {Array.from({ length: selectedFormule?.adultMax || 4 }, (_, i) => i + 1)
-                      .concat([0])
                       .map((n) => (
                         <MenuItem key={n} value={n}>
                           {n}
