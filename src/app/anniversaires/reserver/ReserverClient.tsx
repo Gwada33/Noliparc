@@ -447,7 +447,8 @@ export default function ReserverClient() {
                   (activeStep === 3 &&
                     (watchChildrenCount < enfantMin ||
                       watchAdultsCount < 0 ||
-                      watchAdultsCount > 4))
+                      (selectedFormule?.adultMax ? watchAdultsCount > selectedFormule.adultMax : watchAdultsCount > 4))
+                    )
                 }
               >
                 Suivant
