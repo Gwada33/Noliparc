@@ -323,30 +323,35 @@ export default function ReserverClient() {
             />
 
             <FormControl fullWidth margin="normal" error={!!errors.adultsCount}>
-              <InputLabel>Nombre d'adultes</InputLabel>
+              <InputLabel>
+                Nombre d'adultes (max {selectedFormule?.adultMax || 4})
+              </InputLabel>
               <Controller
                 name="adultsCount"
                 control={control}
                 rules={{
                   required: "Nombre requis",
                   min: { value: 0, message: "Minimum 0" },
-                  max: selectedFormule?.adultMax || 4,
+                  max: { 
+                    value: selectedFormule?.adultMax || 4, 
+                    message: `Maximum ${selectedFormule?.adultMax || 4}` 
+                  },
                 }}
                 render={({ field }) => (
                   <Select {...field} label="Nombre d'adultes">
-                    {[0, 1, 2, 3, 4].map((n) => (
-                      <MenuItem
-                        key={n}
-                        value={n}
-                        disabled={selectedFormule?.adultMax && n > selectedFormule.adultMax}
-                      >
-                        {n}
-                      </MenuItem>
-                    ))}
+                    {Array.from({ length: selectedFormule?.adultMax || 4 }, (_, i) => i + 1)
+                      .concat([0])
+                      .map((n) => (
+                        <MenuItem key={n} value={n}>
+                          {n}
+                        </MenuItem>
+                      ))}
                   </Select>
                 )}
               />
-              <FormHelperText>{errors.adultsCount?.message}</FormHelperText>
+              <FormHelperText>
+                {errors.adultsCount?.message}
+              </FormHelperText>
             </FormControl>
           </Box>
         )}
@@ -447,7 +452,8 @@ export default function ReserverClient() {
                   (activeStep === 3 &&
                     (watchChildrenCount < enfantMin ||
                       watchAdultsCount < 0 ||
-                      watchAdultsCount > 4))
+                      (selectedFormule?.adultMax ? watchAdultsCount > selectedFormule.adultMax : watchAdultsCount > 4))
+                    )
                 }
               >
                 Suivant
