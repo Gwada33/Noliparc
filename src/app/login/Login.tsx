@@ -11,6 +11,7 @@ import {
   Typography,
   Paper,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 import Link from "next/link";
 
@@ -64,6 +65,7 @@ export default function LoginPage() {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      position="relative"
     >
       <Paper elevation={6} sx={{ padding: 4, width: "100%", background: 'none', boxShadow: 'none', maxWidth: 400 }}>
         <Typography variant="h3" align="center" gutterBottom>
@@ -113,21 +115,20 @@ export default function LoginPage() {
             </Button>
 
             <Typography align="center" mt={2} fontSize={14}>
-  Pas encore de compte ?{" "}
-  <Link href="/register" passHref>
-    <Typography
-      component="span"
-      sx={{ color: "primary.main", fontWeight: 600, cursor: "pointer" }}
-    >
-      Inscrivez-vous
-    </Typography>
-  </Link>
-</Typography>
-
+              Pas encore de compte ?{" "}
+              <Link href="/register" passHref>
+                <Typography
+                  component="span"
+                  sx={{ color: "primary.main", fontWeight: 600, cursor: "pointer" }}
+                >
+                  Inscrivez-vous
+                </Typography>
+              </Link>
+            </Typography>
           </Box>
         </form>
       </Paper>
-  <div className="magicpattern-container">{shapes}</div>
+      <div className="magicpattern-container">{shapes}</div>
     </Box>
   );
 }
