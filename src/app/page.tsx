@@ -82,7 +82,7 @@ export default function HomePage() {
               ["Jeu.", "10h-18h"],
               ["Ven.", "10h-18h"],
               ["Sam.", "10h-18h"],
-              ["Dim.", "Fermé"],
+              ["Dim.", "13h-17h"],
             ]}
           />
 
