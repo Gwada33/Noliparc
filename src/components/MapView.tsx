@@ -18,7 +18,7 @@ export default function CarteLeaflet() {
   const position = { lat: 16.295293, lng: -61.667341 };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'center', marginTop: "10rem" }}>
       <Typography
         data-aos="fade-down"
         data-aos-delay="300"

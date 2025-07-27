@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AuthProvider } from "./context/AuthContext";
+import CookieConsent from "@/components/CookieConsent";
 const RubikSANS = Rubik({
   variable: "--font-rubik-sans",
   subsets: ["latin"],
@@ -107,9 +108,10 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           {children}
+          <CookieConsent />
         </AuthProvider>
-          <Analytics />
-      <SpeedInsights />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

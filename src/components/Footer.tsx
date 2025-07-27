@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import content from "@/data/texts.json";
-import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTiktok, FaFilePdf } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -58,6 +58,16 @@ export default function Footer() {
                 <li>
                   <Link href="/legal#pdc">Politique de confidentialité</Link>
                 </li>
+                <li>
+                  <a 
+                    href="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    Décharge de responsabilité et autorisation parentale
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -86,6 +96,7 @@ height={226}
                 &copy; {new Date().getFullYear()} Site conçu par Noliparc. Tous droits réservés.
               </p>
               <p>Téléphone : 0690759848 | Mail : contact@noliparc.com</p>
+
             </div>
     </footer>
   );

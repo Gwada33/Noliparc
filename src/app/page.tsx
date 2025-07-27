@@ -18,10 +18,11 @@ import {
   FaClock,
   FaGavel,
   FaSocks,
-  FaCircle
+  FaCircle,
+  FaFilePdf
 } from "react-icons/fa";
 import { MdNoFood } from "react-icons/md";
-import { Box, Typography, ListItem, ListItemText, ListItemIcon, List } from "@mui/material";
+import { Box, Typography, ListItem, ListItemText, ListItemIcon, List, Button, Modal, IconButton } from "@mui/material";
 import HeroCarousel from "@/components/HeroCarrousel";
 import Footer from "@/components/Footer";
 import { ScheduleTable } from "@/components/ScheduleTable";
@@ -35,6 +36,7 @@ const icons: any = {
   FaClock: FaClock,
   FaGavel: FaGavel,
 };
+
 
 const regles = [
     "Les enfants sont sous la responsabilité des accompagnateurs, vous devez donc en prévoir un nombre suffisant pour le groupe, Noliparc décline toute responsabilité, en cas d’accident, de vol ou de dommage.",
@@ -51,7 +53,27 @@ const regles = [
     "Toute entrée dans le parc, entraîne obligatoirement l’acceptation du présent règlement. En cas de non respect, l’accès au parc vous sera interdit et des dédommagements pourront vous être demandés."
   ];
 
+// Style pour la modale
+const modalStyle = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '90%',
+  maxWidth: '900px',
+  height: '90vh',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 2,
+  borderRadius: '8px',
+  display: 'flex',
+  flexDirection: 'column',
+};
+
 export default function HomePage() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -228,6 +250,88 @@ export default function HomePage() {
             />
           </ListItem>
         ))}
+
+        <Box sx={{ mt: 4, textAlign: 'center' }}>
+          <Button
+            variant="contained"
+            startIcon={<FaFilePdf />}
+            onClick={handleOpen}
+            sx={{
+              backgroundColor: '#DB7C26',
+              '&:hover': {
+                backgroundColor: '#c96f22',
+              },
+              fontWeight: 600,
+              padding: '10px 24px',
+              borderRadius: '8px',
+            }}
+          >
+            Voir la décharge de responsabilité et d'autorisation parentale
+          </Button>
+        </Box>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          disableEscapeKeyDown={false}
+        >
+          <Box sx={modalStyle}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Typography id="modal-modal-title" color="#000000" variant="h5" component="h2">
+                Décharge de responsabilité et d'autorisation parentale
+              </Typography>
+              <IconButton onClick={handleClose} sx={{ color: 'text.primary' }}>
+                ✕
+              </IconButton>
+            </Box>
+            <Box sx={{ flex: 1, minHeight: 0, p: 0, m: 0, overflow: 'hidden', position: 'relative' }}>
+              {/* Solution principale pour la plupart des navigateurs */}
+              <object 
+                data="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7#view=FitH&toolbar=0&navpanes=0" 
+                type="application/pdf"
+                width="100%"
+                height="100%"
+                style={{ 
+                  border: 'none', 
+                  margin: 0, 
+                  padding: 0,
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%'
+                }}
+              >
+                {/* Solution de secours pour les navigateurs qui ne supportent pas l'élément object */}
+                <div style={{ padding: '20px', textAlign: 'center' }}>
+                  <p>Votre navigateur ne supporte pas l'affichage direct du PDF.</p>
+                  <Button 
+                    variant="contained"
+                    href="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    startIcon={<FaFilePdf />}
+                    sx={{
+                      backgroundColor: '#DB7C26',
+                      '&:hover': {
+                        backgroundColor: '#c96f22',
+                      },
+                      fontWeight: 600,
+                      padding: '10px 24px',
+                      borderRadius: '8px',
+                      mt: 2
+                    }}
+                  >
+                    Télécharger le PDF
+                  </Button>
+                </div>
+              </object>
+            </Box>
+          </Box>
+        </Modal>
       </List>
     </Box>
 

@@ -10,11 +10,14 @@ import {
 } from "react";
 import { useRouter } from "next/navigation"; 
 
+export type UserRole = 'admin' | 'user';
+
 export type User = {
   id: string;
   email: string;
   firstName: string;
   lastName: string;
+  role: UserRole;
 };
 
 type AuthContextType = {
