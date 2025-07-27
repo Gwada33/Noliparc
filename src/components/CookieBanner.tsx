@@ -23,26 +23,11 @@ export default function CookieBanner() {
     }
   }, []);
 
-  const trackEvent = (action: string, category: string, label?: string) => {
-    // Si Google Analytics est chargé
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', action, {
-        'event_category': category,
-        'event_label': label,
-        'value': 1
-      });
-    }
-    // Vous pouvez ajouter d'autres outils d'analyse ici
-    console.log(`Event: ${action}`, { category, label });
-  };
 
   const acceptCookies = () => {
     // Enregistrer le consentement dans le localStorage
     localStorage.setItem('cookieConsent', 'accepted');
     setShowBanner(false);
-    
-    // Suivre l'acceptation des cookies
-    trackEvent('cookie_consent', 'cookies', 'accepted');
     
     };
 
@@ -51,8 +36,6 @@ export default function CookieBanner() {
     localStorage.setItem('cookieConsent', 'declined');
     setShowBanner(false);
     
-    // Suivre le refus des cookies
-    trackEvent('cookie_consent', 'cookies', 'declined');
   };
 
   if (!showBanner) {
