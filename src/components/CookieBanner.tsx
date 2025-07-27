@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Box, Button, Typography, useTheme, keyframes } from '@mui/material';
 import Link from 'next/link';
-import { initGoogleAnalytics, GA_MEASUREMENT_ID } from '@/config/analytics';
 
 // Animation pour le bouton
 const pulse = keyframes`
@@ -45,9 +44,7 @@ export default function CookieBanner() {
     // Suivre l'acceptation des cookies
     trackEvent('cookie_consent', 'cookies', 'accepted');
     
-    // Initialiser Google Analytics avec l'ID de mesure
-    initGoogleAnalytics(GA_MEASUREMENT_ID);
-  };
+    };
 
   const declineCookies = () => {
     // Enregistrer le refus dans le localStorage
