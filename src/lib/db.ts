@@ -12,9 +12,19 @@ const dbConfigSchema = z.object({
 });
 
 const defaultConfig: PoolConfig = {
-  max: 20, // Maximum number of clients in the pool
-  idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-  connectionTimeoutMillis: 5000, // Return an error after 5 seconds if connection could not be established
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
+};
+
+// Force l'utilisation du schéma "public"
+const setSearchPathToPublic = async (pool: Pool) => {
+  const client = await pool.connect();
+  try {
+    await client.query(`SET search_path TO public;`);
+  } finally {
+    client.release();
+  }
 };
 
 export const client = new Pool({
@@ -25,17 +35,20 @@ export const client = new Pool({
   })
 });
 
-// Check connection status
+client.on('connect', async () => {
+  console.log('Connected to PostgreSQL database');
+  try {
+    await setSearchPathToPublic(client);
+  } catch (err) {
+    console.error('Failed to set search_path to public:', err);
+  }
+});
+
 client.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
   process.exit(-1);
 });
 
-client.on('connect', () => {
-  console.log('Connected to PostgreSQL database');
-});
-
-// Clean up on app shutdown
 process.on('SIGINT', () => {
   client.end().then(() => {
     console.log('Database connection closed');
@@ -43,7 +56,6 @@ process.on('SIGINT', () => {
   });
 });
 
-// Add type-safe query helper
 export const query = async <T>(sql: string, values?: any[]): Promise<T[]> => {
   try {
     const res = await client.query(sql, values);
@@ -54,7 +66,6 @@ export const query = async <T>(sql: string, values?: any[]): Promise<T[]> => {
   }
 };
 
-// Add health check function
 export const checkDatabaseHealth = async (): Promise<boolean> => {
   try {
     await client.query('SELECT 1');
