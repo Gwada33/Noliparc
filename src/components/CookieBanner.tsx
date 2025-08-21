@@ -31,6 +31,7 @@ export default function CookieBanner() {
     
     };
 
+    
   const declineCookies = () => {
     // Enregistrer le refus dans le localStorage
     localStorage.setItem('cookieConsent', 'declined');

@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "@/css/globals.css";
-import Navbar from "../components/Navbar"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import Navbar from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthProvider } from "./context/AuthContext";
 import CookieConsent from "@/components/CookieConsent";
-const RubikSANS = Rubik({
-  variable: "--font-rubik-sans",
+import InfoPopup from "@/components/InfoPopup";
+
+// Configuration de la police Rubik
+const rubik = Rubik({
   subsets: ["latin"],
+  variable: "--font-rubik",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -103,12 +107,16 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="fr">
-      <body className={`${RubikSANS.variable} body-main `}>
+    <html lang="fr" className={rubik.variable}>
+      <head>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+      </head>
+      <body className="font-sans">
         <AuthProvider>
           <Navbar />
           {children}
           <CookieConsent />
+          <InfoPopup maxAgeSeconds={60 * 60 * 24 * 7} />
         </AuthProvider>
         <Analytics />
         <SpeedInsights />
