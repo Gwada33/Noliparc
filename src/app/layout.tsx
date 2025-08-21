@@ -108,9 +108,9 @@ export default function RootLayout({
 
   return (
     <html lang="fr" className={rubik.variable}>
-      <head>
+     {/* <head>
         <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-      </head>
+      </head> */}
       <body className="font-sans">
         <AuthProvider>
           <Navbar />
