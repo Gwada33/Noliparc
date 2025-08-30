@@ -116,7 +116,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <CookieConsent />
-          <InfoPopup maxAgeSeconds={60 * 60 * 24 * 7} />
+          {/*<InfoPopup maxAgeSeconds={60 * 60 * 24 * 7} />*/}
         </AuthProvider>
         <Analytics />
         <SpeedInsights />
