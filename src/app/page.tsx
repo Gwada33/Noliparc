@@ -118,7 +118,7 @@ export default function HomePage() {
               ["Jeu.", "Fermé"],
               ["Ven.", "Fermé"],
               ["Sam.", "10h-18h"],
-              ["Dim.", "Fermé"],
+              ["Dim.", "13h-17h"],
             ]}
           />
         </Box>
