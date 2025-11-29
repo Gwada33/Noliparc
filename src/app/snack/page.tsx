@@ -39,17 +39,13 @@ const categories: Category[] = [
       { name: "Bouteille 50CL", price: "3.50€" },
     ],
   },
-   {
+  {
     title: "Pause Sucrée",
     items: [
       { name: "Bonbon", price: "0.30€" },
       { name: "Bonbon", price: "0.50€" },
       { name: "Bonbon", price: "0.80€" },
       { name: "Bonbon", price: "1.30€" },
-      { name: "Gaufrette S.Glace", price: "3.00€" },
-      { name: "Gaufrette Nutella", price: "3.50€" },
-      { name: "Crêpes Sucrée", price: "3.00€" },
-      { name: "Crêpes Nutella", price: "3.50€" },
       { name: "Granita Grand", price: "3.00€" },
       { name: "Granita Petit", price: "2.00€" },
     ],
