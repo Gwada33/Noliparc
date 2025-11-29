@@ -212,9 +212,12 @@ export default function Nolijump() {
               />
 
               <Formule
-                title="Chaussetes anti-dérapantes"
+                title="Chaussettes anti-dérapantes"
                 variant="nolijump-entree"
-                durations={[{ time: "", price: "2€" }]}
+                durations={[
+                  { time: "Enfant : ", price: "2.50€" },
+                  { time: "Adulte : ", price: "3€" },
+                ]}
                 showIcons={false}
                 highlightPrice={true}
                 showButton={false}
