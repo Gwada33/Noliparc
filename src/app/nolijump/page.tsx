@@ -80,7 +80,7 @@ export default function Nolijump() {
             className="nolijump-description"
             data-aos="fade-up"
             data-aos-delay="100"
-            dangerouslySetInnerHTML={{ __html: content.header.description_nolijump }}
+            dangerouslySetInnerHTML={{ __html: ((content as any)?.header?.description_nolijump ?? "") }}
           >
           </p>
 

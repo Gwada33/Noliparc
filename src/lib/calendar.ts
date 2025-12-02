@@ -60,8 +60,10 @@ async function persist(store: CalendarStore) {
 export async function listEvents(params?: { from?: string; to?: string; page?: number; pageSize?: number }) {
   const s = await ensureStore();
   let list = s.events;
-  if (params?.from) list = list.filter((e) => e.start >= params.from);
-  if (params?.to) list = list.filter((e) => (e.end ?? e.start) <= params.to);
+  const from = params?.from;
+  const to = params?.to;
+  if (from) list = list.filter((e) => e.start >= from);
+  if (to) list = list.filter((e) => (e.end ?? e.start) <= to);
   const page = Math.max(1, params?.page ?? 1);
   const pageSize = Math.max(1, Math.min(100, params?.pageSize ?? 20));
   const startIdx = (page - 1) * pageSize;
@@ -123,4 +125,3 @@ export async function getAvailability(dateISO: string) {
   const s = await ensureStore();
   return s.availability[dateISO] || null;
 }
-

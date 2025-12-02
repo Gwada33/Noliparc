@@ -24,7 +24,7 @@ async function checkAdmin() {
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: any) {
   const admin = await checkAdmin();
   if (!admin) {
     return NextResponse.json({ message: "Non autorisé" }, { status: 403 });
@@ -107,7 +107,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: any) {
   const admin = await checkAdmin();
   if (!admin) {
     return NextResponse.json({ message: "Non autorisé" }, { status: 403 });

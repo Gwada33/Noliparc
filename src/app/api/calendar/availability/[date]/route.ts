@@ -8,16 +8,14 @@ const PayloadSchema = z.object({
   note: z.string().optional(),
 });
 
-export async function GET(_req: NextRequest, props: { params: Promise<{ date: string }> }) {
-  const params = await props.params;
+export async function GET(_req: NextRequest, { params }: any) {
   const item = await getAvailability(params.date);
   if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   return NextResponse.json(item, { headers: { 'Cache-Control': 'public, max-age=10, s-maxage=10' } });
 }
 
-export async function PUT(req: NextRequest, props: { params: Promise<{ date: string }> }) {
+export async function PUT(req: NextRequest, { params }: any) {
   try {
-    const params = await props.params;
     const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     const body = await req.json();
