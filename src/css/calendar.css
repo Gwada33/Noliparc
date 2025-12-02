@@ -1,0 +1,219 @@
+/* Calendar component styles */
+.calendar {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.calendar-head {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-head-cell {
+  text-align: center;
+  font-weight: 700;
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+.calendar-cell {
+  background: #fff;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-right: none;
+  border-radius: 0;
+  padding: 1rem;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.2s ease;
+  box-shadow: none;
+}
+
+.calendar-cell:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  transform: none;
+  box-shadow: none;
+}
+
+.calendar-cell.pad {
+  background: transparent;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-right: none;
+  box-shadow: none;
+}
+
+.calendar-cell.open {
+  border-left: 4px solid #2e7d32;
+  background-color: rgba(46, 125, 50, 0.06);
+}
+
+.calendar-cell.closed {
+  border-left: none;
+  background-color: rgba(211, 47, 47, 0.05);
+  opacity: 1;
+}
+
+.calendar-cell-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.day-number {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: inherit;
+}
+
+.calendar-cell.open .day-number {
+  color: #2e7d32;
+}
+
+.calendar-cell.closed .day-number {
+  color: #d32f2f;
+}
+
+.calendar-cell-body {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.calendar-cell-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.open { background: #2e7d32; }
+.legend-dot.closed { background: #d32f2f; }
+
+/* Preview Widget - Exact match for ScheduleTable DA */
+.calendar-preview {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  cursor: pointer;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0 16px; /* Matches px={2} */
+  margin-bottom: 48px; /* Matches mb={6} which is 48px */
+  margin-top: 48px; /* Add margin top */
+}
+
+.calendar-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  /* Spacing: MUI Table cells have padding. Grid gap simulates this. */
+  row-gap: 0; 
+  column-gap: 0;
+  border-bottom: 1px solid rgba(224, 224, 224, 1); /* Bottom border of table */
+}
+
+.preview-head {
+  text-align: left; /* MUI TableCell default is left */
+  font-weight: 600; /* ScheduleTable headers */
+  font-size: 0.875rem; /* MUI TableCell size */
+  color: rgba(0, 0, 0, 0.87); /* MUI default text */
+  padding: 16px; /* MUI TableCell padding */
+  font-family: "Rubik", sans-serif;
+  border-bottom: 1px solid rgba(224, 224, 224, 1); /* Header border */
+}
+
+.preview-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Left align to match TableCell */
+  padding: 16px; /* Match TableCell padding */
+  font-size: 18px; /* Matches ScheduleTable fontSize: 18 */
+  font-weight: 600; /* Matches ScheduleTable fontWeight: 600 */
+  font-family: "Rubik", sans-serif;
+  color: rgba(0, 0, 0, 0.87); /* Default text color */
+  border-bottom: 1px solid rgba(224, 224, 224, 1); /* Row border */
+  /* No borders on sides for table look */
+  /* Hover effect subtle */
+  transition: background-color 0.2s;
+}
+
+.preview-cell:hover {
+  background-color: rgba(0, 0, 0, 0.04); /* MUI hover */
+}
+
+.preview-cell.open {
+  color: #2e7d32; /* Green for open days */
+}
+
+.preview-cell.closed {
+  color: #d32f2f; /* Matches ScheduleTable */
+}
+
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0.5rem;
+  }
+  .calendar-head {
+    display: none;
+  }
+  .calendar-cell {
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .calendar-cell-top {
+    margin-bottom: 0;
+    min-width: 40px;
+  }
+  .calendar-cell.open, .calendar-cell.closed {
+    border-left-width: 4px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-right: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .calendar-cell.open { border-left-color: #2e7d32; }
+  .calendar-cell.closed { border-left-color: #d32f2f; }
+  
+  /* Preview responsive: reduce padding */
+  .preview-head, .preview-cell {
+    padding: 8px;
+    font-size: 14px;
+  }
+}

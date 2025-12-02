@@ -19,6 +19,7 @@ export async function GET() {
         email     : payload.email,
         firstName : payload.firstName,
         lastName  : payload.lastName,
+        role      : payload.role,
       },
     });
   } catch {

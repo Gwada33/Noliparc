@@ -6,6 +6,7 @@ import { useState } from "react";
 import content from "@/data/texts.json";
 import { useAuth, User } from "@/app/context/AuthContext";
 import { FiUser, FiLogOut } from 'react-icons/fi';
+import { FaUserShield } from 'react-icons/fa';
 import clsx from 'clsx';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -93,18 +94,34 @@ export default function Navbar() {
         ))}
 
         {user ? (
-          <li className="user-menu" role="none">
-            <button
-              className="btn-nav"
-              onClick={() => setConfirmLogout(true)}
-              role="menuitem"
-              tabIndex={menuOpen ? 0 : -1}
-              type="button"
-            >
-              <FiUser aria-hidden="true" /> {/* Icône utilisateur */}
-              <span className="user-label">Déconnexion</span>
-            </button>
-          </li>
+          <>
+            {user.role === 'admin' && (
+              <li role="none">
+                <Link
+                  href="/admin"
+                  className="btn-nav"
+                  role="menuitem"
+                  tabIndex={menuOpen ? 0 : -1}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <FaUserShield aria-hidden="true" />
+                  <span className="user-label">Admin</span>
+                </Link>
+              </li>
+            )}
+            <li className="user-menu" role="none">
+              <button
+                className="btn-nav"
+                onClick={() => setConfirmLogout(true)}
+                role="menuitem"
+                tabIndex={menuOpen ? 0 : -1}
+                type="button"
+              >
+                <FiUser aria-hidden="true" /> {/* Icône utilisateur */}
+                <span className="user-label">Déconnexion</span>
+              </button>
+            </li>
+          </>
         ) : (
           <>
             <li role="none">

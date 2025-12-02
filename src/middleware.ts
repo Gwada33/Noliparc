@@ -58,6 +58,18 @@ export function middleware(req: NextRequest) {
     return createLoginRedirect(req, pathname);
   }
 
+  // Vérification du rôle admin pour les routes /admin
+  if (pathname.startsWith('/admin')) {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.role !== 'admin') {
+        return NextResponse.redirect(new URL('/', req.url));
+      }
+    } catch (e) {
+      return createLoginRedirect(req, pathname);
+    }
+  }
+
   // Token valide, continuer
   return NextResponse.next();
 }

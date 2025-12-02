@@ -17,44 +17,64 @@ const defaultConfig: PoolConfig = {
   connectionTimeoutMillis: 5000,
 };
 
-// Force l'utilisation du schéma "public"
-const setSearchPathToPublic = async (pool: Pool) => {
-  const client = await pool.connect();
-  try {
-    await client.query(`SET search_path TO public;`);
-  } finally {
-    client.release();
-  }
+const createPool = () => {
+  const config = {
+    ...defaultConfig,
+    ...dbConfigSchema.parse({
+      connectionString: process.env.DATABASE_URL || '',
+      ssl: { rejectUnauthorized: false }
+    })
+  };
+
+  const newPool = new Pool(config);
+
+  newPool.on('connect', async (client) => {
+    // console.log('Connected to PostgreSQL database'); // Commented out to reduce noise as requested
+    try {
+      await client.query(`SET search_path TO public;`);
+    } catch (err) {
+      console.error('Failed to set search_path to public:', err);
+    }
+  });
+
+  newPool.on('error', (err) => {
+    console.error('Unexpected error on idle client', err);
+    process.exit(-1);
+  });
+
+  return newPool;
 };
 
-export const client = new Pool({
-  ...defaultConfig,
-  ...dbConfigSchema.parse({
-    connectionString: process.env.DATABASE_URL || '',
-    ssl: { rejectUnauthorized: false }
-  })
-});
+declare global {
+  var postgres: Pool | undefined;
+}
 
-client.on('connect', async () => {
-  console.log('Connected to PostgreSQL database');
-  try {
-    await setSearchPathToPublic(client);
-  } catch (err) {
-    console.error('Failed to set search_path to public:', err);
+let pool: Pool;
+
+if (process.env.NODE_ENV === 'production') {
+  pool = createPool();
+} else {
+  if (!global.postgres) {
+    global.postgres = createPool();
   }
-});
+  pool = global.postgres;
+}
 
-client.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
-});
+export const client = pool;
 
-process.on('SIGINT', () => {
-  client.end().then(() => {
-    console.log('Database connection closed');
-    process.exit(0);
+// Gestion propre de la fermeture lors de l'arrêt du processus
+if (process.env.NODE_ENV !== 'production') {
+  // En dev, on évite de tuer le pool global à chaque reload,
+  // mais on peut gérer le SIGINT au niveau du process principal si besoin.
+  // Le code précédent attachait un listener SIGINT à chaque import, ce qui est mauvais.
+} else {
+  process.on('SIGINT', () => {
+    pool.end().then(() => {
+      console.log('Database connection closed');
+      process.exit(0);
+    });
   });
-});
+}
 
 export const query = async <T>(sql: string, values?: any[]): Promise<T[]> => {
   try {

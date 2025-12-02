@@ -19,7 +19,10 @@ import {
   FaGavel,
   FaSocks,
   FaCircle,
-  FaFilePdf
+  FaFilePdf,
+  FaMapMarkerAlt,
+  FaTag,
+  FaEuroSign
 } from "react-icons/fa";
 import { MdNoFood } from "react-icons/md";
 import { Box, Typography, ListItem, ListItemText, ListItemIcon, List, Button, Modal, IconButton } from "@mui/material";
@@ -27,6 +30,8 @@ import HeroCarousel from "@/components/HeroCarrousel";
 import Footer from "@/components/Footer";
 import { ScheduleTable } from "@/components/ScheduleTable";
 import Formule from "@/components/Formule";
+import CalendarPreview from "@/components/CalendarPreview";
+import SnowEffect from "@/components/SnowEffect";
 
 const icons: any = {
   FaRulerCombined: FaRulerCombined,
@@ -72,6 +77,52 @@ const modalStyle = {
 
 export default function HomePage() {
   const [open, setOpen] = useState(false);
+  const [parkStatus, setParkStatus] = useState<'open' | 'closed' | 'maintenance'>('open');
+  const [globalMessage, setGlobalMessage] = useState('');
+  const [schedules, setSchedules] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
+  const [eventsLoading, setEventsLoading] = useState(false);
+  const [eventsError, setEventsError] = useState<string | null>(null);
+
+  const formatEventDate = (dateStr?: string, time?: string) => {
+    if (!dateStr) return '';
+    const iso = String(dateStr);
+    const parts = iso.split('-');
+    if (parts.length === 3) {
+      const dayRaw = parts[2];
+      const day = dayRaw.includes('T') ? dayRaw.split('T')[0] : dayRaw;
+      const d = `${day}/${parts[1]}/${parts[0]}`;
+      return `${d}${time ? ` — ${time}` : ''}`;
+    }
+    return `${iso}${time ? ` — ${time}` : ''}`;
+  };
+
+  const resolveEventImageSrc = (input?: string) => {
+    if (!input) return '';
+    let s = String(input).trim();
+    if (s.endsWith(')')) s = s.slice(0, -1);
+    try {
+      const u = new URL(s);
+      if (u.pathname.startsWith('/_next/image')) {
+        const real = u.searchParams.get('url');
+        if (real) {
+          const decoded = decodeURIComponent(real);
+          return decoded;
+        }
+      }
+      return s;
+    } catch {
+      const qIdx = s.indexOf('url=');
+      if (s.includes('/_next/image') && qIdx !== -1) {
+        const q = s.slice(qIdx + 4);
+        const end = q.indexOf('&');
+        const raw = end !== -1 ? q.slice(0, end) : q;
+        return decodeURIComponent(raw);
+      }
+      return s;
+    }
+  };
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -79,12 +130,55 @@ export default function HomePage() {
       duration: 800,
       once: true,
     });
+
+    fetch('/api/config')
+      .then(res => res.json())
+      .then(data => {
+        if (data.parkStatus) setParkStatus(data.parkStatus);
+        if (data.globalMessage) setGlobalMessage(data.globalMessage);
+      })
+      .catch(console.error);
+
+    fetch('/api/schedules?location=Noliparc')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSchedules(data);
+        }
+      })
+      .catch(console.error);
+
+    setEventsLoading(true);
+    setEventsError(null);
+    console.log('GET /api/events');
+    fetch(`/api/events`)
+      .then(res => res.json())
+      .then(data => {
+        const items = Array.isArray(data?.items) ? data.items : [];
+        setEvents(items);
+      })
+      .catch(err => {
+        console.error(err);
+        setEventsError("Impossible de charger les événements");
+      })
+      .finally(() => setEventsLoading(false));
   }, []);
 
   return (
     <>
+      <SnowEffect />
       <main className="home">
         <HeroCarousel />
+        <CalendarPreview year={new Date().getFullYear()} month={12} />
+
+        {parkStatus === 'closed' && globalMessage && (
+          <Box sx={{ textAlign: 'center', mt: 4, mb: -6, position: 'relative', zIndex: 10 }}>
+             <Typography variant="h5" color="error" fontWeight="bold" sx={{ bgcolor: 'rgba(255,255,255,0.9)', display: 'inline-block', px: 3, py: 1, borderRadius: 2, boxShadow: 1 }}>
+               {globalMessage}
+             </Typography>
+          </Box>
+        )}
+
         <Box
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}
@@ -94,34 +188,142 @@ export default function HomePage() {
           mt={10}
           mb={10}
         >
-          <ScheduleTable
-            title="Vacances scolaires"
-            headers={["Jusqu'à 10 ans"]}
-            data={[
-              ["Lun.", "Fermé"],
-              ["Mar.", "10h-18h"],
-              ["Mer.", "10h-18h"],
-              ["Jeu.", "10h-18h"],
-              ["Ven.", "10h-18h"],
-              ["Sam.", "10h-18h"],
-              ["Dim.", "13h-17h"],
-            ]}
-          />
+          {schedules.length > 0 ? (
+            schedules.map((schedule) => (
+              <ScheduleTable
+                key={schedule.id}
+                title={schedule.season}
+                headers={schedule.headers}
+                parkStatus={parkStatus}
+                data={schedule.rows}
+              />
+            ))
+          ) : (
+            <>
+              <ScheduleTable
+                title="Vacances scolaires"
+                headers={["Jusqu'à 10 ans"]}
+                parkStatus={parkStatus}
+                data={[
+                  ["Lun.", "Fermé"],
+                  ["Mar.", "10h-18h"],
+                  ["Mer.", "10h-18h"],
+                  ["Jeu.", "10h-18h"],
+                  ["Ven.", "10h-18h"],
+                  ["Sam.", "10h-18h"],
+                  ["Dim.", "13h-17h"],
+                ]}
+              />
 
-          <ScheduleTable
-            title="Périodes scolaires"
-            headers={["Jusqu'à 10 ans"]}
-            data={[
-              ["Lun.", "Fermé"],
-              ["Mar.", "Fermé"],
-              ["Mer.", "10h-17h"],
-              ["Jeu.", "Fermé"],
-              ["Ven.", "Fermé"],
-              ["Sam.", "10h-18h"],
-              ["Dim.", "13h-17h"],
-            ]}
-          />
+              <ScheduleTable
+                title="Périodes scolaires"
+                headers={["Jusqu'à 10 ans"]}
+                parkStatus={parkStatus}
+                data={[
+                  ["Lun.", "Fermé"],
+                  ["Mar.", "Fermé"],
+                  ["Mer.", "10h-17h"],
+                  ["Jeu.", "Fermé"],
+                  ["Ven.", "Fermé"],
+                  ["Sam.", "10h-18h"],
+                  ["Dim.", "13h-17h"],
+                ]}
+              />
+            </>
+          )}
         </Box>
+
+        {events.length > 0 && (
+          <section id="evenements" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1rem' }}>
+            <h3 className="formule-title" data-aos="fade-up" style={{ marginBottom: '1rem' }}>Événements à venir</h3>
+            <div className="feature-container">
+            {events.map((ev, i) => (
+              <section
+                className="feature-card"
+                key={ev.id ?? i}
+                data-aos="fade-up"
+                data-aos-delay={i * 100}
+                style={{
+                  border: '1px solid #eee',
+                  borderRadius: 16,
+                  padding: '1.25rem',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.06)'
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', md: '1.2fr 1fr' },
+                    gap: { xs: 2, md: 3 },
+                    alignItems: 'start'
+                  }}
+                >
+                  <Box>
+                    <Typography component="h3" sx={{ fontSize: { xs: '1.5rem', md: '1.75rem' }, fontWeight: 700, mb: 1, color: '#0f0f10' }}>
+                      {ev.title || 'Événement'}
+                    </Typography>
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25, color: '#333', fontSize: { xs: '0.95rem', md: '1rem' } }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <FaClock />
+                        <span>{formatEventDate(String(ev.date), ev.time)}</span>
+                      </Box>
+                      {ev.location && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <FaMapMarkerAlt />
+                          <span>{ev.location}</span>
+                        </Box>
+                      )}
+                      {ev.price != null && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <FaEuroSign />
+                          <span>{Number(ev.price).toFixed(2)}€</span>
+                        </Box>
+                      )}
+                      {ev.capacity != null && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <FaUsers />
+                          <span>Capacité: {ev.capacity}</span>
+                        </Box>
+                      )}
+                      {ev.category && (
+                        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, mt: 0.5, px: 1, py: 0.5, borderRadius: 999, backgroundColor: 'rgba(219,124,38,0.12)', color: '#DB7C26' }}>
+                          <FaTag />
+                          <span style={{ fontWeight: 600 }}>{ev.category}</span>
+                        </Box>
+                      )}
+                    </Box>
+
+                    {ev.description && (
+                      <Typography component="div" sx={{ mt: 2, lineHeight: 1.6, color: '#111' }}>
+                        {ev.description}
+                      </Typography>
+                    )}
+
+                    <Box sx={{ mt: 2 }}>
+                      <Link href="#" className="btn-secondary">En savoir plus</Link>
+                    </Box>
+                  </Box>
+
+                  {ev.image && (
+                    <Box sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: '0 6px 16px rgba(0,0,0,0.08)' }}>
+                      <img
+                        className="rounded"
+                        width={1280}
+                        height={720}
+                        alt={ev.title || 'Événement'}
+                        src={resolveEventImageSrc(ev.image)}
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                        loading="lazy"
+                      />
+                    </Box>
+                  )}
+                </Box>
+              </section>
+            ))}
+            </div>
+          </section>
+        )}
 
         <div className="feature-container" id="noliparc">
           {content.features.map((feature, i) => (
@@ -145,12 +347,12 @@ export default function HomePage() {
               <div className="feature-content">
                 <h2>{feature.title}</h2>
                 <Typography
+                  component="div"
                   sx={{
                     whiteSpace: "pre-line",
                     whiteSpaceTrim: "discard-after",
-                  }}
-                >
-                  <p>{feature.paragraph}</p>
+                  }}                >
+                  {feature.paragraph}
                 </Typography>
                 <Link href={feature.link.href} className="btn-secondary">
                   {feature.link.label}

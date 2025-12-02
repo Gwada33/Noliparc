@@ -1,0 +1,30 @@
+.snowflake {
+  position: fixed;
+  top: -20px;
+  z-index: 900; /* Behind navbar (1000) but visible */
+  color: #fff;
+  user-select: none;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(25vh) translateX(15px);
+  }
+  50% {
+    transform: translateY(50vh) translateX(-15px);
+  }
+  75% {
+    transform: translateY(75vh) translateX(15px);
+  }
+  100% {
+    transform: translateY(110vh) translateX(0);
+  }
+}

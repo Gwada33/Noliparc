@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
+import { Toaster } from 'react-hot-toast';
 import "@/css/globals.css";
 import Navbar from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/next";
@@ -7,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthProvider } from "./context/AuthContext";
 import CookieConsent from "@/components/CookieConsent";
 import InfoPopup from "@/components/InfoPopup";
+import GlobalStatus from "@/components/GlobalStatus";
 
 // Configuration de la police Rubik
 const rubik = Rubik({
@@ -113,6 +115,8 @@ export default function RootLayout({
       </head> */}
       <body className="font-sans">
         <AuthProvider>
+          <Toaster />
+        <GlobalStatus />
           <Navbar />
           {children}
           <CookieConsent />

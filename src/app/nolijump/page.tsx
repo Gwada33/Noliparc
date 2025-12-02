@@ -19,12 +19,13 @@ import {
   FaSocks,
   FaGavel,
 } from "react-icons/fa";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import GridGallery from "@/components/GridGallery";
 import { ScheduleTable } from "@/components/ScheduleTable";
 import { Box, Typography } from "@mui/material";
 import { MdNoFood } from "react-icons/md";
+import CalendarPreview from "@/components/CalendarPreview";
 
 const icons: any = {
   FaRulerCombined: FaRulerCombined,
@@ -38,11 +39,30 @@ const icons: any = {
 
 
 export default function Nolijump() {
+  const [parkStatus, setParkStatus] = useState<'open' | 'closed' | 'maintenance'>('open');
+  const [schedules, setSchedules] = useState<any[]>([]);
+
   useEffect(() => {
     AOS.init({
       duration: 800,
       once: true,
     });
+
+    fetch('/api/config')
+      .then(res => res.json())
+      .then(data => {
+        if (data.parkStatus) setParkStatus(data.parkStatus);
+      })
+      .catch(console.error);
+
+    fetch('/api/schedules?location=Nolijump')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSchedules(data);
+        }
+      })
+      .catch(console.error);
   }, []);
   return (
     <main>
@@ -60,10 +80,8 @@ export default function Nolijump() {
             className="nolijump-description"
             data-aos="fade-up"
             data-aos-delay="100"
+            dangerouslySetInnerHTML={{ __html: content.header.description_nolijump }}
           >
-            Viens sauter, courir et t'amuser dans notre espace trampoline unique
-            en Guadeloupe ! Adapté à tous les âges, Nolijump te propose des
-            formules variées pour tous les niveaux d’énergie 🎉
           </p>
 
           <GridGallery
@@ -71,6 +89,8 @@ export default function Nolijump() {
             background={false}
             title="Un grand espace pour vos enfants"
           />
+
+          <CalendarPreview year={new Date().getFullYear()} month={12} />
 
           <Box
             display="flex"
@@ -81,33 +101,49 @@ export default function Nolijump() {
             mt={10}
             mb={10}
           >
-            <ScheduleTable
-              title="Vacances scolaires"
-              headers={["3-6 ans", "à partir de 7 ans"]}
-              data={[
-                ["Lun.", "Fermé", "Fermé"],
-                ["Mar.", "10h-12h", "12h-18h"],
-                ["Mer.", "10h-12h", "12h-18h"],
-                ["Jeu.", "10h-12h", "12h-18h"],
-                ["Ven.", "10h-12h", "12h-18h"],
-                ["Sam.", "10h-12h", "12h-18h"],
-                ["Dim.", "Fermé", "13h-17h"],
-              ]}
-            />
+            {schedules.length > 0 ? (
+              schedules.map((schedule) => (
+                <ScheduleTable
+                  key={schedule.id}
+                  title={schedule.season}
+                  headers={schedule.headers}
+                  parkStatus={parkStatus}
+                  data={schedule.rows}
+                />
+              ))
+            ) : (
+              <>
+                <ScheduleTable
+                  title="Vacances scolaires"
+                  headers={["3-6 ans", "à partir de 7 ans"]}
+                  parkStatus={parkStatus}
+                  data={[
+                    ["Lun.", "Fermé", "Fermé"],
+                    ["Mar.", "10h-12h", "12h-18h"],
+                    ["Mer.", "10h-12h", "12h-18h"],
+                    ["Jeu.", "10h-12h", "12h-18h"],
+                    ["Ven.", "10h-12h", "12h-18h"],
+                    ["Sam.", "10h-12h", "12h-18h"],
+                    ["Dim.", "Fermé", "13h-17h"],
+                  ]}
+                />
 
-            <ScheduleTable
-              title="Périodes scolaires"
-              headers={["3-6 ans", "à partir de 7 ans"]}
-              data={[
-                ["Lun.", "Fermé", "Fermé"],
-                ["Mar.", "Fermé", "Fermé"],
-                ["Mer.", "10h-12h", "12h-18h"],
-                ["Jeu.", "Fermé", "Fermé"],
-                ["Ven.", "Fermé", "Fermé"],
-                ["Sam.", "10h-12h", "12h-18h"],
-                ["Dim.", "Fermé", "13h-17h"],
-              ]}
-            />
+                <ScheduleTable
+                  title="Périodes scolaires"
+                  headers={["3-6 ans", "à partir de 7 ans"]}
+                  parkStatus={parkStatus}
+                  data={[
+                    ["Lun.", "Fermé", "Fermé"],
+                    ["Mar.", "Fermé", "Fermé"],
+                    ["Mer.", "10h-12h", "12h-18h"],
+                    ["Jeu.", "Fermé", "Fermé"],
+                    ["Ven.", "Fermé", "Fermé"],
+                    ["Sam.", "10h-12h", "12h-18h"],
+                    ["Dim.", "Fermé", "13h-17h"],
+                  ]}
+                />
+              </>
+            )}
           </Box>
 
           <div className="feature-container" id="noliparc">

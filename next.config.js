@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'noliparc.fr'],
+    domains: ['localhost', 'noliparc.fr', 'www.noliparc.fr'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'imgupscaler.com', pathname: '/**' },
+      { protocol: 'https', hostname: 'ewyyikh0ws.ufs.sh', pathname: '/**' },
+      { protocol: 'https', hostname: 'www.noliparc.fr', pathname: '/**' },
+      { protocol: 'https', hostname: 'noliparc.fr', pathname: '/**' },
+    ],
     minimumCacheTTL: 60,
     formats: ['image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

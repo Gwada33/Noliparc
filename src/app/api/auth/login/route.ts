@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
 
     const { rows } = await client.query(
-      "SELECT id, password, first_name, last_name FROM users WHERE email=$1",
+      "SELECT id, password, first_name, last_name, role FROM users WHERE email=$1",
       [email]
     );
     const user = rows[0];
@@ -29,6 +29,7 @@ export async function POST(req: Request) {
         email,
         firstName: user.first_name,
         lastName: user.last_name,
+        role: user.role,
       },
       AUTH_CONFIG.JWT_SECRET,
       { 
@@ -55,7 +56,8 @@ export async function POST(req: Request) {
         id: user.id,
         email,
         firstName: user.first_name,
-        lastName: user.last_name
+        lastName: user.last_name,
+        role: user.role
       }
     });
 

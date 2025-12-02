@@ -94,6 +94,17 @@ export default function LoginPage() {
               className="input input-bordered"
             />
 
+            <Box display="flex" justifyContent="flex-end">
+              <Link href="/forgot-password" passHref>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "primary.main", cursor: "pointer", textDecoration: "none" }}
+                >
+                  Mot de passe oublié ?
+                </Typography>
+              </Link>
+            </Box>
+
             {authError && (
               <Typography color="error" align="center">
                 {authError}
