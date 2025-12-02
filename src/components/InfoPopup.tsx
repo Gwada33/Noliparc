@@ -39,9 +39,9 @@ const InfoPopup = ({
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.content}>
-        <button className={styles.close} onClick={handleClose}>×</button>
-        <Image src={imageSrc} alt="Info" width={width} height={height} unoptimized />
+      <div className={styles.content} style={{ width }}>
+        <button className={styles.close} onClick={handleClose} aria-label="Fermer">×</button>
+        <Image src={imageSrc} alt="Info" width={width} height={height} unoptimized style={{ display: 'block', width: '100%', height: 'auto' }} />
       </div>
     </div>
   );

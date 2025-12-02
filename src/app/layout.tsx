@@ -118,6 +118,7 @@ export default function RootLayout({
           <Toaster />
         <GlobalStatus />
           <Navbar />
+          <InfoPopup imageSrc="/images/flyers/fermeture.png" width={720} height={720} cookieKey="global_flyer_fermeture" maxAgeSeconds={60 * 60 * 24 * 7} buttonLabel="Fermer" />
           {children}
           <CookieConsent />
           {/*<InfoPopup maxAgeSeconds={60 * 60 * 24 * 7} />*/}
