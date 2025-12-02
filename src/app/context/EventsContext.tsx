@@ -71,7 +71,6 @@ export const EventsProvider = ({ children }: { children: ReactNode }) => {
       return data.data;
     } catch (e) {
       setError("Erreur lors de la récupération des événements du mois");
-      toast.error("Erreur lors de la récupération des événements du mois");
       return [];
     } finally {
       setLoading(false);
