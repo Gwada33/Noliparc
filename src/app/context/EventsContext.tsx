@@ -58,7 +58,7 @@ export const EventsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const fetchEventsByMonth = async (year: number, month: number) => {
+  const fetchEventsByMonth = useCallback(async (year: number, month: number) => {
     setLoading(true);
     setError(null);
     try {
@@ -76,7 +76,7 @@ export const EventsProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const addEvent = async (event: Event) => {
     setLoading(true);

@@ -89,6 +89,9 @@
   flex: 1;
   font-size: 0.9rem;
   color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .calendar-cell-actions {
@@ -184,6 +187,26 @@
   color: #d32f2f; /* Matches ScheduleTable */
 }
 
+.calendar .event {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(219, 124, 38, 0.12);
+  color: #DB7C26;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.calendar .note {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.04);
+  color: #333;
+}
+
 @media (max-width: 768px) {
   .calendar-grid {
     grid-template-columns: repeat(1, 1fr);
@@ -197,10 +220,31 @@
     flex-direction: row;
     align-items: center;
     gap: 1rem;
+    padding: 0.75rem 0.75rem;
   }
   .calendar-cell-top {
     margin-bottom: 0;
     min-width: 40px;
+  }
+  .calendar-cell-top .day-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 800;
+    background: rgba(0,0,0,0.06);
+    color: #000;
+  }
+  .calendar-cell.open .calendar-cell-top .day-number {
+    background: rgba(46, 125, 50, 0.12);
+    color: #2e7d32;
+  }
+  .calendar-cell.closed .calendar-cell-top .day-number {
+    background: rgba(211, 47, 47, 0.10);
+    color: #d32f2f;
   }
   .calendar-cell.open, .calendar-cell.closed {
     border-left-width: 4px;

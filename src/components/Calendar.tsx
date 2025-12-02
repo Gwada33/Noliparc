@@ -86,8 +86,7 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
         }
       } catch {}
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key, fetchEventsByMonth, year, month]);
+  }, [year, month]);
 
   useEffect(() => {
     try {
