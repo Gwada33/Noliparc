@@ -118,7 +118,12 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
     try {
       const current = data.days[iso];
       const payload = { open: !current?.open, note: current?.note };
-      await fetch(`/api/calendar/availability/${iso}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      await fetch(`/api/calendar/availability/${iso}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'include',
+      });
     } catch {}
   };
 
@@ -139,7 +144,12 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
       },
     }));
     try {
-      await fetch(`/api/calendar/availability/${selectedDay.date}` , { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ open: data.days[selectedDay.date]?.open ?? false, note: noteDraft }) });
+      await fetch(`/api/calendar/availability/${selectedDay.date}` , {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ open: data.days[selectedDay.date]?.open ?? false, note: noteDraft }),
+        credentials: 'include',
+      });
     } catch {}
     setSelectedDay(null);
     setNoteDraft("");
