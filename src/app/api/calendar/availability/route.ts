@@ -8,7 +8,6 @@ export async function GET(req: NextRequest) {
   const month = searchParams.get('month');
   const data = await listAvailability({ year: year ? Number(year) : undefined, month: month ? Number(month) : undefined });
   return NextResponse.json({ items: data }, {
-    headers: { 'Cache-Control': 'public, max-age=10, s-maxage=10' },
+    headers: { 'Cache-Control': 'no-store' },
   });
 }
-

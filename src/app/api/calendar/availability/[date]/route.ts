@@ -11,7 +11,7 @@ const PayloadSchema = z.object({
 export async function GET(_req: NextRequest, { params }: any) {
   const item = await getAvailability(params.date);
   if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  return NextResponse.json(item, { headers: { 'Cache-Control': 'public, max-age=10, s-maxage=10' } });
+  return NextResponse.json(item, { headers: { 'Cache-Control': 'no-store' } });
 }
 
 export async function PUT(req: NextRequest, { params }: any) {

@@ -10,6 +10,7 @@ type DayInfo = {
   note?: string;
   color?: string;
   events?: { title: string }[];
+  blocked?: boolean;
 };
 
 type CalendarData = {
@@ -56,8 +57,8 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
             const iso = d.toISOString().slice(0, 10);
             initialDays[iso] = { date: iso, open: false, events: [] };
           }
-          for (const a of json.items as { date: string; open: boolean; note?: string }[]) {
-            initialDays[a.date] = { date: a.date, open: a.open, note: a.note, color: a.open ? '#3FBF3F' : '#D3D3D3', events: [] };
+          for (const a of json.items as { date: string; open: boolean; note?: string; blocked?: boolean }[]) {
+            initialDays[a.date] = { date: a.date, open: a.open, note: a.note, blocked: a.blocked ?? !a.open, color: a.open ? '#3FBF3F' : '#D3D3D3', events: [] };
           }
           const monthEvents = await fetchEventsByMonth(year, month);
           for (const event of monthEvents) {
@@ -150,6 +151,17 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
         body: JSON.stringify({ open: data.days[selectedDay.date]?.open ?? false, note: noteDraft }),
         credentials: 'include',
       });
+      try {
+        const res = await fetch(`/api/calendar/availability?year=${year}&month=${month}`, { cache: 'no-store' });
+        if (res.ok) {
+          const json = await res.json();
+          const updatedDays: Record<string, DayInfo> = { ...data.days };
+          for (const a of json.items as { date: string; open: boolean; note?: string; blocked?: boolean }[]) {
+            updatedDays[a.date] = { date: a.date, open: a.open, note: a.note, blocked: a.blocked ?? !a.open, color: a.open ? '#3FBF3F' : '#D3D3D3', events: updatedDays[a.date]?.events ?? [] };
+          }
+          setData((prev) => ({ ...prev, days: updatedDays }));
+        }
+      } catch {}
     } catch {}
     setSelectedDay(null);
     setNoteDraft("");
@@ -199,17 +211,22 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
                     />
                   )}
                 </div>
-                <div className="calendar-cell-body">
-                  {info?.note && (
-                    <Typography className="note" variant="body2" sx={{ color: '#000' }}>
-                      {info.note}
-                    </Typography>
-                  )}
-                  {info?.events?.map((event, index) => (
-                    <Typography key={index} className="event" variant="body2" sx={{ color: '#000', fontWeight: 'bold' }}>
-                      {event.title}
-                    </Typography>
-                  ))}
+              <div className="calendar-cell-body">
+                {info?.note && (
+                  <Typography className="note" variant="body2" sx={{ color: '#000' }}>
+                    {info.note}
+                  </Typography>
+                )}
+                {!info?.open && info?.blocked && (
+                  <Typography className="event" variant="body2" sx={{ color: '#d32f2f', fontWeight: 'bold' }}>
+                    Fermé admin
+                  </Typography>
+                )}
+                {info?.events?.map((event, index) => (
+                  <Typography key={index} className="event" variant="body2" sx={{ color: '#000', fontWeight: 'bold' }}>
+                    {event.title}
+                  </Typography>
+                ))}
                 </div>
                 {editable && (
                   <div className="calendar-cell-actions">
