@@ -65,7 +65,8 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
             initialDays[iso] = { date: iso, open: false, events: [] };
           }
           for (const a of json.items as { date: string; open: boolean; note?: string }[]) {
-            initialDays[a.date] = { date: a.date, open: true, note: a.note, color: '#3FBF3F', events: [] };
+            const key = String(a.date).slice(0, 10);
+            initialDays[key] = { date: key, open: true, note: a.note, color: '#3FBF3F', events: [] };
           }
           const monthEvents = await fetchEventsByMonth(year, month);
           for (const event of monthEvents) {
@@ -164,7 +165,8 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
           const json = await res.json();
           const updatedDays: Record<string, DayInfo> = { ...data.days };
           for (const a of json.items as { date: string; open: boolean; note?: string }[]) {
-            updatedDays[a.date] = { date: a.date, open: true, note: a.note, color: '#3FBF3F', events: updatedDays[a.date]?.events ?? [] };
+            const key = String(a.date).slice(0, 10);
+            updatedDays[key] = { date: key, open: true, note: a.note, color: '#3FBF3F', events: updatedDays[key]?.events ?? [] };
           }
           setData((prev) => ({ ...prev, days: updatedDays }));
         }

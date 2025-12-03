@@ -112,7 +112,7 @@ export async function listAvailability(params?: { year?: number; month?: number 
     where.push(`to_char(date, 'YYYY-MM') = $1`);
     values.push(prefix);
   }
-  const sql = `SELECT date, TRUE AS open, COALESCE(reason, '') AS note FROM availability ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY date ASC`;
+  const sql = `SELECT to_char(date, 'YYYY-MM-DD') AS date, TRUE AS open, COALESCE(reason, '') AS note FROM availability ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY date ASC`;
   const res = await client.query(sql, values);
   return res.rows as { date: string; open: boolean; note?: string }[];
 }
@@ -137,7 +137,7 @@ export async function setAvailability(dateISO: string, data: Availability) {
 
 export async function getAvailability(dateISO: string) {
   const res = await client.query(
-    `SELECT date, TRUE AS open, COALESCE(reason, '') AS note FROM availability WHERE date = $1::date AND is_blocked = false LIMIT 1`,
+    `SELECT to_char(date, 'YYYY-MM-DD') AS date, TRUE AS open, COALESCE(reason, '') AS note FROM availability WHERE date = $1::date AND is_blocked = false LIMIT 1`,
     [dateISO]
   );
   return res.rows[0] ?? null;
