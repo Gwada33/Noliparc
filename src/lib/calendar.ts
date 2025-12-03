@@ -105,33 +105,39 @@ export async function deleteEvent(id: string) {
 }
 
 export async function listAvailability(params?: { year?: number; month?: number }) {
-  const where: string[] = [];
+  const where: string[] = ['is_blocked = false'];
   const values: any[] = [];
   if (params?.year && params?.month) {
     const prefix = `${params.year}-${String(params.month).padStart(2, '0')}`;
     where.push(`to_char(date, 'YYYY-MM') = $1`);
     values.push(prefix);
   }
-  const sql = `SELECT date, NOT is_blocked AS open, is_blocked AS blocked, COALESCE(reason, '') AS note FROM availability ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY date ASC`;
+  const sql = `SELECT date, TRUE AS open, COALESCE(reason, '') AS note FROM availability ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY date ASC`;
   const res = await client.query(sql, values);
-  return res.rows as { date: string; open: boolean; blocked: boolean; note?: string }[];
+  return res.rows as { date: string; open: boolean; note?: string }[];
 }
 
 export async function setAvailability(dateISO: string, data: Availability) {
   const parsed = AvailabilitySchema.parse(data);
-  const isBlocked = !parsed.open;
-  const sql = `INSERT INTO availability (date, is_blocked, reason)
-               VALUES ($1::date, $2::boolean, $3::text)
-               ON CONFLICT (date)
-               DO UPDATE SET is_blocked = EXCLUDED.is_blocked, reason = EXCLUDED.reason
-               RETURNING date, NOT is_blocked AS open, is_blocked AS blocked, COALESCE(reason, '') AS note`;
-  const res = await client.query(sql, [dateISO, isBlocked, parsed.note ?? null]);
-  return res.rows[0] as any;
+  if (parsed.open) {
+    const res = await client.query(
+      `INSERT INTO availability (date, is_blocked, reason)
+       VALUES ($1::date, false, $2::text)
+       ON CONFLICT (date)
+       DO UPDATE SET is_blocked = false, reason = EXCLUDED.reason
+       RETURNING date, TRUE AS open, COALESCE(reason, '') AS note`,
+      [dateISO, parsed.note ?? null]
+    );
+    return res.rows[0] as any;
+  } else {
+    await client.query(`UPDATE availability SET is_blocked = true, reason = $2 WHERE date = $1::date`, [dateISO, parsed.note ?? null]);
+    return { date: dateISO, open: false, note: parsed.note } as any;
+  }
 }
 
 export async function getAvailability(dateISO: string) {
   const res = await client.query(
-    `SELECT date, NOT is_blocked AS open, is_blocked AS blocked, COALESCE(reason, '') AS note FROM availability WHERE date = $1::date LIMIT 1`,
+    `SELECT date, TRUE AS open, COALESCE(reason, '') AS note FROM availability WHERE date = $1::date AND is_blocked = false LIMIT 1`,
     [dateISO]
   );
   return res.rows[0] ?? null;

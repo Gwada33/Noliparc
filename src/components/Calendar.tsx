@@ -46,6 +46,13 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
 
   const days = useMemo(() => getDaysInMonth(year, month), [year, month]);
 
+  const toLocalISO10 = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${dd}`;
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -54,11 +61,11 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
           const json = await res.json();
           const initialDays: Record<string, DayInfo> = {};
           for (const d of days) {
-            const iso = d.toISOString().slice(0, 10);
+            const iso = toLocalISO10(d);
             initialDays[iso] = { date: iso, open: false, events: [] };
           }
-          for (const a of json.items as { date: string; open: boolean; note?: string; blocked?: boolean }[]) {
-            initialDays[a.date] = { date: a.date, open: a.open, note: a.note, blocked: a.blocked ?? !a.open, color: a.open ? '#3FBF3F' : '#D3D3D3', events: [] };
+          for (const a of json.items as { date: string; open: boolean; note?: string }[]) {
+            initialDays[a.date] = { date: a.date, open: true, note: a.note, color: '#3FBF3F', events: [] };
           }
           const monthEvents = await fetchEventsByMonth(year, month);
           for (const event of monthEvents) {
@@ -80,7 +87,7 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
         } else {
           const initialDays: Record<string, DayInfo> = {};
           for (const d of days) {
-            const iso = d.toISOString().slice(0, 10);
+            const iso = toLocalISO10(d);
             initialDays[iso] = { date: iso, open: false, events: [] };
           }
           setData({ year, month, days: initialDays });
@@ -156,8 +163,8 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
         if (res.ok) {
           const json = await res.json();
           const updatedDays: Record<string, DayInfo> = { ...data.days };
-          for (const a of json.items as { date: string; open: boolean; note?: string; blocked?: boolean }[]) {
-            updatedDays[a.date] = { date: a.date, open: a.open, note: a.note, blocked: a.blocked ?? !a.open, color: a.open ? '#3FBF3F' : '#D3D3D3', events: updatedDays[a.date]?.events ?? [] };
+          for (const a of json.items as { date: string; open: boolean; note?: string }[]) {
+            updatedDays[a.date] = { date: a.date, open: true, note: a.note, color: '#3FBF3F', events: updatedDays[a.date]?.events ?? [] };
           }
           setData((prev) => ({ ...prev, days: updatedDays }));
         }
@@ -193,7 +200,7 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
           ))}
 
           {days.map((d) => {
-            const iso = d.toISOString().slice(0, 10);
+            const iso = toLocalISO10(d);
             const info = data.days[iso];
             const isOpen = info?.open;
             return (
@@ -217,9 +224,9 @@ export default function Calendar({ year, month, storageKey, editable = false }: 
                     {info.note}
                   </Typography>
                 )}
-                {!info?.open && info?.blocked && (
+                {!info?.open && (
                   <Typography className="event" variant="body2" sx={{ color: '#d32f2f', fontWeight: 'bold' }}>
-                    Fermé admin
+                    Fermé
                   </Typography>
                 )}
                 {info?.events?.map((event, index) => (
