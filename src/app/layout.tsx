@@ -118,7 +118,7 @@ export default function RootLayout({
           <Toaster />
         <GlobalStatus />
           <Navbar />
-          <InfoPopup imageSrc="/images/flyers/fermeture.png" width={720} height={720} cookieKey="global_flyer_fermeture" maxAgeSeconds={60 * 60 * 24 * 7} />
+          <InfoPopup images={["/images/flyers/party.jpeg"]} width={720} height={720} cookieKey="global_flyer_pyjama" maxAgeSeconds={60 * 60 * 24 * 7} showAll />
           {children}
           <CookieConsent />
           {/*<InfoPopup maxAgeSeconds={60 * 60 * 24 * 7} />*/}
