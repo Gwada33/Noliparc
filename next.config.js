@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   images: {
-    domains: ['localhost', 'noliparc.fr', 'www.noliparc.fr'],
     remotePatterns: [
       { protocol: 'https', hostname: 'imgupscaler.com', pathname: '/**' },
       { protocol: 'https', hostname: 'ewyyikh0ws.ufs.sh', pathname: '/**' },
@@ -16,14 +17,11 @@ const nextConfig = {
     loader: 'default',
   },
 
-  experimental: {
-    optimizeFonts: true,
-    esmExternals: true,
-    serverActions: true,
+  turbopack: {
+    root: path.resolve(__dirname),
   },
 
   trailingSlash: true,
-  swcMinify: true,
 
   env: {
     API_URL: process.env.API_URL || 'http://localhost:3000',
