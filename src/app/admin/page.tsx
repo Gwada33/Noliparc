@@ -54,6 +54,7 @@ interface ParkConfig {
   announcementBanner?: {
     enabled: boolean;
     dismissible: boolean;
+    dismissalFrequency: 'session' | 'daily';
     displayMode: 'always' | 'scheduled';
     contentType: 'image' | 'text';
     text?: string;
@@ -85,6 +86,7 @@ export default function AdminDashboard() {
     announcementBanner: {
       enabled: false,
       dismissible: true,
+      dismissalFrequency: 'session',
       displayMode: 'always',
       contentType: 'image',
       text: '',
