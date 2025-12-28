@@ -179,6 +179,7 @@ export default function AdminDashboard() {
           ...(parkConfig.announcementBanner || {
             enabled: true,
             dismissible: true,
+            dismissalFrequency: 'session',
             displayMode: 'always',
             contentType: 'image',
             text: '',
@@ -389,6 +390,7 @@ export default function AdminDashboard() {
                         ...(parkConfig.announcementBanner || {
                           enabled: false,
                           dismissible: true,
+                          dismissalFrequency: 'session',
                           displayMode: 'always',
                           contentType: 'image',
                           text: '',
@@ -419,6 +421,7 @@ export default function AdminDashboard() {
                     ...(parkConfig.announcementBanner || {
                       enabled: true,
                       dismissible: true,
+                      dismissalFrequency: 'session',
                       displayMode: 'always',
                       contentType: 'image',
                       text: '',
@@ -512,6 +515,7 @@ export default function AdminDashboard() {
                       ...(parkConfig.announcementBanner || {
                         enabled: false,
                         dismissible: true,
+                        dismissalFrequency: 'session',
                         displayMode: 'always',
                         contentType: 'image',
                         text: '',
@@ -546,6 +550,7 @@ export default function AdminDashboard() {
                           ...(parkConfig.announcementBanner || {
                             enabled: false,
                             dismissible: true,
+                            dismissalFrequency: 'session',
                             displayMode: 'always',
                             contentType: 'image',
                             text: '',
@@ -574,6 +579,7 @@ export default function AdminDashboard() {
                           ...(parkConfig.announcementBanner || {
                             enabled: false,
                             dismissible: true,
+                            dismissalFrequency: 'session',
                             displayMode: 'always',
                             contentType: 'image',
                             text: '',
@@ -604,6 +610,7 @@ export default function AdminDashboard() {
                       ...(parkConfig.announcementBanner || {
                         enabled: false,
                         dismissible: true,
+                        dismissalFrequency: 'session',
                         displayMode: 'always',
                         contentType: 'image',
                         text: '',
@@ -639,6 +646,7 @@ export default function AdminDashboard() {
                         ...(parkConfig.announcementBanner || {
                           enabled: false,
                           dismissible: true,
+                          dismissalFrequency: 'session',
                           displayMode: 'always',
                           contentType: 'image',
                           text: '',
@@ -668,6 +676,7 @@ export default function AdminDashboard() {
                         ...(parkConfig.announcementBanner || {
                           enabled: false,
                           dismissible: true,
+                          dismissalFrequency: 'session',
                           displayMode: 'always',
                           contentType: 'image',
                           text: '',
@@ -715,6 +724,7 @@ export default function AdminDashboard() {
                       ...(parkConfig.announcementBanner || {
                         enabled: false,
                         dismissible: true,
+                        dismissalFrequency: 'session',
                         displayMode: 'always',
                         contentType: 'image',
                         text: '',
