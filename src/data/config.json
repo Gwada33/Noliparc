@@ -3,5 +3,17 @@
   "parkStatus": "open",
   "globalMessage": "",
   "alertLevel": "none",
-  "nextOpening": "2025-07-01"
+  "nextOpening": "2025-07-01",
+  "announcementBanner": {
+    "enabled": true,
+    "dismissible": true,
+    "dismissalFrequency": "session",
+    "displayMode": "always",
+    "contentType": "image",
+    "text": "PROMO DU 9 JUIN",
+    "imageUrl": "/uploads/1766938712833-21c1956615db78.jpeg",
+    "startAt": "",
+    "endAt": "",
+    "version": "4"
+  }
 }

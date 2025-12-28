@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthContext";
 import CookieConsent from "@/components/CookieConsent";
 import InfoPopup from "@/components/InfoPopup";
 import GlobalStatus from "@/components/GlobalStatus";
+import GlobalBanner from "@/components/GlobalBanner";
 
 // Configuration de la police Rubik
 const rubik = Rubik({
@@ -117,6 +118,7 @@ export default function RootLayout({
         <AuthProvider>
           <Toaster />
         <GlobalStatus />
+          <GlobalBanner />
           <Navbar />
           <InfoPopup images={["/images/flyers/party.jpeg"]} width={720} height={720} cookieKey="global_flyer_pyjama" maxAgeSeconds={60 * 60 * 24 * 7} showAll />
           {children}

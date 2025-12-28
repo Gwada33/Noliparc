@@ -51,6 +51,17 @@ interface ParkConfig {
   globalMessage: string;
   alertLevel: 'none' | 'info' | 'warning' | 'error';
   nextOpening: string;
+  announcementBanner?: {
+    enabled: boolean;
+    dismissible: boolean;
+    displayMode: 'always' | 'scheduled';
+    contentType: 'image' | 'text';
+    text?: string;
+    imageUrl?: string;
+    startAt?: string;
+    endAt?: string;
+    version?: string;
+  };
 }
 
 export default function AdminDashboard() {
@@ -70,10 +81,22 @@ export default function AdminDashboard() {
     parkStatus: 'open',
     globalMessage: '',
     alertLevel: 'none',
-    nextOpening: ''
+    nextOpening: '',
+    announcementBanner: {
+      enabled: false,
+      dismissible: true,
+      displayMode: 'always',
+      contentType: 'image',
+      text: '',
+      imageUrl: '',
+      startAt: '',
+      endAt: '',
+      version: '1'
+    }
   });
   const [configLoading, setConfigLoading] = useState(false);
   const [feedback, setFeedback] = useState<{type: 'success' | 'error', message: string} | null>(null);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
 
   useEffect(() => {
     if (user?.role === 'admin') {
@@ -98,7 +121,18 @@ export default function AdminDashboard() {
       // Fetch config
       fetch('/api/admin/config')
         .then(res => res.json())
-        .then(data => { if (!data.error) setParkConfig(data); })
+        .then(data => {
+          if (!data.error) {
+            setParkConfig((prev) => ({
+              ...prev,
+              ...data,
+              announcementBanner: {
+                ...prev.announcementBanner,
+                ...(data.announcementBanner ?? {})
+              }
+            }));
+          }
+        })
         .catch(console.error);
     }
   }, [user]);
@@ -120,6 +154,47 @@ export default function AdminDashboard() {
       setFeedback({ type: 'error', message: 'Erreur technique.' });
     } finally {
       setConfigLoading(false);
+    }
+  };
+
+  const handleUploadAnnouncementImage = async (file: File) => {
+    setUploadingBanner(true);
+    try {
+      const form = new FormData();
+      form.append('file', file);
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: form,
+      });
+      const data = await res.json().catch(() => ({} as any));
+      if (!res.ok || !data?.url) {
+        setFeedback({ type: 'error', message: 'Erreur upload image.' });
+        return;
+      }
+      setParkConfig({
+        ...parkConfig,
+        announcementBanner: {
+          ...(parkConfig.announcementBanner || {
+            enabled: true,
+            dismissible: true,
+            displayMode: 'always',
+            contentType: 'image',
+            text: '',
+            imageUrl: '',
+            startAt: '',
+            endAt: '',
+            version: '1'
+          }),
+          enabled: true,
+          contentType: 'image',
+          imageUrl: String(data.url),
+        }
+      });
+      setFeedback({ type: 'success', message: 'Image uploadée. Pense à sauvegarder.' });
+    } catch {
+      setFeedback({ type: 'error', message: 'Erreur upload image.' });
+    } finally {
+      setUploadingBanner(false);
     }
   };
 
@@ -290,6 +365,378 @@ export default function AdminDashboard() {
               sx={{ alignSelf: 'flex-start', bgcolor: '#DB7C26', '&:hover': { bgcolor: '#B05A12' } }}
             >
               Sauvegarder
+            </Button>
+          </div>
+        </section>
+
+        {/* Announcements Section */}
+        <section className="card" style={{ background: 'white', borderRadius: '12px', padding: '1.5rem', border: '1px solid #e0e0e0' }}>
+          <h2 className="section-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <FaExclamationCircle color="#DB7C26" /> Annonces
+          </h2>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={!!parkConfig.announcementBanner?.enabled}
+                  onChange={(e) =>
+                    setParkConfig({
+                      ...parkConfig,
+                      announcementBanner: {
+                        ...(parkConfig.announcementBanner || {
+                          enabled: false,
+                          dismissible: true,
+                          displayMode: 'always',
+                          contentType: 'image',
+                          text: '',
+                          imageUrl: '',
+                          startAt: '',
+                          endAt: '',
+                          version: '1'
+                        }),
+                        enabled: e.target.checked
+                      }
+                    })
+                  }
+                  color="warning"
+                />
+              }
+              label="Activer l'annonce (GlobalBanner)"
+            />
+
+            <Button
+              variant="outlined"
+              onClick={() => {
+                const current = parkConfig.announcementBanner?.version ? String(parkConfig.announcementBanner.version) : '1';
+                const n = Number.parseInt(current, 10);
+                const next = Number.isFinite(n) ? String(n + 1) : String(Date.now());
+                setParkConfig({
+                  ...parkConfig,
+                  announcementBanner: {
+                    ...(parkConfig.announcementBanner || {
+                      enabled: true,
+                      dismissible: true,
+                      displayMode: 'always',
+                      contentType: 'image',
+                      text: '',
+                      imageUrl: '',
+                      startAt: '',
+                      endAt: '',
+                      version: '1'
+                    }),
+                    enabled: true,
+                    version: next,
+                  }
+                });
+              }}
+              sx={{ alignSelf: 'flex-start' }}
+            >
+              Forcer ré-affichage (bump version)
+            </Button>
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={parkConfig.announcementBanner?.dismissible !== false}
+                  onChange={(e) =>
+                    setParkConfig({
+                      ...parkConfig,
+                      announcementBanner: {
+                        ...(parkConfig.announcementBanner || {
+                          enabled: false,
+                          dismissible: true,
+                          dismissalFrequency: 'session',
+                          displayMode: 'always',
+                          contentType: 'image',
+                          text: '',
+                          imageUrl: '',
+                          startAt: '',
+                          endAt: '',
+                          version: '1'
+                        }),
+                        dismissible: e.target.checked
+                      }
+                    })
+                  }
+                  color="warning"
+                />
+              }
+              label="Peut être fermée par le visiteur"
+            />
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Ré-affichage après fermeture</label>
+              <Select
+                fullWidth
+                size="small"
+                value={parkConfig.announcementBanner?.dismissalFrequency || 'session'}
+                onChange={(e) =>
+                  setParkConfig({
+                    ...parkConfig,
+                    announcementBanner: {
+                      ...(parkConfig.announcementBanner || {
+                        enabled: false,
+                        dismissible: true,
+                        dismissalFrequency: 'session',
+                        displayMode: 'always',
+                        contentType: 'image',
+                        text: '',
+                        imageUrl: '',
+                        startAt: '',
+                        endAt: '',
+                        version: '1'
+                      }),
+                      dismissalFrequency: e.target.value as any,
+                    }
+                  })
+                }
+              >
+                <MenuItem value="session">À chaque nouvelle visite</MenuItem>
+                <MenuItem value="daily">Au maximum 1 fois par jour</MenuItem>
+              </Select>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Affichage</label>
+              <Select
+                fullWidth
+                size="small"
+                value={parkConfig.announcementBanner?.displayMode || 'always'}
+                onChange={(e) =>
+                  setParkConfig({
+                    ...parkConfig,
+                    announcementBanner: {
+                      ...(parkConfig.announcementBanner || {
+                        enabled: false,
+                        dismissible: true,
+                        displayMode: 'always',
+                        contentType: 'image',
+                        text: '',
+                        imageUrl: '',
+                        startAt: '',
+                        endAt: '',
+                        version: '1'
+                      }),
+                      displayMode: e.target.value as any
+                    }
+                  })
+                }
+              >
+                <MenuItem value="always">Tout le temps</MenuItem>
+                <MenuItem value="scheduled">Entre deux dates</MenuItem>
+              </Select>
+            </div>
+
+            {parkConfig.announcementBanner?.displayMode === 'scheduled' && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Début</label>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="datetime-local"
+                    value={parkConfig.announcementBanner?.startAt || ''}
+                    onChange={(e) =>
+                      setParkConfig({
+                        ...parkConfig,
+                        announcementBanner: {
+                          ...(parkConfig.announcementBanner || {
+                            enabled: false,
+                            dismissible: true,
+                            displayMode: 'always',
+                            contentType: 'image',
+                            text: '',
+                            imageUrl: '',
+                            startAt: '',
+                            endAt: '',
+                            version: '1'
+                          }),
+                          startAt: e.target.value
+                        }
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Fin</label>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="datetime-local"
+                    value={parkConfig.announcementBanner?.endAt || ''}
+                    onChange={(e) =>
+                      setParkConfig({
+                        ...parkConfig,
+                        announcementBanner: {
+                          ...(parkConfig.announcementBanner || {
+                            enabled: false,
+                            dismissible: true,
+                            displayMode: 'always',
+                            contentType: 'image',
+                            text: '',
+                            imageUrl: '',
+                            startAt: '',
+                            endAt: '',
+                            version: '1'
+                          }),
+                          endAt: e.target.value
+                        }
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Type</label>
+              <Select
+                fullWidth
+                size="small"
+                value={parkConfig.announcementBanner?.contentType || 'image'}
+                onChange={(e) =>
+                  setParkConfig({
+                    ...parkConfig,
+                    announcementBanner: {
+                      ...(parkConfig.announcementBanner || {
+                        enabled: false,
+                        dismissible: true,
+                        displayMode: 'always',
+                        contentType: 'image',
+                        text: '',
+                        imageUrl: '',
+                        startAt: '',
+                        endAt: '',
+                        version: '1'
+                      }),
+                      contentType: e.target.value as any
+                    }
+                  })
+                }
+              >
+                <MenuItem value="image">Image</MenuItem>
+                <MenuItem value="text">Texte</MenuItem>
+              </Select>
+            </div>
+
+            {parkConfig.announcementBanner?.contentType === 'text' ? (
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Texte</label>
+                <TextField
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  size="small"
+                  placeholder="Ex: Promo spéciale ce week-end..."
+                  value={parkConfig.announcementBanner?.text || ''}
+                  onChange={(e) =>
+                    setParkConfig({
+                      ...parkConfig,
+                      announcementBanner: {
+                        ...(parkConfig.announcementBanner || {
+                          enabled: false,
+                          dismissible: true,
+                          displayMode: 'always',
+                          contentType: 'image',
+                          text: '',
+                          imageUrl: '',
+                          startAt: '',
+                          endAt: '',
+                          version: '1'
+                        }),
+                        text: e.target.value
+                      }
+                    })
+                  }
+                />
+              </div>
+            ) : (
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>URL image</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  placeholder="/images/flyers/fermeture.png ou https://..."
+                  value={parkConfig.announcementBanner?.imageUrl || ''}
+                  onChange={(e) =>
+                    setParkConfig({
+                      ...parkConfig,
+                      announcementBanner: {
+                        ...(parkConfig.announcementBanner || {
+                          enabled: false,
+                          dismissible: true,
+                          displayMode: 'always',
+                          contentType: 'image',
+                          text: '',
+                          imageUrl: '',
+                          startAt: '',
+                          endAt: '',
+                          version: '1'
+                        }),
+                        imageUrl: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <div style={{ marginTop: '0.75rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Uploader une image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    disabled={uploadingBanner}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) void handleUploadAnnouncementImage(f);
+                      e.currentTarget.value = '';
+                    }}
+                  />
+                  <div style={{ fontSize: '0.85rem', color: '#666', marginTop: '0.25rem' }}>
+                    L'image sera enregistrée dans <code>/public/uploads</code> et l'URL sera remplie automatiquement.
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '600' }}>Version (pour ré-afficher après fermeture)</label>
+              <TextField
+                fullWidth
+                size="small"
+                placeholder="Ex: 2"
+                value={parkConfig.announcementBanner?.version || '1'}
+                onChange={(e) =>
+                  setParkConfig({
+                    ...parkConfig,
+                    announcementBanner: {
+                      ...(parkConfig.announcementBanner || {
+                        enabled: false,
+                        dismissible: true,
+                        displayMode: 'always',
+                        contentType: 'image',
+                        text: '',
+                        imageUrl: '',
+                        startAt: '',
+                        endAt: '',
+                        version: '1'
+                      }),
+                      version: e.target.value
+                    }
+                  })
+                }
+              />
+            </div>
+
+            <Button 
+              variant="contained" 
+              color="primary" 
+              startIcon={<FaSave />}
+              onClick={handleSaveConfig}
+              disabled={configLoading}
+              sx={{ alignSelf: 'flex-start', bgcolor: '#DB7C26', '&:hover': { bgcolor: '#B05A12' } }}
+            >
+              Sauvegarder l'annonce
             </Button>
           </div>
         </section>

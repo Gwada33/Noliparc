@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { AUTH_CONFIG } from '@/lib/constants';
+import { get_config } from '@/lib/config';
 
 function isProtectedPath(pathname: string): boolean {
   const protectedPaths = ['/admin', '/anniversaires/reserver'];
@@ -36,8 +37,37 @@ function createLoginRedirect(req: NextRequest, pathname: string): NextResponse {
   return NextResponse.redirect(loginUrl);
 }
 
-export function proxy(req: NextRequest) {
+function isPublicAssetPath(pathname: string): boolean {
+  return (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/favicon') ||
+    pathname.startsWith('/icons') ||
+    pathname.startsWith('/images') ||
+    pathname.startsWith('/uploads')
+  );
+}
+
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
+  // Maintenance mode (bloquant)
+  try {
+    const cfg = await get_config();
+    if (cfg?.maintenanceMode === true) {
+      // Always allow admin + admin APIs
+      if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+        // continue
+      } else if (pathname === '/maintenance' || isPublicAssetPath(pathname)) {
+        return NextResponse.next();
+      } else if (pathname.startsWith('/api')) {
+        return NextResponse.json({ error: 'Maintenance' }, { status: 503 });
+      } else {
+        return NextResponse.rewrite(new URL('/maintenance', req.url));
+      }
+    }
+  } catch {
+    // If config can't be read, don't block traffic.
+  }
 
   if (!isProtectedPath(pathname)) return NextResponse.next();
 
@@ -62,5 +92,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/anniversaires/reserver/:path*'],
+  matcher: ['/:path*'],
 };

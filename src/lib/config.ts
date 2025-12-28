@@ -9,7 +9,19 @@ export interface ParkConfig {
   globalMessage: string;
   alertLevel: 'none' | 'info' | 'warning' | 'error';
   nextOpening: string;
-  [key: string]: string | boolean | number | undefined;
+  announcementBanner?: {
+    enabled: boolean;
+    dismissible: boolean;
+    dismissalFrequency: 'session' | 'daily';
+    displayMode: 'always' | 'scheduled';
+    contentType: 'image' | 'text';
+    text?: string;
+    imageUrl?: string;
+    startAt?: string;
+    endAt?: string;
+    version?: string;
+  };
+  [key: string]: unknown;
 }
 
 export async function get_config(): Promise<ParkConfig> {
@@ -24,7 +36,19 @@ export async function get_config(): Promise<ParkConfig> {
       parkStatus: 'open',
       globalMessage: '',
       alertLevel: 'none',
-      nextOpening: ''
+      nextOpening: '',
+      announcementBanner: {
+        enabled: false,
+        dismissible: true,
+        dismissalFrequency: 'session',
+        displayMode: 'always',
+        contentType: 'image',
+        text: '',
+        imageUrl: '',
+        startAt: '',
+        endAt: '',
+        version: '1'
+      }
     };
   }
 }
