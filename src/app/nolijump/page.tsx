@@ -135,7 +135,7 @@ export default function Nolijump() {
                   data={[
                     ["Lun.", "Fermé", "Fermé"],
                     ["Mar.", "Fermé", "Fermé"],
-                    ["Mer.", "10h-12h", "12h-18h"],
+                    ["Mer.", "10h-12h", "12h-17h"],
                     ["Jeu.", "Fermé", "Fermé"],
                     ["Ven.", "Fermé", "Fermé"],
                     ["Sam.", "10h-12h", "12h-18h"],

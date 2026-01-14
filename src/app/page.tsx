@@ -166,10 +166,10 @@ export default function HomePage() {
 
   return (
     <>
-      <SnowEffect />
+      {/*<SnowEffect />*/}
       <main className="home">
         <HeroCarousel />
-        <CalendarPreview year={new Date().getFullYear()} month={12} />
+        {/*<CalendarPreview year={new Date().getFullYear()} month={12} />*/}
 
         {parkStatus === 'closed' && globalMessage && (
           <Box sx={{ textAlign: 'center', mt: 4, mb: -6, position: 'relative', zIndex: 10 }}>
