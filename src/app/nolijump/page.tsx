@@ -90,7 +90,7 @@ export default function Nolijump() {
             title="Un grand espace pour vos enfants"
           />
 
-          <CalendarPreview year={new Date().getFullYear()} month={12} />
+          {/*<CalendarPreview year={new Date().getFullYear()} month={12} />*/}
 
           <Box
             display="flex"
