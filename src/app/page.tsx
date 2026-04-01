@@ -395,7 +395,8 @@ export default function HomePage() {
                   1 adulte accompagnateur gratuit
                 </span>
                 <br />
-                <span className="tarif-sub">5€ par  adulte supplémentaire</span>
+                <br />
+                <span className="tarif-sub">+3€ par adulte accompagnateur de l'enfant</span>
               </span>
             </div>
 
