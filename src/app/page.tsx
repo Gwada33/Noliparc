@@ -392,7 +392,7 @@ export default function HomePage() {
               <span className="tarif-label">Adulte</span>
               <span className="tarif-value">
                 <br />
-                <span className="tarif-sub">+3€ par adulte accompagnateur de l'enfant</span>
+                <span className="tarif-sub">+3€ par adulte accompagnateur</span>
               </span>
             </div>
 
