@@ -26,10 +26,10 @@ import {
 } from "react-icons/fa";
 import { MdNoFood } from "react-icons/md";
 import { Box, Typography, ListItem, ListItemText, ListItemIcon, List, Button, Modal, IconButton } from "@mui/material";
-import HeroCarousel from "@/components/HeroCarrousel";
-import Footer from "@/components/Footer";
+import { HeroCarousel } from "@/components/Hero";
+import { Footer } from "@/components/Footer";
 import { ScheduleTable } from "@/components/ScheduleTable";
-import Formule from "@/components/Formule";
+import { Formule } from "@/components/Formule";
 import CalendarPreview from "@/components/CalendarPreview";
 import SnowEffect from "@/components/SnowEffect";
 

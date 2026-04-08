@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/app/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { FaSearch, FaPlus, FaEdit, FaTrash, FaUserShield, FaUser, FaTimes } from 'react-icons/fa';
-import '@/css/admin-dashboard.css';
+import styles from '@/styles/pages/admin.module.css';
 
 // Types
 interface User {

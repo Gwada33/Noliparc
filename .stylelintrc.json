@@ -1,0 +1,64 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier"
+  ],
+  "plugins": [
+    "stylelint-declaration-block-no-ignored-properties"
+  ],
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "Utilisez les design tokens au lieu des couleurs hex. Ex: var(--color-primary)"
+      }
+    ],
+    "unit-disallowed-list": [
+      [
+        "px"
+      ],
+      {
+        "message": "Utilisez rem ou les design tokens au lieu de px. Ex: var(--spacing-lg)"
+      }
+    ],
+    "no-duplicate-custom-properties": true,
+    "custom-property-no-missing-var-function": true,
+    "indentation": 2,
+    "selector-max-id": 0,
+    "max-nesting-depth": 3,
+    "plugin/declaration-block-no-ignored-properties": true,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "supports",
+          "layer"
+        ]
+      }
+    ],
+    "declaration-no-important": [
+      true,
+      {
+        "message": "Évitez !important. Si vous en avez besoin, vérifiez votre spécificité CSS."
+      }
+    ],
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*$",
+      {
+        "message": "Utilisez camelCase pour les noms de classe. Ex: .buttonPrimary"
+      }
+    ],
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "message": "Les préfixes de navigateur ne sont pas nécessaires avec les standards modernes."
+      }
+    ],
+    "value-no-vendor-prefix": [
+      true,
+      {
+        "message": "Utilisez les valeurs standard sans préfixe de navigateur."
+      }
+    ]
+  }
+}

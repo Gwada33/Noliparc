@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { FaPlus, FaEdit, FaTrash, FaTimes, FaCalendarAlt, FaSave } from "react-icons/fa";
-import "@/css/admin-dashboard.css";
+import styles from "@/styles/pages/admin.module.css";
 
 interface Schedule {
   id: number;

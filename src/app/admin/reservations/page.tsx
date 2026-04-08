@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/app/context/AuthContext';
 import { FaSearch, FaCheck, FaTimes, FaTrash, FaEye, FaCalendarAlt, FaClock, FaChild, FaBirthdayCake, FaList, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import '@/css/admin-dashboard.css';
+import styles from '@/styles/pages/admin.module.css';
 
 // Types
 interface Reservation {

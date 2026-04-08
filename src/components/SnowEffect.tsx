@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import "@/css/snow.css";
+import styles from "@/styles/components/_snow.module.css";
 
 export default function SnowEffect() {
   const [flakes, setFlakes] = useState<{ id: number; left: string; duration: string; delay: string; size: string }[]>([]);
@@ -23,7 +23,7 @@ export default function SnowEffect() {
       {flakes.map((flake) => (
         <div
           key={flake.id}
-          className="snowflake"
+          className={styles.snowflake}
           style={{
             left: flake.left,
             animationDuration: flake.duration,

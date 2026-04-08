@@ -13,7 +13,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Legend, PieChart, Pie, Cell, LineChart, Line
 } from 'recharts';
-import "@/css/admin-dashboard.css";
+import styles from "@/styles/pages/admin.module.css";
 
 const COLORS = ['#DB7C26', '#2e7d32', '#1565c0', '#e65100', '#f9a825', '#8e24aa', '#424242'];
 
