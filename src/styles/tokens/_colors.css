@@ -1,0 +1,165 @@
+/* ==========================================================================
+   COLOR TOKENS - Noliparc Design System
+   Palette énergique et moderne "New Jump"
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     PRIMARY COLORS - Orange énergique
+     -------------------------------------------------------------------------- */
+  --color-primary: #FF6B35;
+  --color-primary-light: #FF8F66;
+  --color-primary-dark: #E55A2B;
+  --color-primary-50: #FFF5F0;
+  --color-primary-100: #FFE8DD;
+  --color-primary-200: #FFCFBB;
+  --color-primary-300: #FFAD8A;
+  --color-primary-400: #FF8F66;
+  --color-primary-500: #FF6B35;
+  --color-primary-600: #E55A2B;
+  --color-primary-700: #CC4A22;
+  --color-primary-800: #A33B1B;
+  --color-primary-900: #7A2D15;
+
+  /* --------------------------------------------------------------------------
+     SECONDARY COLORS - Turquoise vibrant
+     -------------------------------------------------------------------------- */
+  --color-secondary: #4ECDC4;
+  --color-secondary-light: #7EDDD7;
+  --color-secondary-dark: #3DBDB4;
+  --color-secondary-50: #F0FDFB;
+  --color-secondary-100: #CCFBF1;
+  --color-secondary-200: #99F6E4;
+  --color-secondary-300: #7EDDD7;
+  --color-secondary-400: #4ECDC4;
+  --color-secondary-500: #2DD4BF;
+  --color-secondary-600: #3DBDB4;
+  --color-secondary-700: #0F9B8E;
+  --color-secondary-800: #107E73;
+  --color-secondary-900: #115E59;
+
+  /* --------------------------------------------------------------------------
+     ACCENT COLORS - Touches ludiques
+     -------------------------------------------------------------------------- */
+  /* Rose vif */
+  --color-accent-pink: #FF6B9D;
+  --color-accent-pink-light: #FF9FBF;
+  --color-accent-pink-dark: #E54D80;
+
+  /* Violet premium */
+  --color-accent-purple: #A855F7;
+  --color-accent-purple-light: #C084FC;
+  --color-accent-purple-dark: #9333EA;
+
+  /* Jaune attention */
+  --color-accent-yellow: #FBBF24;
+  --color-accent-yellow-light: #FCD34D;
+  --color-accent-yellow-dark: #F59E0B;
+
+  /* Vert succès */
+  --color-accent-green: #22C55E;
+  --color-accent-green-light: #4ADE80;
+  --color-accent-green-dark: #16A34A;
+
+  /* Bleu info */
+  --color-accent-blue: #3B82F6;
+  --color-accent-blue-light: #60A5FA;
+  --color-accent-blue-dark: #2563EB;
+
+  /* --------------------------------------------------------------------------
+     NEUTRAL COLORS - Gris élégants
+     -------------------------------------------------------------------------- */
+  --color-neutral-950: #0A0A0B;
+  --color-neutral-900: #0F0F10;
+  --color-neutral-800: #1F1F1F;
+  --color-neutral-700: #333333;
+  --color-neutral-600: #4B5563;
+  --color-neutral-500: #6B7280;
+  --color-neutral-400: #9CA3AF;
+  --color-neutral-300: #D1D5DB;
+  --color-neutral-200: #E5E7EB;
+  --color-neutral-100: #F3F4F6;
+  --color-neutral-50: #FAFAFA;
+  --color-white: #FFFFFF;
+
+  /* --------------------------------------------------------------------------
+     SEMANTIC COLORS - États et feedback
+     -------------------------------------------------------------------------- */
+  --color-success: #22C55E;
+  --color-success-light: #DCFCE7;
+  --color-success-dark: #16A34A;
+
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-warning-dark: #D97706;
+
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+  --color-error-dark: #DC2626;
+
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
+  --color-info-dark: #2563EB;
+
+  /* --------------------------------------------------------------------------
+     GRADIENTS - Effets dynamiques
+     -------------------------------------------------------------------------- */
+  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #FF6B9D 100%);
+  --gradient-primary-hover: linear-gradient(135deg, #E55A2B 0%, #E54D80 100%);
+  --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #A855F7 100%);
+  --gradient-secondary-hover: linear-gradient(135deg, #3DBDB4 0%, #9333EA 100%);
+  --gradient-dark: linear-gradient(180deg, #1F1F1F 0%, #0F0F10 100%);
+  --gradient-fun: linear-gradient(135deg, #FBBF24 0%, #FF6B35 50%, #FF6B9D 100%);
+  --gradient-cool: linear-gradient(135deg, #4ECDC4 0%, #3B82F6 100%);
+  --gradient-hero: linear-gradient(135deg, #FF6B35 0%, #A855F7 50%, #4ECDC4 100%);
+  --gradient-sunset: linear-gradient(135deg, #FF6B35 0%, #FF6B9D 50%, #A855F7 100%);
+  --gradient-overlay-dark: linear-gradient(180deg, rgba(15, 15, 16, 0) 0%, rgba(15, 15, 16, 0.8) 100%);
+  --gradient-overlay-light: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 100%);
+
+  /* --------------------------------------------------------------------------
+     SURFACE COLORS - Backgrounds et surfaces
+     -------------------------------------------------------------------------- */
+  --surface-background: var(--color-white);
+  --surface-foreground: var(--color-neutral-900);
+  --surface-muted: var(--color-neutral-100);
+  --surface-muted-foreground: var(--color-neutral-500);
+  --surface-card: var(--color-white);
+  --surface-card-foreground: var(--color-neutral-900);
+  --surface-popover: var(--color-white);
+  --surface-popover-foreground: var(--color-neutral-900);
+  --surface-border: var(--color-neutral-200);
+  --surface-input: var(--color-neutral-200);
+  --surface-ring: var(--color-primary);
+
+  /* --------------------------------------------------------------------------
+     COMPONENT COLORS - Couleurs spécifiques composants
+     -------------------------------------------------------------------------- */
+  --color-navbar-bg: var(--color-white);
+  --color-navbar-bg-scrolled: rgba(255, 255, 255, 0.95);
+  --color-footer-bg: var(--color-neutral-900);
+  --color-footer-text: var(--color-neutral-300);
+  --color-hero-overlay: rgba(15, 15, 16, 0.4);
+  --color-card-bg: var(--color-white);
+  --color-card-border: var(--color-neutral-200);
+  --color-input-bg: var(--color-white);
+  --color-input-border: var(--color-neutral-300);
+  --color-input-focus: var(--color-primary);
+}
+
+/* ==========================================================================
+   DARK MODE (optionnel pour le futur)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Uncomment to enable dark mode
+    --surface-background: var(--color-neutral-900);
+    --surface-foreground: var(--color-neutral-50);
+    --surface-muted: var(--color-neutral-800);
+    --surface-muted-foreground: var(--color-neutral-400);
+    --surface-card: var(--color-neutral-800);
+    --surface-card-foreground: var(--color-neutral-50);
+    --surface-border: var(--color-neutral-700);
+    --surface-input: var(--color-neutral-700);
+    */
+  }
+}

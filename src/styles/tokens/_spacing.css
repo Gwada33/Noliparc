@@ -1,0 +1,161 @@
+/* ==========================================================================
+   SPACING TOKENS - Noliparc Design System
+   Système d'espacement cohérent basé sur 4px
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     BASE SPACING SCALE (multiples de 4px)
+     -------------------------------------------------------------------------- */
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 0.125rem;  /* 2px */
+  --space-1: 0.25rem;     /* 4px */
+  --space-1-5: 0.375rem;  /* 6px */
+  --space-2: 0.5rem;      /* 8px */
+  --space-2-5: 0.625rem;  /* 10px */
+  --space-3: 0.75rem;     /* 12px */
+  --space-3-5: 0.875rem;  /* 14px */
+  --space-4: 1rem;        /* 16px */
+  --space-5: 1.25rem;     /* 20px */
+  --space-6: 1.5rem;      /* 24px */
+  --space-7: 1.75rem;     /* 28px */
+  --space-8: 2rem;        /* 32px */
+  --space-9: 2.25rem;     /* 36px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-11: 2.75rem;    /* 44px */
+  --space-12: 3rem;       /* 48px */
+  --space-14: 3.5rem;     /* 56px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px */
+  --space-28: 7rem;       /* 112px */
+  --space-32: 8rem;       /* 128px */
+  --space-36: 9rem;       /* 144px */
+  --space-40: 10rem;      /* 160px */
+  --space-44: 11rem;      /* 176px */
+  --space-48: 12rem;      /* 192px */
+  --space-52: 13rem;      /* 208px */
+  --space-56: 14rem;      /* 224px */
+  --space-60: 15rem;      /* 240px */
+  --space-64: 16rem;      /* 256px */
+  --space-72: 18rem;      /* 288px */
+  --space-80: 20rem;      /* 320px */
+  --space-96: 24rem;      /* 384px */
+
+  /* --------------------------------------------------------------------------
+     SEMANTIC SPACING - Usage spécifique
+     -------------------------------------------------------------------------- */
+  /* Inline (horizontal) spacing */
+  --space-inline-xs: var(--space-1);
+  --space-inline-sm: var(--space-2);
+  --space-inline-md: var(--space-4);
+  --space-inline-lg: var(--space-6);
+  --space-inline-xl: var(--space-8);
+
+  /* Stack (vertical) spacing */
+  --space-stack-xs: var(--space-1);
+  --space-stack-sm: var(--space-2);
+  --space-stack-md: var(--space-4);
+  --space-stack-lg: var(--space-6);
+  --space-stack-xl: var(--space-8);
+
+  /* Inset (padding) spacing */
+  --space-inset-xs: var(--space-2);
+  --space-inset-sm: var(--space-3);
+  --space-inset-md: var(--space-4);
+  --space-inset-lg: var(--space-6);
+  --space-inset-xl: var(--space-8);
+  --space-inset-2xl: var(--space-12);
+
+  /* --------------------------------------------------------------------------
+     COMPONENT SPACING
+     -------------------------------------------------------------------------- */
+  /* Buttons */
+  --button-padding-x: var(--space-6);
+  --button-padding-y: var(--space-3);
+  --button-padding-x-sm: var(--space-4);
+  --button-padding-y-sm: var(--space-2);
+  --button-padding-x-lg: var(--space-8);
+  --button-padding-y-lg: var(--space-4);
+  --button-gap: var(--space-2);
+
+  /* Cards */
+  --card-padding: var(--space-6);
+  --card-padding-sm: var(--space-4);
+  --card-padding-lg: var(--space-8);
+  --card-gap: var(--space-4);
+
+  /* Forms */
+  --input-padding-x: var(--space-4);
+  --input-padding-y: var(--space-3);
+  --form-gap: var(--space-4);
+  --label-gap: var(--space-2);
+
+  /* Navigation */
+  --nav-padding-x: var(--space-4);
+  --nav-padding-y: var(--space-2);
+  --nav-gap: var(--space-6);
+
+  /* Sections */
+  --section-padding-y: var(--space-16);
+  --section-padding-y-sm: var(--space-12);
+  --section-padding-y-lg: var(--space-24);
+  --section-gap: var(--space-12);
+
+  /* --------------------------------------------------------------------------
+     CONTAINER WIDTHS
+     -------------------------------------------------------------------------- */
+  --container-xs: 20rem;    /* 320px */
+  --container-sm: 24rem;    /* 384px */
+  --container-md: 28rem;    /* 448px */
+  --container-lg: 32rem;    /* 512px */
+  --container-xl: 36rem;    /* 576px */
+  --container-2xl: 42rem;   /* 672px */
+  --container-3xl: 48rem;   /* 768px */
+  --container-4xl: 56rem;   /* 896px */
+  --container-5xl: 64rem;   /* 1024px */
+  --container-6xl: 72rem;   /* 1152px */
+  --container-7xl: 80rem;   /* 1280px */
+  --container-full: 100%;
+  --container-max: 1400px;
+
+  /* --------------------------------------------------------------------------
+     GRID
+     -------------------------------------------------------------------------- */
+  --grid-columns: 12;
+  --grid-gap: var(--space-6);
+  --grid-gap-sm: var(--space-4);
+  --grid-gap-lg: var(--space-8);
+
+  /* --------------------------------------------------------------------------
+     BREAKPOINTS (for reference in JS/media queries)
+     -------------------------------------------------------------------------- */
+  --breakpoint-xs: 475px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ==========================================================================
+   RESPONSIVE SECTION SPACING
+   ========================================================================== */
+
+/* Mobile */
+@media (max-width: 767px) {
+  :root {
+    --section-padding-y: var(--space-12);
+    --section-padding-y-lg: var(--space-16);
+    --card-padding: var(--space-4);
+  }
+}
+
+/* Large screens */
+@media (min-width: 1280px) {
+  :root {
+    --section-padding-y: var(--space-20);
+    --section-padding-y-lg: var(--space-32);
+  }
+}

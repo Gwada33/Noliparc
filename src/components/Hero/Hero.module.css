@@ -1,0 +1,289 @@
+/* ==========================================================================
+   HERO CAROUSEL - CSS Module
+   Section hero avec carrousel vidéo
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO CONTAINER
+   -------------------------------------------------------------------------- */
+.heroCarousel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.heroSwiper {
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   SLIDE
+   -------------------------------------------------------------------------- */
+.heroSlide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   BACKGROUND VIDEO
+   -------------------------------------------------------------------------- */
+.heroBgVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   OVERLAY CONTENT
+   -------------------------------------------------------------------------- */
+.heroOverlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8);
+  box-sizing: border-box;
+}
+
+/* Logo image */
+.heroLogo {
+  max-width: 80%;
+  height: auto;
+  max-height: 45vh;
+  margin-bottom: var(--space-8);
+  animation: fadeInScale 0.8s ease-out;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   SUMMARY / TEXT CONTENT
+   -------------------------------------------------------------------------- */
+.heroSummary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  margin: 0;
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   CTA BUTTON
+   -------------------------------------------------------------------------- */
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-8);
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  border: none;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-lg);
+}
+
+.heroCta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow-glow-primary), var(--shadow-xl);
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   NAVIGATION BUTTONS (Glassmorphism)
+   -------------------------------------------------------------------------- */
+.glassButton,
+.noliparcButton {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-lg);
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  z-index: 3;
+  transition: all var(--transition-fast);
+}
+
+.glassButton:hover,
+.noliparcButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.glassButton {
+  bottom: var(--space-20);
+  right: var(--space-6);
+}
+
+.noliparcButton {
+  bottom: var(--space-20);
+  right: var(--space-6);
+}
+
+/* Arrow animation */
+.arrowSvg {
+  animation: slideArrow 1.5s infinite ease-in-out;
+}
+
+@keyframes slideArrow {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SCROLL INDICATOR
+   -------------------------------------------------------------------------- */
+.scrollIndicator {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  opacity: 0.8;
+  animation: fadeInUp 1s ease-out 1s both;
+}
+
+.scrollMouse {
+  width: 24px;
+  height: 40px;
+  border: 2px solid var(--color-white);
+  border-radius: var(--radius-full);
+  position: relative;
+}
+
+.scrollMouse::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  transform: translateX(-50%);
+  animation: scrollBounce 2s infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) translateY(12px);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE - MOBILE
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .heroOverlay {
+    padding: var(--space-4);
+  }
+
+  .heroLogo {
+    max-width: 90%;
+    max-height: 35vh;
+    margin-bottom: var(--space-6);
+  }
+
+  .heroTitle {
+    font-size: var(--text-xl);
+  }
+
+  .heroSummary {
+    gap: var(--space-4);
+    padding: 0 var(--space-2);
+  }
+
+  .heroCta {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-base);
+  }
+
+  .glassButton,
+  .noliparcButton {
+    bottom: auto;
+    top: var(--space-4);
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .glassButton:hover,
+  .noliparcButton:hover {
+    transform: translateX(-50%) scale(1.05);
+  }
+
+  .scrollIndicator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: var(--text-lg);
+  }
+
+  .heroLogo {
+    max-width: 95%;
+    max-height: 30vh;
+  }
+}
