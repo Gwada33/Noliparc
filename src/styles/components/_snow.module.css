@@ -1,7 +1,7 @@
 .snowflake {
   position: fixed;
   top: -20px;
-  z-index: 900; /* Behind navbar (1000) but visible */
+  z-index: 900;
   color: #fff;
   user-select: none;
   pointer-events: none;

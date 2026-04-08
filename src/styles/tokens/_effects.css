@@ -1,0 +1,163 @@
+/* ==========================================================================
+   EFFECTS TOKENS - Noliparc Design System
+   Ombres, bordures, radius et transitions
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     BORDER RADIUS
+     -------------------------------------------------------------------------- */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;     /* 4px */
+  --radius-md: 0.5rem;      /* 8px */
+  --radius-lg: 0.75rem;     /* 12px */
+  --radius-xl: 1rem;        /* 16px */
+  --radius-2xl: 1.5rem;     /* 24px */
+  --radius-3xl: 2rem;       /* 32px */
+  --radius-4xl: 2.5rem;     /* 40px */
+  --radius-full: 9999px;
+
+  /* Component-specific radius */
+  --radius-button: var(--radius-full);
+  --radius-card: var(--radius-2xl);
+  --radius-input: var(--radius-lg);
+  --radius-badge: var(--radius-full);
+  --radius-modal: var(--radius-2xl);
+  --radius-tooltip: var(--radius-md);
+  --radius-avatar: var(--radius-full);
+
+  /* --------------------------------------------------------------------------
+     BORDER WIDTHS
+     -------------------------------------------------------------------------- */
+  --border-0: 0;
+  --border-1: 1px;
+  --border-2: 2px;
+  --border-3: 3px;
+  --border-4: 4px;
+  --border-8: 8px;
+
+  /* --------------------------------------------------------------------------
+     BOX SHADOWS
+     -------------------------------------------------------------------------- */
+  /* Subtle shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  --shadow-none: none;
+
+  /* Colored glow shadows */
+  --shadow-glow-primary: 0 0 20px rgba(255, 107, 53, 0.4);
+  --shadow-glow-primary-lg: 0 0 40px rgba(255, 107, 53, 0.5);
+  --shadow-glow-secondary: 0 0 20px rgba(78, 205, 196, 0.4);
+  --shadow-glow-secondary-lg: 0 0 40px rgba(78, 205, 196, 0.5);
+  --shadow-glow-pink: 0 0 20px rgba(255, 107, 157, 0.4);
+  --shadow-glow-purple: 0 0 20px rgba(168, 85, 247, 0.4);
+  --shadow-glow-yellow: 0 0 20px rgba(251, 191, 36, 0.4);
+
+  /* Elevation shadows (for cards, modals, etc.) */
+  --shadow-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-elevation-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --shadow-elevation-3: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10);
+  --shadow-elevation-4: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+  --shadow-elevation-5: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  /* Component shadows */
+  --shadow-button: var(--shadow-sm);
+  --shadow-button-hover: var(--shadow-md);
+  --shadow-card: var(--shadow-elevation-2);
+  --shadow-card-hover: var(--shadow-elevation-4);
+  --shadow-navbar: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: var(--shadow-lg);
+  --shadow-modal: var(--shadow-2xl);
+  --shadow-tooltip: var(--shadow-md);
+
+  /* --------------------------------------------------------------------------
+     TRANSITIONS
+     -------------------------------------------------------------------------- */
+  /* Durations */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+  --duration-slowest: 1000ms;
+
+  /* Timing functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Preset transitions */
+  --transition-fast: var(--duration-fast) var(--ease-out);
+  --transition-normal: var(--duration-normal) var(--ease-out);
+  --transition-slow: var(--duration-slow) var(--ease-out);
+  --transition-bounce: var(--duration-normal) var(--ease-bounce);
+  --transition-elastic: var(--duration-slow) var(--ease-elastic);
+
+  /* Property-specific transitions */
+  --transition-colors: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+  --transition-opacity: opacity var(--transition-normal);
+  --transition-transform: transform var(--transition-normal);
+  --transition-shadow: box-shadow var(--transition-normal);
+  --transition-all: all var(--transition-normal);
+
+  /* --------------------------------------------------------------------------
+     OPACITY
+     -------------------------------------------------------------------------- */
+  --opacity-0: 0;
+  --opacity-5: 0.05;
+  --opacity-10: 0.1;
+  --opacity-20: 0.2;
+  --opacity-25: 0.25;
+  --opacity-30: 0.3;
+  --opacity-40: 0.4;
+  --opacity-50: 0.5;
+  --opacity-60: 0.6;
+  --opacity-70: 0.7;
+  --opacity-75: 0.75;
+  --opacity-80: 0.8;
+  --opacity-90: 0.9;
+  --opacity-95: 0.95;
+  --opacity-100: 1;
+
+  /* --------------------------------------------------------------------------
+     BLUR
+     -------------------------------------------------------------------------- */
+  --blur-none: 0;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+  --blur-2xl: 40px;
+  --blur-3xl: 64px;
+
+  /* Backdrop blur */
+  --backdrop-blur-sm: blur(4px);
+  --backdrop-blur-md: blur(8px);
+  --backdrop-blur-lg: blur(16px);
+  --backdrop-blur-xl: blur(24px);
+
+  /* --------------------------------------------------------------------------
+     Z-INDEX SCALE
+     -------------------------------------------------------------------------- */
+  --z-behind: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-navbar: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-max: 9999;
+}

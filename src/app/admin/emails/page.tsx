@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/app/context/AuthContext';
 import { FaPaperPlane, FaHistory, FaFileAlt, FaPlus, FaTrash, FaEdit, FaEye } from 'react-icons/fa';
-import '@/css/admin-dashboard.css';
+import styles from '@/styles/pages/admin.module.css';
 
 export default function EmailsPage() {
   const { user } = useAuth();

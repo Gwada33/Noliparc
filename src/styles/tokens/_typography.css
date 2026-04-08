@@ -1,0 +1,183 @@
+/* ==========================================================================
+   TYPOGRAPHY TOKENS - Noliparc Design System
+   Système typographique moderne et lisible
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     FONT FAMILIES
+     -------------------------------------------------------------------------- */
+  --font-primary: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, Monaco, "Courier New", monospace;
+
+  /* --------------------------------------------------------------------------
+     FONT SIZES - Échelle modulaire (ratio 1.25)
+     -------------------------------------------------------------------------- */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 3.75rem;     /* 60px */
+  --text-7xl: 4.5rem;      /* 72px */
+  --text-8xl: 6rem;        /* 96px */
+  --text-9xl: 8rem;        /* 128px */
+
+  /* --------------------------------------------------------------------------
+     FONT WEIGHTS
+     -------------------------------------------------------------------------- */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+
+  /* --------------------------------------------------------------------------
+     LINE HEIGHTS
+     -------------------------------------------------------------------------- */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* --------------------------------------------------------------------------
+     LETTER SPACING
+     -------------------------------------------------------------------------- */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* --------------------------------------------------------------------------
+     HEADING PRESETS
+     -------------------------------------------------------------------------- */
+  /* Display - Pour les titres héroïques */
+  --heading-display-size: var(--text-6xl);
+  --heading-display-weight: var(--font-black);
+  --heading-display-leading: var(--leading-tight);
+  --heading-display-tracking: var(--tracking-tight);
+
+  /* H1 */
+  --heading-1-size: var(--text-5xl);
+  --heading-1-weight: var(--font-bold);
+  --heading-1-leading: var(--leading-tight);
+  --heading-1-tracking: var(--tracking-tight);
+
+  /* H2 */
+  --heading-2-size: var(--text-4xl);
+  --heading-2-weight: var(--font-bold);
+  --heading-2-leading: var(--leading-tight);
+  --heading-2-tracking: var(--tracking-tight);
+
+  /* H3 */
+  --heading-3-size: var(--text-3xl);
+  --heading-3-weight: var(--font-semibold);
+  --heading-3-leading: var(--leading-snug);
+  --heading-3-tracking: var(--tracking-normal);
+
+  /* H4 */
+  --heading-4-size: var(--text-2xl);
+  --heading-4-weight: var(--font-semibold);
+  --heading-4-leading: var(--leading-snug);
+  --heading-4-tracking: var(--tracking-normal);
+
+  /* H5 */
+  --heading-5-size: var(--text-xl);
+  --heading-5-weight: var(--font-semibold);
+  --heading-5-leading: var(--leading-normal);
+  --heading-5-tracking: var(--tracking-normal);
+
+  /* H6 */
+  --heading-6-size: var(--text-lg);
+  --heading-6-weight: var(--font-semibold);
+  --heading-6-leading: var(--leading-normal);
+  --heading-6-tracking: var(--tracking-normal);
+
+  /* --------------------------------------------------------------------------
+     BODY TEXT PRESETS
+     -------------------------------------------------------------------------- */
+  --body-large-size: var(--text-lg);
+  --body-large-weight: var(--font-normal);
+  --body-large-leading: var(--leading-relaxed);
+
+  --body-base-size: var(--text-base);
+  --body-base-weight: var(--font-normal);
+  --body-base-leading: var(--leading-relaxed);
+
+  --body-small-size: var(--text-sm);
+  --body-small-weight: var(--font-normal);
+  --body-small-leading: var(--leading-normal);
+
+  --body-xs-size: var(--text-xs);
+  --body-xs-weight: var(--font-normal);
+  --body-xs-leading: var(--leading-normal);
+
+  /* --------------------------------------------------------------------------
+     SPECIAL TEXT STYLES
+     -------------------------------------------------------------------------- */
+  /* Labels */
+  --label-size: var(--text-sm);
+  --label-weight: var(--font-medium);
+  --label-leading: var(--leading-normal);
+  --label-tracking: var(--tracking-wide);
+
+  /* Captions */
+  --caption-size: var(--text-xs);
+  --caption-weight: var(--font-normal);
+  --caption-leading: var(--leading-normal);
+
+  /* Buttons */
+  --button-size: var(--text-base);
+  --button-weight: var(--font-semibold);
+  --button-leading: var(--leading-none);
+  --button-tracking: var(--tracking-wide);
+
+  /* Navigation */
+  --nav-size: var(--text-base);
+  --nav-weight: var(--font-medium);
+  --nav-leading: var(--leading-none);
+
+  /* Prices */
+  --price-size: var(--text-3xl);
+  --price-weight: var(--font-bold);
+  --price-leading: var(--leading-none);
+}
+
+/* ==========================================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================================== */
+
+/* Mobile-first: Les tailles de base sont pour mobile */
+
+/* Tablets (768px+) */
+@media (min-width: 768px) {
+  :root {
+    --heading-display-size: var(--text-7xl);
+    --heading-1-size: var(--text-6xl);
+    --heading-2-size: var(--text-5xl);
+    --heading-3-size: var(--text-4xl);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  :root {
+    --heading-display-size: var(--text-8xl);
+    --heading-1-size: var(--text-7xl);
+    --heading-2-size: var(--text-5xl);
+    --heading-3-size: var(--text-4xl);
+  }
+}

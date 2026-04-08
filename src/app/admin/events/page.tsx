@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import EventForm from '@/components/EventForm';
 import { useEvents } from '@/app/context/EventsContext';
-import '@/css/admin-dashboard.css';
+import styles from '@/styles/pages/admin.module.css';
 
 // Define the Event type for type safety
 interface Event {

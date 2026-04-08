@@ -1,0 +1,398 @@
+/* ==========================================================================
+   GLOBAL STYLES - Noliparc Design System
+   Styles de base pour tous les éléments
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ROOT ELEMENT
+   -------------------------------------------------------------------------- */
+:root {
+  /* Ensure smooth color transitions for theme changes */
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   BODY
+   -------------------------------------------------------------------------- */
+body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--surface-foreground);
+  background-color: var(--surface-background);
+  overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY - HEADINGS
+   -------------------------------------------------------------------------- */
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--heading-1-size);
+  font-weight: var(--heading-1-weight);
+  line-height: var(--heading-1-leading);
+  letter-spacing: var(--heading-1-tracking);
+  color: var(--color-neutral-900);
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--heading-2-size);
+  font-weight: var(--heading-2-weight);
+  line-height: var(--heading-2-leading);
+  letter-spacing: var(--heading-2-tracking);
+  color: var(--color-neutral-900);
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-size: var(--heading-3-size);
+  font-weight: var(--heading-3-weight);
+  line-height: var(--heading-3-leading);
+  letter-spacing: var(--heading-3-tracking);
+  color: var(--color-neutral-900);
+}
+
+h4, .h4 {
+  font-family: var(--font-display);
+  font-size: var(--heading-4-size);
+  font-weight: var(--heading-4-weight);
+  line-height: var(--heading-4-leading);
+  letter-spacing: var(--heading-4-tracking);
+  color: var(--color-neutral-900);
+}
+
+h5, .h5 {
+  font-family: var(--font-display);
+  font-size: var(--heading-5-size);
+  font-weight: var(--heading-5-weight);
+  line-height: var(--heading-5-leading);
+  letter-spacing: var(--heading-5-tracking);
+  color: var(--color-neutral-900);
+}
+
+h6, .h6 {
+  font-family: var(--font-display);
+  font-size: var(--heading-6-size);
+  font-weight: var(--heading-6-weight);
+  line-height: var(--heading-6-leading);
+  letter-spacing: var(--heading-6-tracking);
+  color: var(--color-neutral-900);
+}
+
+/* Display heading (larger than h1) */
+.display {
+  font-family: var(--font-display);
+  font-size: var(--heading-display-size);
+  font-weight: var(--heading-display-weight);
+  line-height: var(--heading-display-leading);
+  letter-spacing: var(--heading-display-tracking);
+  color: var(--color-neutral-900);
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY - BODY TEXT
+   -------------------------------------------------------------------------- */
+p {
+  font-size: var(--body-base-size);
+  font-weight: var(--body-base-weight);
+  line-height: var(--body-base-leading);
+  color: var(--color-neutral-700);
+  margin-bottom: var(--space-4);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.lead {
+  font-size: var(--body-large-size);
+  font-weight: var(--body-large-weight);
+  line-height: var(--body-large-leading);
+  color: var(--color-neutral-600);
+}
+
+.small {
+  font-size: var(--body-small-size);
+  font-weight: var(--body-small-weight);
+  line-height: var(--body-small-leading);
+}
+
+.caption {
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  line-height: var(--caption-leading);
+  color: var(--color-neutral-500);
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY - INLINE ELEMENTS
+   -------------------------------------------------------------------------- */
+strong, b {
+  font-weight: var(--font-semibold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+mark {
+  background-color: var(--color-accent-yellow);
+  color: var(--color-neutral-900);
+  padding: 0.1em 0.2em;
+  border-radius: var(--radius-sm);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background-color: var(--color-neutral-100);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background-color: var(--color-neutral-900);
+  color: var(--color-neutral-100);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   LINKS
+   -------------------------------------------------------------------------- */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+a:active {
+  color: var(--color-primary-dark);
+}
+
+/* Link variants */
+.link-muted {
+  color: var(--color-neutral-500);
+}
+
+.link-muted:hover {
+  color: var(--color-neutral-700);
+}
+
+.link-white {
+  color: var(--color-white);
+}
+
+.link-white:hover {
+  color: var(--color-neutral-200);
+}
+
+/* --------------------------------------------------------------------------
+   LISTS (when styled)
+   -------------------------------------------------------------------------- */
+.list-styled {
+  padding-left: var(--space-6);
+}
+
+.list-styled li {
+  position: relative;
+  margin-bottom: var(--space-2);
+}
+
+ul.list-styled li::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--space-6) * -1 + var(--space-1));
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+ol.list-styled {
+  counter-reset: list-counter;
+}
+
+ol.list-styled li::before {
+  content: counter(list-counter) ".";
+  counter-increment: list-counter;
+  position: absolute;
+  left: calc(var(--space-6) * -1);
+  color: var(--color-primary);
+  font-weight: var(--font-semibold);
+}
+
+/* --------------------------------------------------------------------------
+   HORIZONTAL RULE
+   -------------------------------------------------------------------------- */
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--surface-border);
+  margin: var(--space-8) 0;
+}
+
+/* --------------------------------------------------------------------------
+   IMAGES
+   -------------------------------------------------------------------------- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.img-cover {
+  object-fit: cover;
+}
+
+.img-contain {
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   SECTIONS & CONTAINERS
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+}
+
+.section {
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+}
+
+.section-sm {
+  padding-top: var(--section-padding-y-sm);
+  padding-bottom: var(--section-padding-y-sm);
+}
+
+.section-lg {
+  padding-top: var(--section-padding-y-lg);
+  padding-bottom: var(--section-padding-y-lg);
+}
+
+/* --------------------------------------------------------------------------
+   FORM ELEMENTS BASE
+   -------------------------------------------------------------------------- */
+label {
+  display: block;
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  line-height: var(--label-leading);
+  color: var(--color-neutral-700);
+  margin-bottom: var(--label-gap);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: var(--input-padding-y) var(--input-padding-x);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-neutral-900);
+  background-color: var(--color-input-bg);
+  border: var(--border-1) solid var(--color-input-border);
+  border-radius: var(--radius-input);
+  transition: var(--transition-colors), box-shadow var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-input-focus);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-neutral-400);
+}
+
+/* --------------------------------------------------------------------------
+   TABLES BASE
+   -------------------------------------------------------------------------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: var(--border-1) solid var(--surface-border);
+}
+
+.table th {
+  font-weight: var(--font-semibold);
+  color: var(--color-neutral-900);
+  background-color: var(--color-neutral-50);
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-neutral-50);
+}
+
+/* --------------------------------------------------------------------------
+   MAIN LAYOUT
+   -------------------------------------------------------------------------- */
+main {
+  min-height: 100vh;
+}
+
+/* Ensure footer stays at bottom */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper main {
+  flex: 1;
+}
