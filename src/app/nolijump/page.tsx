@@ -202,7 +202,7 @@ export default function Nolijump() {
 
               <Formule
                 title="Fun Jump"
-                subtitle="(7 ans et +)"
+                subtitle="(7 ans et +, 12-18h)"
                 variant="nolijump-entree"
                 durations={[
                   { time: "1h : ", price: "13€" },
@@ -215,7 +215,7 @@ export default function Nolijump() {
 
               <Formule
                 title="Crazy Jump 2h"
-                subtitle="(7 ans et +)"
+                subtitle="(7 ans et +, 12h-18h)"
                 variant="nolijump-entree"
                 durations={[{ time: "", price: "23€" }]}
                 showIcons={false}
@@ -228,8 +228,7 @@ export default function Nolijump() {
                 variant="nolijump-entree"
                 subtitle="(à partir de 12h)"
                 durations={[
-                  { time: "1h (Hors vacance scolaire) : ", price: "10.50€" },
-                  { time: "1h (pendant les vacances) : ", price: "8€" },
+                  { time: "1h : ", price: "10.50€" },
                 ]}
                 notes={["(Justificatif demandé)"]}
                 showIcons={false}
@@ -252,7 +251,7 @@ export default function Nolijump() {
                 variant="nolijump-entree"
                 durations={[
                   { time: "Enfant : ", price: "2.50€" },
-                  { time: "Adulte : ", price: "3€" },
+                  { time: "Adulte : ", price: "Rupture de stock" },
                 ]}
                 showIcons={false}
                 highlightPrice={true}
