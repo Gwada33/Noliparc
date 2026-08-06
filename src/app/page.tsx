@@ -399,7 +399,7 @@ export default function HomePage() {
             <div className="tarif-item">
               <span className="tarif-label">Chaussettes</span>
               <span className="tarif-value">
-                <span className="tarif-sub">Adulte : 3€</span>
+                <span className="tarif-sub">Adulte : Rupture de stock !</span>
                 <br />
                 <span className="tarif-sub">Enfant : 2.50€</span>
               </span>
