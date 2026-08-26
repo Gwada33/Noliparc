@@ -1,47 +1,127 @@
-.nolijump-section {
-  padding: 4rem 1rem;
-  margin-top: 2rem;
-  background: linear-gradient(to bottom, 	#f3d0a3 5%, #ffffff 100%);
+/* ==========================================================================
+   Page Nolijump — landing page
+   ========================================================================== */
+
+/* ---- Hero ---- */
+.nolijump-hero {
+  position: relative;
+  padding: clamp(6rem, 14vw, 10rem) var(--space-5) clamp(3.5rem, 8vw, 5.5rem);
+  text-align: center;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(219, 124, 38, 0.1), transparent 70%),
+    var(--color-surface);
+  overflow: hidden;
+}
+
+.nolijump-logo {
+  width: auto;
+  max-width: min(560px, 82vw);
+  height: auto;
+  margin: 0 auto var(--space-6);
+}
+
+.nolijump-hero .open-badge {
+  margin-bottom: var(--space-4);
+}
+
+.nolijump-hero h1 {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 800;
+  color: var(--color-ink);
+  max-width: 760px;
+  margin: 0 auto var(--space-3);
+}
+
+.nolijump-hero .sub {
+  font-size: 1.15rem;
+  color: var(--color-slate);
+  max-width: 560px;
+  margin: 0 auto var(--space-8);
+  line-height: var(--leading-normal);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---- Bandeau infos pratiques ---- */
+.nolijump-info {
+  padding: var(--space-12) var(--space-5);
+  background: var(--color-surface-alt);
+}
+
+.nolijump-info-grid {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.nolijump-info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
   text-align: center;
 }
 
-.nolijump-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #e2511d;
-}
-
-.nolijump-description {
-  font-size: 1.35rem;
-  font-weight: 500;
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  margin-top: 4rem;
-  color: #000000;
-}
-
-.jump-pricing {
+.nolijump-info-item .icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  gap: 5rem;
+  justify-content: center;
+  font-size: 1.75rem;
 }
 
-.nolijump-btn {
-  margin-top: 2rem;
+.nolijump-info-item span {
+  font-weight: 600;
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  line-height: 1.35;
 }
 
-.btn-primary {
-  padding: 0.8rem 2rem;
-  background-color: #ff6600;
-  color: white;
-  border-radius: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background 0.3s ease;
+/* ---- Sections génériques de la page ---- */
+.nolijump-block {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-5);
 }
 
-.btn-primary:hover {
-  background-color: #e2511d;
+.nolijump-block .section-heading {
+  margin-bottom: var(--space-10);
+}
+
+/* Rythme vertical des sections partagées sur cette page */
+.page-nolijump .feature-container {
+  margin: var(--space-12) auto var(--space-16);
+}
+
+.page-nolijump .jump-pricing {
+  padding: var(--space-12) var(--space-5) var(--space-16);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  .nolijump-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+@media (max-width: 520px) {
+  .nolijump-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nolijump-logo {
+    max-width: 90vw;
+  }
 }

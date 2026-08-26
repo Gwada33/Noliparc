@@ -1,103 +1,98 @@
-/* Quote */
+/* ==========================================================================
+   Galerie, citation, CTA divers
+   ========================================================================== */
+
 .quote {
-    font-size: 1.5rem;
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-
-  /* Footer */
-  
-  .cta h2 {
-    font-size: 2rem;
-    color: white;
-  }
-  
-  .cta p {
-    color: #ccc;
-    margin-bottom: 1rem;
-  }
-
-  /* AOS Animations */
-[data-aos="fade-up"] {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  
-  [data-aos="fade-up"].aos-animate {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  [data-aos="fade-in"] {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  
-  [data-aos="fade-in"].aos-animate {
-    opacity: 1;
-  }
-  
-
-.no-bg{
-  background: none !important;
-  margin-top: 6.5rem !important;
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-bottom: var(--space-4);
+  color: var(--color-slate);
 }
-/* Gallery Container */
+
+.cta h2 {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.cta p {
+  color: #ccc;
+  margin-bottom: var(--space-4);
+}
+
+/* Variante de galerie sans fond sombre */
+.no-bg {
+  background: none !important;
+  margin-top: var(--space-20) !important;
+}
+
+.no-bg .gallery-title {
+  color: var(--color-ink);
+}
+
+.no-bg .gallery-subtitle {
+  color: var(--color-slate);
+}
+
+.no-bg .main-swiper .swiper-pagination-bullet,
+.no-bg .mobile-swiper .swiper-pagination-bullet {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.no-bg .main-swiper .swiper-pagination-bullet-active,
+.no-bg .mobile-swiper .swiper-pagination-bullet-active {
+  background-color: var(--color-primary);
+}
+
+/* ===== Galerie ===== */
 .gallery-container {
   width: 100%;
-  background-color: #1f1f1f;
+  background-color: var(--color-dark);
   margin: 0 auto;
-  height: 100vh;
-  padding: 16px;
+  padding: var(--space-8);
   overflow: hidden;
 }
 
-/* Gallery Header */
 .gallery-header {
-  margin-top: 40px;
+  margin-top: var(--space-10);
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: var(--space-8);
 }
 
 .gallery-title {
-  font-size: 3rem;
+  font-size: var(--text-title-page);
   font-weight: 700;
-  transform: translateY(10px);
-  color: #ffffff;
+  color: #fff;
 }
 
 .gallery-subtitle {
-  font-size: 1rem;
-  color: #666666;
-  opacity: 0;
+  font-size: var(--text-base);
+  color: var(--color-muted);
 }
 
 .gallery-empty {
   text-align: center;
-  padding: 40px;
+  padding: var(--space-10);
   font-size: 1.125rem;
-  color: #666;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  color: var(--color-muted);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
 }
 
-/* Main Gallery */
 .gallery-main {
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-6);
 }
 
 .gallery-slide {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--transition);
 }
 
 .gallery-slide:hover {
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .gallery-image-container {
@@ -108,7 +103,7 @@
 
 .gallery-image {
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-slow);
 }
 
 .gallery-slide:hover .gallery-image {
@@ -119,7 +114,7 @@
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0);
-  transition: background-color 0.3s ease;
+  transition: background-color var(--transition);
 }
 
 .gallery-slide:hover .gallery-image-overlay {
@@ -131,18 +126,18 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 16px;
+  padding: var(--space-4);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
 .gallery-caption-title {
-  color: white;
+  color: #fff;
   font-weight: 600;
   font-size: 1.125rem;
   margin: 0;
 }
 
-/* Navigation Buttons */
+/* Navigation */
 .gallery-nav-button {
   position: absolute;
   top: 50%;
@@ -150,27 +145,27 @@
   z-index: 10;
   background-color: rgba(255, 255, 255, 0.9);
   border: none;
-  border-radius: 50%;
-  padding: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-full);
+  padding: var(--space-2);
+  box-shadow: var(--shadow-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform var(--transition), background var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .gallery-nav-button:hover {
-  background-color: white;
+  background-color: #fff;
   transform: translateY(-50%) scale(1.1);
 }
 
 .gallery-nav-prev {
-  left: 8px;
+  left: var(--space-3);
 }
 
 .gallery-nav-next {
-  right: 8px;
+  right: var(--space-3);
 }
 
 .gallery-nav-button svg {
@@ -179,9 +174,9 @@
   height: 24px;
 }
 
-/* Thumbnails */
+/* Miniatures */
 .gallery-thumbs {
-  margin-top: 24px;
+  margin-top: var(--space-6);
 }
 
 .gallery-thumb {
@@ -189,9 +184,9 @@
   aspect-ratio: 3 / 4;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   opacity: 0.6;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--transition);
 }
 
 .gallery-thumb:hover {
@@ -202,17 +197,17 @@
   object-fit: cover;
 }
 
-/* Mobile Gallery */
+/* Galerie mobile */
 .gallery-mobile {
   display: none;
-  margin-top: 32px;
+  margin-top: var(--space-8);
 }
 
 .gallery-mobile-slide {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 }
 
 .gallery-mobile-image-container {
@@ -229,30 +224,32 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 16px;
+  padding: var(--space-4);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
 .gallery-mobile-caption-title {
-  color: white;
+  color: #fff;
   font-weight: 600;
   font-size: 1.25rem;
   margin: 0;
 }
 
-/* Swiper Customizations */
+/* Swiper */
 .main-swiper .swiper-pagination {
   bottom: 16px;
 }
 
-.main-swiper .swiper-pagination-bullet {
-  background-color: white;
+.main-swiper .swiper-pagination-bullet,
+.mobile-swiper .swiper-pagination-bullet {
+  background-color: #fff;
   opacity: 0.7;
 }
 
-.main-swiper .swiper-pagination-bullet-active {
+.main-swiper .swiper-pagination-bullet-active,
+.mobile-swiper .swiper-pagination-bullet-active {
   opacity: 1;
-  background-color: white;
+  background-color: #fff;
 }
 
 .thumbnail-swiper .swiper-slide-thumb-active {
@@ -261,51 +258,18 @@
 
 .thumbnail-swiper .swiper-slide-thumb-active .gallery-thumb {
   opacity: 1;
-  box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px white;
+  box-shadow: 0 0 0 2px var(--color-primary), 0 0 0 4px #fff;
+}
+
+.thumbnail-swiper {
+  overflow: hidden;
 }
 
 .mobile-swiper .swiper-pagination {
   bottom: 16px;
 }
 
-.mobile-swiper .swiper-pagination-bullet {
-  background-color: white;
-  opacity: 0.7;
-}
-
-.mobile-swiper .swiper-pagination-bullet-active {
-  opacity: 1;
-  background-color: white;
-}
-
-/* Hide scrollbar for thumbnail swiper */
-.thumbnail-swiper {
-  overflow: hidden;
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-
-  .gallery-title{
-    margin-top: 4rem;
-
-  }
-  .gallery-mobile {
-    display: block;
-    margin-top: 4rem;
-  }
-
-  .gallery-main {
-    display: none;
-  }
-
-  .gallery-thumbs {
-    display: none;
-  }
-}
-
-
-/* Curseur cliquable sur les images */
+/* Curseur */
 .cursor-pointer {
   cursor: pointer;
 }
@@ -318,10 +282,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: var(--z-modal);
 }
 
-/* Conteneur de l'image plein écran */
 .fullscreen-image-container {
   position: relative;
   width: 100%;
@@ -330,21 +293,36 @@
   max-height: 100vh;
 }
 
-/* Image en plein écran */
 .fullscreen-image {
   object-fit: contain;
   width: 100%;
   height: 100%;
 }
 
-/* Bouton de fermeture (croix) */
 .fullscreen-close-btn {
   position: absolute;
   top: 20px;
   right: 20px;
-  color: white;
+  color: #fff;
   font-size: 32px;
   background: none;
   border: none;
   cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gallery-title {
+    margin-top: var(--space-16);
+  }
+
+  .gallery-mobile {
+    display: block;
+    margin-top: var(--space-16);
+  }
+
+  .gallery-main,
+  .gallery-thumbs {
+    display: none;
+  }
 }

@@ -10,6 +10,7 @@ import CookieConsent from "@/components/CookieConsent";
 import InfoPopup from "@/components/InfoPopup";
 import GlobalStatus from "@/components/GlobalStatus";
 import GlobalBanner from "@/components/GlobalBanner";
+import Providers from "./Providers";
 
 // Configuration de la police Rubik
 const rubik = Rubik({
@@ -19,8 +20,12 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "Noliparc - Accueil",
-  description: "Le plus grand parc de trampolines indoor de Guadeloupe",
+  metadataBase: new URL("https://noliparc.fr"),
+  title: {
+    default: "Noliparc - Parc de loisirs indoor en Guadeloupe",
+    template: "%s | Noliparc",
+  },
+  description: "Le plus grand parc de trampolines et de jeux indoor de Guadeloupe : Nolijump, quads enfants, anniversaires et snack à Sainte-Rose.",
 
   // SEO
 keywords: [
@@ -68,12 +73,25 @@ keywords: [
 
   // Open Graph (réseaux sociaux)
   openGraph: {
-    title: "Noliparc - Accueil",
-    description: "Le plus grand parc indoor de Guadeloupe",
+    title: "Noliparc - Parc de loisirs indoor en Guadeloupe",
+    description: "Le plus grand parc de trampolines et de jeux indoor de Guadeloupe : Nolijump, quads enfants, anniversaires et snack à Sainte-Rose.",
     url: "https://noliparc.fr",
     siteName: "Noliparc",
     locale: "fr_FR",
     type: "website",
+    images: [
+      {
+        url: "/images/image-noliparc.png",
+        width: 1000,
+        height: 1050,
+        alt: "Noliparc - parc de loisirs indoor en Guadeloupe",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Noliparc - Parc de loisirs indoor en Guadeloupe",
+    description: "Le plus grand parc de trampolines et de jeux indoor de Guadeloupe.",
   },
   // Icones
   icons: {
@@ -115,6 +133,36 @@ export default function RootLayout({
         <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
       </head> */}
       <body className="font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "AmusementPark",
+              name: "Noliparc",
+              description:
+                "Le plus grand parc de trampolines et de jeux indoor de Guadeloupe : Nolijump, quads enfants, anniversaires et snack.",
+              url: "https://noliparc.fr",
+              telephone: "+590 590 85 86 20",
+              email: "contact@noliparc.fr",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "10 ZAC de Nolivier",
+                addressLocality: "Sainte-Rose",
+                postalCode: "97115",
+                addressCountry: "GP",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 16.295293,
+                longitude: -61.667341,
+              },
+              image: "https://noliparc.fr/images/image-noliparc.png",
+              priceRange: "€€",
+            }),
+          }}
+        />
+        <Providers>
         <AuthProvider>
           <Toaster />
         <GlobalStatus />
@@ -125,6 +173,7 @@ export default function RootLayout({
           <CookieConsent />
           {/*<InfoPopup maxAgeSeconds={60 * 60 * 24 * 7} />*/}
         </AuthProvider>
+        </Providers>
         <Analytics />
         <SpeedInsights />
       </body>

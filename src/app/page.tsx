@@ -18,7 +18,6 @@ import {
   FaClock,
   FaGavel,
   FaSocks,
-  FaCircle,
   FaFilePdf,
   FaMapMarkerAlt,
   FaTag,
@@ -340,6 +339,7 @@ export default function HomePage() {
                     width={1269}
                     alt={feature.alt ?? "Noliparc.fr"}
                     height={906}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     src={feature.image}
                   />
                 </div>
@@ -399,9 +399,9 @@ export default function HomePage() {
             <div className="tarif-item">
               <span className="tarif-label">Chaussettes</span>
               <span className="tarif-value">
-                <span className="tarif-sub">Adulte : Rupture de stock !</span>
+                <span className="tarif-sub">Adulte : 8,99€</span>
                 <br />
-                <span className="tarif-sub">Enfant : 2.50€</span>
+                <span className="tarif-sub">Enfant : 4,00€</span>
               </span>
             </div>
           </section>
@@ -430,109 +430,136 @@ export default function HomePage() {
         </div>
 
 
- <Box sx={{ maxWidth: "1200px", margin: "0 auto", padding: 4 }}>
-      <Typography data-aos="fade-down" data-aos-delay="300" variant="h2" fontFamily={"Rubik, sans-serif"} fontWeight={600} color="#DB7C26" component="h2" gutterBottom>
-        Règlement intérieur
-      </Typography>
-      <List>
-        {regles.map((regle, index) => (
-          <ListItem key={index} alignItems="flex-start">
-            <ListItemIcon sx={{ minWidth: 30 }}>
-              <FaCircle color="#000" />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography variant="body1" data-aos="fade-down" data-aos-delay="100" color="text.primary">
-                  {regle}
-                </Typography>
-              }
-            />
-          </ListItem>
-        ))}
-
-        <Box sx={{ mt: 4, textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            startIcon={<FaFilePdf />}
-            onClick={handleOpen}
-            sx={{
-              backgroundColor: '#DB7C26',
-              '&:hover': {
-                backgroundColor: '#c96f22',
-              },
-              fontWeight: 600,
-              padding: '10px 24px',
-              borderRadius: '8px',
-            }}
-          >
-            Voir la décharge de responsabilité et d'autorisation parentale
-          </Button>
-        </Box>
-
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          disableEscapeKeyDown={false}
+ <section id="reglement" aria-label="Règlement intérieur" style={{ background: '#fdf9f4', padding: '5rem 1rem' }}>
+      <Box sx={{ maxWidth: 900, margin: '0 auto' }}>
+        <Typography
+          data-aos="fade-down"
+          variant="h2"
+          component="h2"
+          fontWeight={800}
+          textAlign="center"
+          sx={{ color: '#DB7C26', mb: 1 }}
         >
-          <Box sx={modalStyle}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography id="modal-modal-title" color="#000000" variant="h5" component="h2">
-                Décharge de responsabilité et d'autorisation parentale
-              </Typography>
-              <IconButton onClick={handleClose} sx={{ color: 'text.primary' }}>
-                ✕
-              </IconButton>
-            </Box>
-            <Box sx={{ flex: 1, minHeight: 0, p: 0, m: 0, overflow: 'hidden', position: 'relative' }}>
-              {/* Solution principale pour la plupart des navigateurs */}
-              <object 
-                data="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7#view=FitH&toolbar=0&navpanes=0" 
-                type="application/pdf"
-                width="100%"
-                height="100%"
-                style={{ 
-                  border: 'none', 
-                  margin: 0, 
-                  padding: 0,
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%'
-                }}
-              >
-                {/* Solution de secours pour les navigateurs qui ne supportent pas l'élément object */}
-                <div style={{ padding: '20px', textAlign: 'center' }}>
-                  <p>Votre navigateur ne supporte pas l'affichage direct du PDF.</p>
-                  <Button 
-                    variant="contained"
-                    href="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    startIcon={<FaFilePdf />}
-                    sx={{
-                      backgroundColor: '#DB7C26',
-                      '&:hover': {
-                        backgroundColor: '#c96f22',
-                      },
-                      fontWeight: 600,
-                      padding: '10px 24px',
-                      borderRadius: '8px',
-                      mt: 2
-                    }}
-                  >
-                    Télécharger le PDF
-                  </Button>
-                </div>
-              </object>
-            </Box>
+          Règlement intérieur
+        </Typography>
+        <Typography textAlign="center" sx={{ color: 'text.secondary', mb: 4, fontSize: '1.05rem' }}>
+          Pour le confort et la sécurité de tous, merci de respecter ces quelques règles.
+        </Typography>
+
+        <List sx={{ bgcolor: '#fff', borderRadius: 4, p: { xs: 1.5, md: 2.5 }, boxShadow: '0 6px 20px rgba(0,0,0,0.05)' }}>
+          {regles.map((regle, index) => (
+            <ListItem key={index} alignItems="flex-start" sx={{ gap: 1.5 }}>
+              <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}>
+                <Box
+                  sx={{
+                    width: 26,
+                    height: 26,
+                    borderRadius: '50%',
+                    bgcolor: '#DB7C26',
+                    color: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 13,
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}
+                >
+                  {index + 1}
+                </Box>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="body1" data-aos="fade-up" data-aos-delay={index * 30} sx={{ lineHeight: 1.6 }}>
+                    {regle}
+                  </Typography>
+                }
+              />
+            </ListItem>
+          ))}
+
+          <Box sx={{ mt: 4, textAlign: 'center' }}>
+            <Button
+              variant="contained"
+              startIcon={<FaFilePdf />}
+              onClick={handleOpen}
+              sx={{
+                backgroundColor: '#DB7C26',
+                '&:hover': { backgroundColor: '#c96f22' },
+                fontWeight: 600,
+                padding: '12px 24px',
+                borderRadius: '999px',
+                textTransform: 'none',
+              }}
+            >
+              Voir la décharge de responsabilité et d'autorisation parentale
+            </Button>
           </Box>
-        </Modal>
-      </List>
-    </Box>
+        </List>
+      </Box>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        disableEscapeKeyDown={false}
+      >
+        <Box sx={modalStyle}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography id="modal-modal-title" color="#000000" variant="h5" component="h2">
+              Décharge de responsabilité et d'autorisation parentale
+            </Typography>
+            <IconButton onClick={handleClose} sx={{ color: 'text.primary' }}>
+              ✕
+            </IconButton>
+          </Box>
+          <Box sx={{ flex: 1, minHeight: 0, p: 0, m: 0, overflow: 'hidden', position: 'relative' }}>
+            {/* Solution principale pour la plupart des navigateurs */}
+            <object
+              data="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7#view=FitH&toolbar=0&navpanes=0"
+              type="application/pdf"
+              width="100%"
+              height="100%"
+              style={{
+                border: 'none',
+                margin: 0,
+                padding: 0,
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%'
+              }}
+            >
+              {/* Solution de secours pour les navigateurs qui ne supportent pas l'élément object */}
+              <div style={{ padding: '20px', textAlign: 'center' }}>
+                <p>Votre navigateur ne supporte pas l'affichage direct du PDF.</p>
+                <Button
+                  variant="contained"
+                  href="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  startIcon={<FaFilePdf />}
+                  sx={{
+                    backgroundColor: '#DB7C26',
+                    '&:hover': { backgroundColor: '#c96f22' },
+                    fontWeight: 600,
+                    padding: '10px 24px',
+                    borderRadius: '999px',
+                    textTransform: 'none',
+                    mt: 2
+                  }}
+                >
+                  Télécharger le PDF
+                </Button>
+              </div>
+            </object>
+          </Box>
+        </Box>
+      </Modal>
+    </section>
 
         <MapView />
 

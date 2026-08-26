@@ -9,7 +9,7 @@ export default function AdminLayout({
 }) {
   return (
     <EventsProvider>
-      <div style={{ minHeight: '100vh', display: 'flex', marginTop: '60px', flexDirection: 'column' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', marginTop: '64px', flexDirection: 'column' }}>
         <AdminBreadcrumbs />
         <div style={{ flex: 1 }}>
           {children}

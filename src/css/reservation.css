@@ -1,69 +1,65 @@
-.options-container{
-    display: flex;  
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* ==========================================================================
+   Écran de choix de réservation (Noliparc / Nolijump)
+   ========================================================================== */
+
+.reservation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
 }
 
-.reservation-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
+.options-container {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.option-button img{
-    width: 80%;
+.option-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+  cursor: pointer;
+  transition: width 0.5s ease-in-out, filter 0.3s ease;
 }
 
-.option-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: #FF8811;
-    transition: width ease-in-out .5s ;
+.option-button img {
+  width: 80%;
+  object-fit: contain;
+}
+
+.option-button:nth-child(1) {
+  background-color: var(--color-success);
 }
 
 .reservation-title {
-    font-size: 54px;
-    z-index: 1;
-    visibility: hidden;
+  font-size: 54px;
+  z-index: 1;
+  visibility: hidden;
 }
 
-  @media (min-width: 768px) {
-    .options-container{
-        flex-direction: row;
-    }
-    .option-button{
-        width: 50%;
-        height: 100%;
-    }
-    .option-button:hover{
-        width: 70%;
-    }
+@media (min-width: 768px) {
+  .options-container {
+    flex-direction: row;
   }
 
-.option-button:nth-child(1){
-    background-color: #71B340;
-}
-.option-button:hover{
+  .option-button {
+    width: 50%;
+    height: 100%;
+  }
+
+  .option-button:hover {
     width: 70%;
-    cursor:pointer;
-}
-
-.option-button:hover .option-button:nth-child(1){
-    filter: blur(10px);
-}
-
-.option-button:hover .option-button:nth-child(2){
-    opacity: 0.8;
+    filter: brightness(1.05);
+  }
 }

@@ -9,9 +9,17 @@ export default function PageCalendrier() {
   const month = 12; // Décembre
   return (
     <EventsProvider>
-      <main className="page" style={{ padding: 24 }}>
-        <Calendar year={year} month={month} storageKey={`calendar-${year}-12`} editable={false} />
-      </main>
+      <>
+        <header className="page-hero">
+          <h1>Calendrier</h1>
+          <p>
+            Retrouvez nos jours d'ouverture et nos événements spéciaux tout au long de l'année.
+          </p>
+        </header>
+        <div className="page-content">
+          <Calendar year={year} month={month} storageKey={`calendar-${year}-12`} editable={false} />
+        </div>
+      </>
     </EventsProvider>
   );
 }

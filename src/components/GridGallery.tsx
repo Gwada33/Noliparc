@@ -98,12 +98,20 @@ export default function ImageGallery({ images, title, subtitle, background }: Im
         </Swiper>
 
         {/* Custom Navigation Buttons */}
-        <button className="swiper-button-prev-custom gallery-nav-button gallery-nav-prev">
+        <button
+          className="swiper-button-prev-custom gallery-nav-button gallery-nav-prev"
+          aria-label="Image précédente"
+          type="button"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m15 18-6-6 6-6" />
           </svg>
         </button>
-        <button className="swiper-button-next-custom gallery-nav-button gallery-nav-next">
+        <button
+          className="swiper-button-next-custom gallery-nav-button gallery-nav-next"
+          aria-label="Image suivante"
+          type="button"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m9 18 6-6-6-6" />
           </svg>
@@ -166,6 +174,8 @@ export default function ImageGallery({ images, title, subtitle, background }: Im
           e.stopPropagation()
           setFullscreenImage(null)
         }}
+        aria-label="Fermer l'image"
+        type="button"
       >
         &times;
       </button>

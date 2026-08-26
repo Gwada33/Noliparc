@@ -1,22 +1,26 @@
+/* ==========================================================================
+   Popup d'information
+   ========================================================================== */
+
 .popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
+  padding: var(--space-4);
 }
 
 .popup-content {
   position: relative;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  background: var(--color-surface);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
   text-align: center;
+  box-shadow: var(--shadow-xl);
+  max-width: 90vw;
 }
 
 .close-button {
@@ -26,5 +30,12 @@
   background: none;
   border: none;
   font-size: 24px;
+  line-height: 1;
   cursor: pointer;
+  color: var(--color-slate);
+  transition: color var(--transition);
+}
+
+.close-button:hover {
+  color: var(--color-danger);
 }

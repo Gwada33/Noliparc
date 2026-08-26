@@ -55,9 +55,17 @@ const categories: Category[] = [
 
 export default function MenuTables() {
   return (
-    <section className="menu-container">
-      <h2 className="menu-title">Découvrez nos délicieuses offres</h2>
-      <div className="menu-grid">
+    <>
+      <header className="page-hero">
+        <h1>Le Snack Noliparc 🍔</h1>
+        <p>
+          Découvrez nos délicieuses offres salées, sucrées et boissons à déguster
+          sur place tout au long de la journée.
+        </p>
+      </header>
+
+      <section className="menu-container" aria-label="Carte du snack">
+        <div className="menu-grid">
         {categories.map((category, index) => (
           <div key={index} className="menu-card">
             <h3 className="menu-card-title">{category.title}</h3>
@@ -74,6 +82,7 @@ export default function MenuTables() {
           </div>
         ))}
       </div>
-    </section>
+      </section>
+    </>
   );
 }

@@ -1,49 +1,52 @@
+/* ==========================================================================
+   Carte du snack
+   ========================================================================== */
+
 .menu-container {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
-  background-color: #fff7f0;
-  color: #000;
+  padding: var(--space-8) var(--space-5) var(--space-24);
+  background: var(--color-surface);
+  color: var(--color-ink);
 }
 
 .menu-title {
-  font-size: 3rem;
+  font-size: var(--text-title-page);
   text-align: center;
-  color: #e65100;
-  margin-top: 20px;
-  margin-bottom: 80px;
-  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: var(--space-12);
+  font-weight: 800;
 }
 
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
   width: 100%;
 }
 
-/* Étendre le dernier élément si le nombre d’éléments est impair */
-@media (min-width: 768px) {
-  .menu-card:nth-last-child(1):nth-child(odd) {
-    grid-column: span 2;
-  }
+.menu-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
 }
 
-
-.menu-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+.menu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
 }
 
 .menu-card-title {
-  font-size: 1.8rem;
-  color: #c62828;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #ffe0b2;
-  padding-bottom: 10px;
+  font-size: 1.6rem;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-primary-soft);
+  font-weight: 700;
 }
 
 .menu-table {
@@ -52,18 +55,38 @@
 }
 
 .menu-table tr {
-  border-bottom: 1px dashed #ddd;
+  border-bottom: 1px dashed var(--color-line);
+}
+
+.menu-table tr:last-child {
+  border-bottom: none;
 }
 
 .item-name {
   text-align: left;
-  padding: 10px 0;
-  font-size: 1.1rem;
+  padding: var(--space-3) 0;
+  font-size: 1.05rem;
+  color: var(--color-ink);
 }
 
 .item-price {
   text-align: right;
-  padding: 10px 0;
-  font-weight: bold;
-  font-size: 1.1rem;
+  padding: var(--space-3) 0;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

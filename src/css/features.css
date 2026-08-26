@@ -1,63 +1,68 @@
-/* Features */
+/* ==========================================================================
+   Sections "features" & bandeau informations
+   ========================================================================== */
 
-.feature-container{
+.feature-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10vh;
-  flex-direction: column;
-  margin-top: 10rem;
-  margin-bottom: 10rem;
+  gap: var(--space-20);
+  max-width: 1200px;
+  margin: var(--space-24) auto;
+  padding: 0 var(--space-5);
 }
 
 .feature-card {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-8);
   width: 100%;
-  padding: 2rem;
-  color: #000;
+  padding: var(--space-8);
+  color: var(--color-ink);
+}
+
+.feature-image {
+  flex: 1;
 }
 
 .feature-image img {
   width: 100%;
-  height: 100%;
-  border-radius: 1rem;
+  height: auto;
+  border-radius: var(--radius-xl);
+  transition: transform var(--transition-slow);
+}
+
+.feature-card:hover .feature-image img {
+  transform: scale(1.03);
 }
 
 .feature-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* centrage horizontal du contenu */
+  align-items: center;
   text-align: center;
-  gap: 20px;
-  padding: 1rem;
-  width: 100%;
+  gap: var(--space-5);
+  padding: var(--space-4);
 }
 
 .feature-content h2 {
   text-transform: uppercase;
-  font-size: 3.5rem;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
 .feature-content p {
+  color: var(--color-slate);
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-2);
+  white-space: pre-line;
 }
 
-.btn-secondary {
-  background: #03a9f4;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
-/* Le texte centré à gauche mais non écrasé */
-
-
-/* Responsive desktop */
+/* ---- Desktop : alternance image / texte ---- */
 @media (min-width: 768px) {
   .feature-card {
     flex-direction: row;
@@ -71,25 +76,24 @@
   .feature-content {
     align-items: flex-start;
     text-align: left;
-    justify-content: center;
-    padding: 2rem;
-    width: 100%;
   }
 
-  .feature-image,
-  .feature-content {
-    flex: 1;
+  .feature-content p {
+    text-align: left;
   }
 }
+
+/* ==========================================================================
+   Bandeau "informations" (icônes + infos clés)
+   ========================================================================== */
+
 .informations-section {
-  margin-top: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 2rem 1rem;
-  background-color: 		#A8D672;
-  min-height: 40vh;
+  padding: var(--space-12) var(--space-4);
+  background-color: var(--color-lime);
   width: 100%;
 }
 
@@ -102,63 +106,50 @@
   flex-wrap: wrap;
   gap: 0;
   width: 100%;
-  margin: 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
 .informations-list li {
   position: relative;
   box-sizing: border-box;
   width: 25%;
-  padding: 1rem;
-  gap: 20px;
+  padding: var(--space-6) var(--space-4);
+  gap: var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
   text-align: center;
-  border-radius: 0;
 }
 
-/* Bordure droite fondue avec un gradient */
 .informations-list li::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0;
+  top: 20%;
   right: 0;
   width: 2px;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(224, 224, 224, 0));
+  height: 60%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0)
+  );
 }
 
-/* Supprimer l'effet sur le 4e élément (desktop) */
 .informations-list li:nth-child(4)::after {
   display: none;
 }
 
 .informations-list li svg {
-  font-size: 4rem;
-  color: #efefef;
-  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  color: #fff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
-/* Ombre derrière l'icône */
-.informations-list li svg::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  opacity: 0.5;
-  filter: blur(2px);
-  z-index: -1;
-  border-radius: 50%;
-}
-
-/* Responsive à 1024px : 2 colonnes */
 @media (max-width: 1024px) {
   .informations-list li {
     width: 50%;
@@ -169,7 +160,6 @@
   }
 }
 
-/* Responsive à 600px : 1 colonne */
 @media (max-width: 600px) {
   .informations-list li {
     width: 100%;

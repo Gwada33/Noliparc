@@ -11,12 +11,17 @@ const images = Array.from({ length: imageCount }, (_, i) => ({
 
 export default function Preview() {
   return (
-    <main>
+    <>
+      <header className="page-hero">
+        <h1>Espace de jeux Noliparc</h1>
+        <p>
+          Découvrez nos structures de jeux, toboggans et piscines à balles en images.
+        </p>
+      </header>
       <GridGallery
         images={images}
-        title="Espace de jeux Noliparc"
-        subtitle="Images de Quad"
+        title="Galerie photos"
       />
-    </main>
+    </>
   );
 }

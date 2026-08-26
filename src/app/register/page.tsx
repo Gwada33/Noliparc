@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -13,7 +13,8 @@ import {
   Link,
 } from "@mui/material";
 import ReCAPTCHA from "react-google-recaptcha";
-import { MuiTelInput } from 'mui-tel-input'
+import { MuiTelInput } from "mui-tel-input";
+import AuthShell from "@/components/AuthShell";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -28,36 +29,6 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [acceptedCGU, setAcceptedCGU] = useState(false);
-  const [shapes, setShapes] = useState<React.ReactNode[]>([]);
-
-  useEffect(() => {
-    const newShapes = [...Array(20)].map((_, i) => {
-      const size = Math.floor(Math.random() * 150) + 50; // 50–200px
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const delay = Math.random() * 10;
-
-      return (
-        <div
-          key={i}
-          className="pattern-shape"
-          style={{
-            width: size,
-            height: size,
-            top: `${top}%`,
-            left: `${left}%`,
-            animationDelay: `${delay}s`,
-          }}
-        />
-      );
-    });
-
-    setShapes(newShapes);
-  }, []);
-
-    const handlePhoneChange = (value: string) => {
-    setForm({ ...form, phone: value });
-  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -101,23 +72,10 @@ export default function RegisterPage() {
   }
 
   return (
-    <>
-      <Box
-        sx={{
-          maxWidth: 500,
-          padding: "1rem 1rem",
-          borderRadius: "20px",
-          maxHeight: "100vh",
-          mx: "auto",
-          mt: 10,
-        }}
-      >
-        <Typography variant="h3" color="black" gutterBottom>
-          Créez votre compte
-        </Typography>
-
-        <form onSubmit={handleSubmit}>
-          <Box display="flex" gap={2} mt={2}>
+    <AuthShell title="Créez votre compte" subtitle="Inscrivez-vous en quelques secondes">
+      <form onSubmit={handleSubmit}>
+        <Box display="flex" flexDirection="column" gap={1.5}>
+          <Box display="flex" gap={1.5}>
             <TextField
               label="Prénom"
               fullWidth
@@ -125,7 +83,6 @@ export default function RegisterPage() {
               value={form.firstName}
               onChange={(e) => setForm({ ...form, firstName: e.target.value })}
             />
-
             <TextField
               label="Nom"
               fullWidth
@@ -140,7 +97,6 @@ export default function RegisterPage() {
             type="email"
             fullWidth
             required
-            margin="normal"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
@@ -150,30 +106,28 @@ export default function RegisterPage() {
             type="password"
             fullWidth
             required
-            margin="normal"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
 
-           <MuiTelInput
-          defaultCountry="GP"
-          preferredCountries={["FR", "BE", "CH", "GP"]}
-          label="Numéro de téléphone"
-          fullWidth
-          required
-          margin="normal"
-          value={form.phone}
-          onChange={(value: string) =>
-            setForm((prev) => ({ ...prev, phone: value }))
-          }
-        />
+          <MuiTelInput
+            defaultCountry="GP"
+            preferredCountries={["FR", "BE", "CH", "GP"]}
+            label="Numéro de téléphone"
+            fullWidth
+            required
+            value={form.phone}
+            onChange={(value: string) =>
+              setForm((prev) => ({ ...prev, phone: value }))
+            }
+          />
 
-          <Box mt={2}>
+          <div className="recaptcha-wrap">
             <ReCAPTCHA
               sitekey="6LdB4E0rAAAAAIVszAj02dyiKJnOmAyPKPB0eykR"
               onChange={(token) => setCaptchaToken(token)}
             />
-          </Box>
+          </div>
 
           <FormControlLabel
             control={
@@ -184,49 +138,41 @@ export default function RegisterPage() {
               />
             }
             label={
-              <Box display="inline" component="span">
-                <Typography variant="body2" component="span" color="black">
-                  J'accepte les{" "}
-                  <Link href="/legal#cgu" target="_blank" underline="hover">
-                    conditions d'utilisation
-                  </Link>
-                  <Typography component="span" color="error" sx={{ ml: 0 }}>
-                    *
-                  </Typography>
-                </Typography>
-              </Box>
+              <Typography variant="body2" component="span">
+                J&apos;accepte les{" "}
+                <Link href="/legal#cgu" target="_blank" underline="hover">
+                  conditions d&apos;utilisation
+                </Link>
+                *
+              </Typography>
             }
-            sx={{ mt: 2 }}
           />
 
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            sx={{ mt: 2 }}
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : "S’inscrire"}
+            {loading ? <CircularProgress size={24} /> : "S'inscrire"}
           </Button>
 
-          <Typography variant="body2" textAlign="center" color="#000" mt={2}>
+          <Typography variant="body2" textAlign="center" mt={1}>
             Déjà un compte ? <Link href="/login">Connectez-vous</Link>
           </Typography>
-        </form>
+        </Box>
+      </form>
 
-        {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
-          </Alert>
-        )}
-        {success && (
-          <Alert severity="success" sx={{ mt: 2 }}>
-            {success}
-          </Alert>
-        )}
-      </Box>
-      <div className="magicpattern-container">{shapes}</div>
-    </>
+      {error && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      )}
+      {success && (
+        <Alert severity="success" sx={{ mt: 2 }}>
+          {success}
+        </Alert>
+      )}
+    </AuthShell>
   );
 }

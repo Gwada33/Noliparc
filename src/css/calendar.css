@@ -1,20 +1,23 @@
-/* Calendar component styles */
+/* ==========================================================================
+   Calendrier
+   ========================================================================== */
+
 .calendar {
-  margin-top: 2rem;
+  margin-top: var(--space-8);
   width: 100%;
 }
 
 .calendar-head {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .calendar-head-cell {
   text-align: center;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--color-ink);
   text-transform: uppercase;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
@@ -24,51 +27,45 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  border-bottom: 1px solid var(--color-line);
 }
 
 .calendar-cell {
-  background: #fff;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
   border-right: none;
   border-radius: 0;
-  padding: 1rem;
+  padding: var(--space-4);
   min-height: 120px;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.2s ease;
-  box-shadow: none;
+  transition: background-color var(--transition);
 }
 
 .calendar-cell:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-  transform: none;
-  box-shadow: none;
+  background-color: var(--color-surface-alt);
 }
 
 .calendar-cell.pad {
   background: transparent;
-  border-bottom: 1px solid rgba(224, 224, 224, 1);
-  border-right: none;
-  box-shadow: none;
+  border-bottom: 1px solid var(--color-line);
 }
 
 .calendar-cell.open {
-  border-left: 4px solid #2e7d32;
-  background-color: rgba(46, 125, 50, 0.06);
+  border-left: 4px solid var(--color-success);
+  background-color: var(--color-success-soft);
 }
 
 .calendar-cell.closed {
   border-left: none;
   background-color: rgba(211, 47, 47, 0.05);
-  opacity: 1;
 }
 
 .calendar-cell-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .day-number {
@@ -78,17 +75,17 @@
 }
 
 .calendar-cell.open .day-number {
-  color: #2e7d32;
+  color: var(--color-success);
 }
 
 .calendar-cell.closed .day-number {
-  color: #d32f2f;
+  color: var(--color-danger);
 }
 
 .calendar-cell-body {
   flex: 1;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--color-slate);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -97,23 +94,24 @@
 .calendar-cell-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
 }
 
 .calendar-legend {
   display: flex;
-  gap: 2rem;
+  gap: var(--space-8);
   align-items: center;
-  margin-top: 2rem;
+  margin-top: var(--space-8);
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   font-weight: 500;
-  color: var(--foreground);
+  color: var(--color-ink);
 }
 
 .legend-dot {
@@ -123,68 +121,62 @@
   display: inline-block;
 }
 
-.legend-dot.open { background: #2e7d32; }
-.legend-dot.closed { background: #d32f2f; }
+.legend-dot.open {
+  background: var(--color-success);
+}
+.legend-dot.closed {
+  background: var(--color-danger);
+}
 
-/* Preview Widget - Exact match for ScheduleTable DA */
+/* ---- Aperçu (widget) ---- */
 .calendar-preview {
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: var(--space-12) auto;
   cursor: pointer;
   background: transparent;
-  box-shadow: none;
   border: none;
-  padding: 0 16px; /* Matches px={2} */
-  margin-bottom: 48px; /* Matches mb={6} which is 48px */
-  margin-top: 48px; /* Add margin top */
+  padding: 0 16px;
 }
 
 .calendar-preview-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  /* Spacing: MUI Table cells have padding. Grid gap simulates this. */
-  row-gap: 0; 
-  column-gap: 0;
-  border-bottom: 1px solid rgba(224, 224, 224, 1); /* Bottom border of table */
+  border-bottom: 1px solid var(--color-line);
 }
 
 .preview-head {
-  text-align: left; /* MUI TableCell default is left */
-  font-weight: 600; /* ScheduleTable headers */
-  font-size: 0.875rem; /* MUI TableCell size */
-  color: rgba(0, 0, 0, 0.87); /* MUI default text */
-  padding: 16px; /* MUI TableCell padding */
-  font-family: "Rubik", sans-serif;
-  border-bottom: 1px solid rgba(224, 224, 224, 1); /* Header border */
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  padding: 16px;
+  border-bottom: 1px solid var(--color-line);
 }
 
 .preview-cell {
   aspect-ratio: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Left align to match TableCell */
-  padding: 16px; /* Match TableCell padding */
-  font-size: 18px; /* Matches ScheduleTable fontSize: 18 */
-  font-weight: 600; /* Matches ScheduleTable fontWeight: 600 */
-  font-family: "Rubik", sans-serif;
-  color: rgba(0, 0, 0, 0.87); /* Default text color */
-  border-bottom: 1px solid rgba(224, 224, 224, 1); /* Row border */
-  /* No borders on sides for table look */
-  /* Hover effect subtle */
-  transition: background-color 0.2s;
+  justify-content: flex-start;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-line);
+  transition: background-color var(--transition);
 }
 
 .preview-cell:hover {
-  background-color: rgba(0, 0, 0, 0.04); /* MUI hover */
+  background-color: var(--color-surface-alt);
 }
 
 .preview-cell.open {
-  color: #2e7d32; /* Green for open days */
+  color: var(--color-success);
 }
 
 .preview-cell.closed {
-  color: #d32f2f; /* Matches ScheduleTable */
+  color: var(--color-danger);
 }
 
 .calendar .event {
@@ -192,9 +184,9 @@
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: rgba(219, 124, 38, 0.12);
-  color: #DB7C26;
+  color: var(--color-primary);
   font-weight: 600;
   width: fit-content;
 }
@@ -202,61 +194,74 @@
 .calendar .note {
   display: block;
   padding: 8px 10px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.04);
-  color: #333;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-alt);
+  color: var(--color-ink);
 }
 
 @media (max-width: 768px) {
   .calendar-grid {
     grid-template-columns: repeat(1, 1fr);
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
+
   .calendar-head {
     display: none;
   }
+
   .calendar-cell {
     min-height: auto;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 0.75rem;
+    gap: var(--space-4);
+    padding: var(--space-3);
   }
+
   .calendar-cell-top {
     margin-bottom: 0;
     min-width: 40px;
   }
+
   .calendar-cell-top .day-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     font-size: 1rem;
     font-weight: 800;
-    background: rgba(0,0,0,0.06);
-    color: #000;
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
   }
+
   .calendar-cell.open .calendar-cell-top .day-number {
-    background: rgba(46, 125, 50, 0.12);
-    color: #2e7d32;
+    background: var(--color-success-soft);
+    color: var(--color-success);
   }
+
   .calendar-cell.closed .calendar-cell-top .day-number {
-    background: rgba(211, 47, 47, 0.10);
-    color: #d32f2f;
+    background: rgba(211, 47, 47, 0.1);
+    color: var(--color-danger);
   }
-  .calendar-cell.open, .calendar-cell.closed {
+
+  .calendar-cell.open,
+  .calendar-cell.closed {
     border-left-width: 4px;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    border-right: 1px solid rgba(0,0,0,0.05);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid var(--color-line);
+    border-right: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
   }
-  .calendar-cell.open { border-left-color: #2e7d32; }
-  .calendar-cell.closed { border-left-color: #d32f2f; }
-  
-  /* Preview responsive: reduce padding */
-  .preview-head, .preview-cell {
+
+  .calendar-cell.open {
+    border-left-color: var(--color-success);
+  }
+  .calendar-cell.closed {
+    border-left-color: var(--color-danger);
+  }
+
+  .preview-head,
+  .preview-cell {
     padding: 8px;
     font-size: 14px;
   }
