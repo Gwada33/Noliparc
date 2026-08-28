@@ -260,7 +260,7 @@ export default function Nolijump() {
             title="Chaussettes anti-dérapantes"
             variant="nolijump-entree"
             durations={[
-              { time: "Enfant : ", price: "4,00€" },
+              { time: "Enfant : ", price: "5€" },
               { time: "Adulte : ", price: "8,99€" },
             ]}
             showIcons={false}

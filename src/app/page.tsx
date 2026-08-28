@@ -401,7 +401,7 @@ export default function HomePage() {
               <span className="tarif-value">
                 <span className="tarif-sub">Adulte : 8,99€</span>
                 <br />
-                <span className="tarif-sub">Enfant : 4,00€</span>
+                <span className="tarif-sub">Enfant : 5€</span>
               </span>
             </div>
           </section>
