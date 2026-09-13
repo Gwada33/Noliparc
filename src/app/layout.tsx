@@ -7,10 +7,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthProvider } from "./context/AuthContext";
 import CookieConsent from "@/components/CookieConsent";
-import InfoPopup from "@/components/InfoPopup";
 import GlobalStatus from "@/components/GlobalStatus";
-import GlobalBanner from "@/components/GlobalBanner";
 import Providers from "./Providers";
+import ScrollReveal from "@/components/ScrollReveal";
 
 // Configuration de la police Rubik
 const rubik = Rubik({
@@ -18,6 +17,12 @@ const rubik = Rubik({
   variable: "--font-rubik",
   display: "swap",
 });
+
+export const viewport = {
+  themeColor: "#DB7C26",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://noliparc.fr"),
@@ -134,6 +139,16 @@ export default function RootLayout({
       </head> */}
       <body className="font-sans">
         <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js');",
+          }}
+        />
+        <link rel="preconnect" href="https://ia600709.us.archive.org" />
+        <link rel="preconnect" href="https://tile.openstreetmap.org" />
+        <link rel="preconnect" href="https://server.arcgisonline.com" />
+        <link rel="preconnect" href="https://ewyyikh0ws.ufs.sh" />
+        <link rel="preconnect" href="https://maps.google.com" />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -163,6 +178,7 @@ export default function RootLayout({
           }}
         />
         <Providers>
+        <ScrollReveal />
         <AuthProvider>
           <Toaster />
         <GlobalStatus />

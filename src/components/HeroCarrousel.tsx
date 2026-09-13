@@ -101,6 +101,7 @@ export default function HeroCarousel() {
                   src={slide.video}
                   muted
                   playsInline
+                  preload={index === 0 ? "metadata" : "none"}
                   onEnded={handleVideoEnded}
                   style={{
                     position: "absolute",

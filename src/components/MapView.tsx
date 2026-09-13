@@ -61,6 +61,7 @@ export default function CarteLeaflet() {
               <img
                 alt="Façade du parc Noliparc"
                 src={content.header["image-ext"]}
+                loading="lazy"
                 style={{ width: "100%", marginTop: "0.5rem", borderRadius: "8px" }}
               />
             </Popup>

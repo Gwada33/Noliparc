@@ -10,12 +10,12 @@ const nextConfig = {
       { protocol: 'https', hostname: 'noliparc.fr', pathname: '/**' },
     ],
     minimumCacheTTL: 60,
-    formats: ['image/webp'],
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    path: '/_next/image',
-    loader: 'default',
   },
+
+  poweredByHeader: false,
 
   turbopack: {
     root: path.resolve(__dirname),
@@ -27,27 +27,62 @@ const nextConfig = {
     API_URL: process.env.API_URL || 'http://localhost:3000',
   },
 
-  // Configuration pour le développement
+  // Meilleur tree-shaking des gros packages (barrels)
+  experimental: {
+    optimizePackageImports: [
+      '@mui/material',
+      '@mui/icons-material',
+      '@mui/x-date-pickers',
+      'react-icons',
+      'recharts',
+    ],
+  },
+
   async headers() {
     return [
+      // Assets statiques : cache long et immutable
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/icons/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Pages : jamais de cache long (le contenu change : horaires, prix...)
       {
         source: '/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, s-maxage=31536000, stale-while-revalidate=2592000',
+            value: 'public, max-age=0, s-maxage=60, stale-while-revalidate=120',
           },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
           },
         ],
       },

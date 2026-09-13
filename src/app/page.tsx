@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import content from "@/data/texts.json";
 
 import dynamic from 'next/dynamic';
@@ -27,10 +25,8 @@ import { MdNoFood } from "react-icons/md";
 import { Box, Typography, ListItem, ListItemText, ListItemIcon, List, Button, Modal, IconButton } from "@mui/material";
 import HeroCarousel from "@/components/HeroCarrousel";
 import Footer from "@/components/Footer";
-import { ScheduleTable } from "@/components/ScheduleTable";
+import ScheduleCard from "@/components/ScheduleCard";
 import Formule from "@/components/Formule";
-import CalendarPreview from "@/components/CalendarPreview";
-import SnowEffect from "@/components/SnowEffect";
 
 const icons: any = {
   FaRulerCombined: FaRulerCombined,
@@ -74,6 +70,54 @@ const modalStyle = {
   flexDirection: 'column',
 };
 
+const VACANCES_HOME: string[][] = [
+  ["Lun.", "Fermé"],
+  ["Mar.", "10h-18h"],
+  ["Mer.", "10h-18h"],
+  ["Jeu.", "10h-18h"],
+  ["Ven.", "10h-18h"],
+  ["Sam.", "10h-18h"],
+  ["Dim.", "13h-17h"],
+];
+
+const SCOLAIRE_HOME: string[][] = [
+  ["Lun.", "Fermé"],
+  ["Mar.", "Fermé"],
+  ["Mer.", "10h-17h"],
+  ["Jeu.", "Fermé"],
+  ["Ven.", "Fermé"],
+  ["Sam.", "10h-18h"],
+  ["Dim.", "13h-17h"],
+];
+
+const espaces = [
+  {
+    title: "L'espace de jeux",
+    image: "/images/image-toboggan.jpeg",
+    points: ["350 m² de structures indoor", "Toboggans & piscines à balles", "Dès le plus jeune âge"],
+    cta: { label: "Voir les images", href: "/preview" },
+  },
+  {
+    title: "Les quads",
+    image: "/images/quad/quad-1.jpeg",
+    points: ["De vrais mini-quads", "Circuit 100 % sécurisé", "Encadrés par notre équipe"],
+    cta: { label: "Voir les quads", href: "/quad" },
+  },
+  {
+    title: "Le snack",
+    image: "/images/snack.png",
+    contain: true,
+    points: ["Hamburgers & frites", "Granitas rafraîchissants", "Sur place toute la journée"],
+    cta: { label: "La carte du snack", href: "/snack" },
+  },
+  {
+    title: "Les anniversaires",
+    image: "/images/nolijump/nolijump-10.jpeg",
+    points: ["Salle dédiée au goûter", "Gâteau & boissons inclus", "Animation selon la formule"],
+    cta: { label: "Voir les formules", href: "/anniversaires" },
+  },
+];
+
 export default function HomePage() {
   const [open, setOpen] = useState(false);
   const [parkStatus, setParkStatus] = useState<'open' | 'closed' | 'maintenance'>('open');
@@ -82,6 +126,7 @@ export default function HomePage() {
   const [events, setEvents] = useState<any[]>([]);
   const [eventsLoading, setEventsLoading] = useState(false);
   const [eventsError, setEventsError] = useState<string | null>(null);
+  const [showAllRules, setShowAllRules] = useState(false);
 
   const formatEventDate = (dateStr?: string, time?: string) => {
     if (!dateStr) return '';
@@ -125,11 +170,6 @@ export default function HomePage() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-
     fetch('/api/config')
       .then(res => res.json())
       .then(data => {
@@ -178,64 +218,158 @@ export default function HomePage() {
           </Box>
         )}
 
-        <Box
-          display="flex"
-          flexDirection={{ xs: "column", md: "row" }}
-          gap={4}
-          justifyContent="center"
-          alignItems="flex-start"
-          mt={10}
-          mb={10}
-        >
-          {schedules.length > 0 ? (
-            schedules.map((schedule) => (
-              <ScheduleTable
-                key={schedule.id}
-                title={schedule.season}
-                headers={schedule.headers}
-                parkStatus={parkStatus}
-                data={schedule.rows}
-              />
-            ))
-          ) : (
-            <>
-              <ScheduleTable
-                title="Vacances scolaires"
-                headers={["Jusqu'à 10 ans"]}
-                parkStatus={parkStatus}
-                data={[
-                  ["Lun.", "Fermé"],
-                  ["Mar.", "10h-18h"],
-                  ["Mer.", "10h-18h"],
-                  ["Jeu.", "10h-18h"],
-                  ["Ven.", "10h-18h"],
-                  ["Sam.", "10h-18h"],
-                  ["Dim.", "13h-17h"],
-                ]}
-              />
+        <section className="informations-section" data-aos="fade-in">
+          <ul className="informations-list">
+            {content.informations_noliparc.items.map((item, index) => {
+              const Icon = icons[item.icon];
+              return (
+                <li key={index} className="informations-item">
+                  {Icon && <Icon />}
+                  {item.text}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
 
-              <ScheduleTable
-                title="Périodes scolaires"
-                headers={["Jusqu'à 10 ans"]}
-                parkStatus={parkStatus}
-                data={[
-                  ["Lun.", "Fermé"],
-                  ["Mar.", "Fermé"],
-                  ["Mer.", "10h-17h"],
-                  ["Jeu.", "Fermé"],
-                  ["Ven.", "Fermé"],
-                  ["Sam.", "10h-18h"],
-                  ["Dim.", "13h-17h"],
-                ]}
-              />
-            </>
-          )}
-        </Box>
+        <section id="espaces" aria-labelledby="espaces-title" style={{ maxWidth: 1200, margin: '0 auto', padding: '5rem 1rem 0' }}>
+          <h2 id="espaces-title" className="section-heading" data-aos="fade-up">Nos espaces</h2>
+          <div className="offers-grid offers-grid--2" style={{ marginBottom: 'var(--space-8)' }}>
+            {espaces.map((espace, i) => (
+              <article
+                className="offer-card"
+                key={espace.title}
+                data-aos="fade-up"
+                data-aos-delay={i * 100}
+              >
+                <div
+                  className={`offer-card__img ${
+                    espace.contain ? "offer-card__img--contain" : ""
+                  }`}
+                >
+                  <Image
+                    src={espace.image}
+                    alt={espace.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="offer-card__body">
+                  <h3 className="offer-card__title">{espace.title}</h3>
+                  <ul className="offer-card__points">
+                    {espace.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  <Link href={espace.cta.href} className="offer-card__cta btn-primary">
+                    {espace.cta.label}
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="horaires-tarifs" aria-labelledby="horaires-tarifs-title" style={{ maxWidth: 1200, margin: '0 auto', padding: '5rem 1rem 0' }}>
+          <h2 id="horaires-tarifs-title" className="section-heading" data-aos="fade-up">
+            Horaires &amp; tarifs
+          </h2>
+
+          {/* Horaires d'ouverture */}
+          <h3 id="horaires" className="block-title" data-aos="fade-up">
+            Horaires d&apos;ouverture
+          </h3>
+
+          <div className="sched-grid" data-aos="fade-up">
+            {schedules.length > 0 ? (
+              schedules.map((schedule) => (
+                <ScheduleCard
+                  key={schedule.id}
+                  tone="green"
+                  title={String(schedule.season || "Horaires")}
+                  headers={schedule.headers || ["Jusqu'à 10 ans"]}
+                  data={schedule.rows}
+                />
+              ))
+            ) : (
+              <>
+                <ScheduleCard
+                  tone="green"
+                  title="Pendant les vacances"
+                  headers={["Jusqu'à 10 ans"]}
+                  data={VACANCES_HOME}
+                />
+                <ScheduleCard
+                  tone="green"
+                  title="Périodes scolaires"
+                  headers={["Jusqu'à 10 ans"]}
+                  data={SCOLAIRE_HOME}
+                />
+              </>
+            )}
+          </div>
+
+          {/* Tarifs */}
+          <h3 id="tarifs" className="block-title" data-aos="fade-up">
+            Tarifs
+          </h3>
+
+          <section className="tarifs-section">
+            <div className="tarif-item">
+              <span className="tarif-label">Moins de 1 an</span>
+              <span className="tarif-value">Gratuit</span>
+            </div>
+
+            <div className="tarif-item">
+              <span className="tarif-label">De 1 à 10 ans</span>
+              <span className="tarif-value">12€</span>
+            </div>
+
+            <div className="tarif-item">
+              <span className="tarif-label">Adulte</span>
+              <span className="tarif-value">
+                <br />
+                <span className="tarif-sub">+3€ par adulte accompagnateur</span>
+              </span>
+            </div>
+
+            <div className="tarif-item">
+              <span className="tarif-label">Chaussettes</span>
+              <span className="tarif-value">
+                <span className="tarif-sub">Adulte : 8,99€</span>
+                <br />
+                <span className="tarif-sub">Enfant : 5€</span>
+              </span>
+            </div>
+          </section>
+
+          <div className="formule-grid" data-aos="fade-up">
+            <Formule
+              title="Pass 4 entrées "
+              variant="noliparc-anniv"
+              subtitle="(Valable pour la prochaine visite)"
+              durations={[{ time: "", price: "36€" }]}
+              showIcons={false}
+              highlightPrice={true}
+              showButton={false}
+            />
+
+            <Formule
+              title="Pass 7 entrées "
+              variant="noliparc-anniv"
+              subtitle="(Valable pour la prochaine visite)"
+              durations={[{ time: "", price: "60€" }]}
+              showIcons={false}
+              highlightPrice={true}
+              showButton={false}
+            />
+          </div>
+        </section>
 
         {events.length > 0 && (
-          <section id="evenements" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1rem' }}>
-            <h3 className="formule-title" data-aos="fade-up" style={{ marginBottom: '1rem' }}>Événements à venir</h3>
-            <div className="feature-container">
+          <section id="evenements" style={{ maxWidth: 1200, margin: '0 auto', padding: '4rem 1rem 0' }}>
+            <h2 className="section-heading" data-aos="fade-up">Événements à venir</h2>
+            <div className="feature-container" style={{ margin: 'var(--space-8) auto 0' }}>
             {events.map((ev, i) => (
               <section
                 className="feature-card"
@@ -243,10 +377,10 @@ export default function HomePage() {
                 data-aos="fade-up"
                 data-aos-delay={i * 100}
                 style={{
-                  border: '1px solid #eee',
+                  border: '1px solid var(--color-line)',
                   borderRadius: 16,
                   padding: '1.25rem',
-                  boxShadow: '0 4px 10px rgba(0,0,0,0.06)'
+                  boxShadow: 'var(--shadow-sm)'
                 }}
               >
                 <Box
@@ -286,7 +420,7 @@ export default function HomePage() {
                         </Box>
                       )}
                       {ev.category && (
-                        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, mt: 0.5, px: 1, py: 0.5, borderRadius: 999, backgroundColor: 'rgba(219,124,38,0.12)', color: '#DB7C26' }}>
+                        <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, mt: 0.5, px: 1, py: 0.5, borderRadius: 999, backgroundColor: 'rgba(46,125,50,0.12)', color: '#2e7d32' }}>
                           <FaTag />
                           <span style={{ fontWeight: 600 }}>{ev.category}</span>
                         </Box>
@@ -298,14 +432,10 @@ export default function HomePage() {
                         {ev.description}
                       </Typography>
                     )}
-
-                    <Box sx={{ mt: 2 }}>
-                      <Link href="#" className="btn-secondary">En savoir plus</Link>
-                    </Box>
                   </Box>
 
                   {ev.image && (
-                    <Box sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: '0 6px 16px rgba(0,0,0,0.08)' }}>
+                    <Box sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
                       <img
                         className="rounded"
                         width={1280}
@@ -324,113 +454,7 @@ export default function HomePage() {
           </section>
         )}
 
-        <div className="feature-container" id="noliparc">
-          {content.features.map((feature, i) => (
-            <section
-              className="feature-card"
-              key={i}
-              data-aos="fade-up"
-              data-aos-delay={i * 100}
-            >
-              {feature.image && (
-                <div className="feature-image">
-                  <Image
-                    className="rounded"
-                    width={1269}
-                    alt={feature.alt ?? "Noliparc.fr"}
-                    height={906}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    src={feature.image}
-                  />
-                </div>
-              )}
-              <div className="feature-content">
-                <h2>{feature.title}</h2>
-                <Typography
-                  component="div"
-                  sx={{
-                    whiteSpace: "pre-line",
-                    whiteSpaceTrim: "discard-after",
-                  }}                >
-                  {feature.paragraph}
-                </Typography>
-                <Link href={feature.link.href} className="btn-secondary">
-                  {feature.link.label}
-                </Link>
-              </div>
-            </section>
-          ))}
-        </div>
-        <section className="informations-section">
-          <ul className="informations-list">
-            {content.informations_noliparc.items.map((item, index) => {
-              const Icon = icons[item.icon];
-              return (
-                <li key={index} className="informations-item">
-                  {Icon && <Icon />}
-                  {item.text}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-
-        <div className="jump-pricing" data-aos="fade-up" data-aos-delay="300">
-          <h3 className="formule-title">Tarifs</h3>
-          <section className="tarifs-section">
-            <div className="tarif-item">
-              <span className="tarif-label">Moins de 1 an</span>
-              <span className="tarif-value">Gratuit</span>
-            </div>
-
-            <div className="tarif-item">
-              <span className="tarif-label">De 1 à 10 ans</span>
-              <span className="tarif-value">12€</span>
-            </div>
-
-            <div className="tarif-item">
-              <span className="tarif-label">Adulte</span>
-              <span className="tarif-value">
-                <br />
-                <span className="tarif-sub">+3€ par adulte accompagnateur</span>
-              </span>
-            </div>
-
-            <div className="tarif-item">
-              <span className="tarif-label">Chaussettes</span>
-              <span className="tarif-value">
-                <span className="tarif-sub">Adulte : 8,99€</span>
-                <br />
-                <span className="tarif-sub">Enfant : 5€</span>
-              </span>
-            </div>
-          </section>
-
-          <div className="formule-grid">
-            <Formule
-              title="Pass 4 entrées "
-              variant="noliparc-anniv"
-              subtitle="(Valable pour la prochaine visite)"
-              durations={[{ time: "", price: "36€" }]}
-              showIcons={false}
-              highlightPrice={true}
-              showButton={false}
-            />
-
-            <Formule
-              title="Pass 7 entrées "
-              variant="noliparc-anniv"
-              subtitle="(Valable pour la prochaine visite)"
-              durations={[{ time: "", price: "60€" }]}
-              showIcons={false}
-              highlightPrice={true}
-              showButton={false}
-            />
-          </div>
-        </div>
-
-
- <section id="reglement" aria-label="Règlement intérieur" style={{ background: '#fdf9f4', padding: '5rem 1rem' }}>
+ <section id="reglement" aria-label="Règlement intérieur" style={{ background: '#f4faf4', padding: '5rem 1rem' }}>
       <Box sx={{ maxWidth: 900, margin: '0 auto' }}>
         <Typography
           data-aos="fade-down"
@@ -438,7 +462,7 @@ export default function HomePage() {
           component="h2"
           fontWeight={800}
           textAlign="center"
-          sx={{ color: '#DB7C26', mb: 1 }}
+          sx={{ color: '#2e7d32', mb: 1 }}
         >
           Règlement intérieur
         </Typography>
@@ -447,7 +471,7 @@ export default function HomePage() {
         </Typography>
 
         <List sx={{ bgcolor: '#fff', borderRadius: 4, p: { xs: 1.5, md: 2.5 }, boxShadow: '0 6px 20px rgba(0,0,0,0.05)' }}>
-          {regles.map((regle, index) => (
+          {regles.slice(0, showAllRules ? regles.length : 6).map((regle, index) => (
             <ListItem key={index} alignItems="flex-start" sx={{ gap: 1.5 }}>
               <ListItemIcon sx={{ minWidth: 32, mt: 0.5 }}>
                 <Box
@@ -455,7 +479,7 @@ export default function HomePage() {
                     width: 26,
                     height: 26,
                     borderRadius: '50%',
-                    bgcolor: '#DB7C26',
+                    bgcolor: '#2e7d32',
                     color: '#fff',
                     display: 'flex',
                     alignItems: 'center',
@@ -478,14 +502,26 @@ export default function HomePage() {
             </ListItem>
           ))}
 
+          <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <Button
+              variant="text"
+              onClick={() => setShowAllRules((s) => !s)}
+              sx={{ color: '#2e7d32', fontWeight: 700, textTransform: 'none' }}
+            >
+              {showAllRules
+                ? "Masquer le règlement"
+                : `Voir les ${regles.length} règles`}
+            </Button>
+          </Box>
+
           <Box sx={{ mt: 4, textAlign: 'center' }}>
             <Button
               variant="contained"
               startIcon={<FaFilePdf />}
               onClick={handleOpen}
               sx={{
-                backgroundColor: '#DB7C26',
-                '&:hover': { backgroundColor: '#c96f22' },
+                backgroundColor: '#2e7d32',
+                '&:hover': { backgroundColor: '#1b5e20' },
                 fontWeight: 600,
                 padding: '12px 24px',
                 borderRadius: '999px',
@@ -543,8 +579,8 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   startIcon={<FaFilePdf />}
                   sx={{
-                    backgroundColor: '#DB7C26',
-                    '&:hover': { backgroundColor: '#c96f22' },
+                    backgroundColor: '#2e7d32',
+                    '&:hover': { backgroundColor: '#1b5e20' },
                     fontWeight: 600,
                     padding: '10px 24px',
                     borderRadius: '999px',

@@ -53,6 +53,7 @@
   top: 0;
   left: 0;
   z-index: 0;
+  animation: ken-burns 16s ease-in-out infinite alternate;
 }
 
 .hero-overlay {
@@ -67,6 +68,15 @@
   padding: var(--space-6);
   text-align: center;
   color: #fff;
+}
+
+.hero-overlay .image-noliparc,
+.hero-overlay .image-nolijump {
+  animation: hero-pop 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+.hero-summary {
+  animation: hero-fade 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
 }
 
 .image-noliparc,

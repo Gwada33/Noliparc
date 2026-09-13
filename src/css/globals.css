@@ -17,15 +17,11 @@
 @import url("./footer.css");
 @import url("./formule.css");
 @import url("./anniversaire.css");
-@import url("./dashboard.css");
 @import url("./auth.css");
 @import url("./snack.css");
 @import url("./calendar.css");
 @import url("./advent.css");
-@import url("./admin-dashboard.css");
 @import url("./reservation.css");
-@import url("./infopopup.css");
-@import url("./snow.css");
 
 /* ===== Reset ===== */
 html,
@@ -89,6 +85,36 @@ h6 {
   overflow-x: hidden;
 }
 
+/* Noliparc s'identifie en vert (Nolijump garde l'orange) */
+.home .block-title {
+  color: var(--color-success);
+}
+
+.home .btn-primary {
+  background-color: var(--color-success);
+}
+
+.home .btn-primary:hover {
+  background-color: var(--color-success-hover);
+  box-shadow: 0 6px 18px rgba(46, 125, 50, 0.3);
+}
+
+.home .noliparc-anniv {
+  border-color: var(--color-success);
+}
+
+.home .noliparc-anniv h4 {
+  color: var(--color-success);
+}
+
+.home .noliparc-anniv .price.highlight {
+  color: var(--color-success);
+}
+
+.home .map-section h2 {
+  color: var(--color-success);
+}
+
 /* ===== En-tête de sous-page ===== */
 .page-hero {
   padding: var(--space-20) var(--space-5) var(--space-12);
@@ -128,6 +154,19 @@ h6 {
   font-weight: 800;
   text-align: center;
   margin-bottom: var(--space-8);
+}
+
+/* Sous-titre de bloc dans une section combinée (h3) */
+.block-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-align: center;
+  margin: var(--space-8) 0 var(--space-6);
+}
+
+.block-title:first-of-type {
+  margin-top: var(--space-4);
 }
 
 /* ===== Boutons partagés ===== */
@@ -246,23 +285,94 @@ h6 {
   }
 }
 
-/* ===== AOS Animations ===== */
-[data-aos="fade-up"] {
+/* ==========================================================================
+   Révélations au scroll (ScrollReveal)
+   ========================================================================== */
+html.js [data-aos] {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, filter;
 }
 
-[data-aos="fade-up"].aos-animate {
+html.js [data-aos="fade-up"] {
+  transform: translateY(28px);
+  filter: blur(6px);
+}
+
+html.js [data-aos="fade-down"] {
+  transform: translateY(-28px);
+  filter: blur(6px);
+}
+
+html.js [data-aos="fade-in"] {
+  transform: scale(0.985);
+}
+
+html.js [data-aos="zoom-in"] {
+  transform: scale(0.92);
+  filter: blur(4px);
+}
+
+html.js [data-aos].aos-animate {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  filter: blur(0);
 }
 
-[data-aos="fade-in"] {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+/* ==========================================================================
+   Animations d'entrée (hero, au chargement)
+   ========================================================================== */
+@keyframes hero-pop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-[data-aos="fade-in"].aos-animate {
-  opacity: 1;
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes logo-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+/* Respect des préférences d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

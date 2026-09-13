@@ -2,6 +2,58 @@
    Écran de choix de réservation (Noliparc / Nolijump)
    ========================================================================== */
 
+/* Barre récapitulative mobile (sticky) */
+.mobile-summary {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .mobile-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 800;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-line);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-summary__label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .mobile-summary__value {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-ink);
+    max-width: 60vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-summary__price {
+    font-weight: 800;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  /* Laisse de la place pour la barre sous le formulaire */
+  .reserve-form {
+    padding-bottom: 5.5rem !important;
+  }
+}
+
 .reservation-container {
   display: flex;
   justify-content: center;
