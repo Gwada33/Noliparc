@@ -1,15 +1,24 @@
+<<<<<<< Updated upstream
+=======
+// Prix des chaussettes (référence unique pour tout le site)
+export const SOCKS_PRICE_CHILD = "Rupture de stock";
+export const SOCKS_PRICE_ADULT = 7;
+
+>>>>>>> Stashed changes
 export const formules = [
   {
     value: "formule-grenouille",
     label: "Formule Grenouille",
     enfantMin: 14,
     timeSlots: ["10:30 - 12:00", "13:30 - 15:00", "15:30 - 17:00"],
+    note: "Les enfants peuvent profiter de l'espace de jeux une heure après dans la salle de JEU.",
   },
   {
     value: "formule-foumi-manioc",
     label: "Formule Foumi Manioc",
     enfantMin: 15,
     timeSlots: ["10:30 - 12:30", "13:00 - 15:00", "15:30 - 17:30"],
+    note: "Les enfants peuvent profiter de l'espace de jeux une heure après dans la salle de JEU.",
   },
   {
     value: "formule-mangouste-(privatisation-dimanche)",

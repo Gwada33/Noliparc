@@ -231,6 +231,15 @@ export default function HomePage() {
             </>
           )}
         </Box>
+            <div className="tarif-item">
+              <span className="tarif-label">Chaussettes</span>
+              <span className="tarif-value">
+                <span className="tarif-sub">Adulte : 7€</span>
+                <br />
+                <span className="tarif-sub">Enfant : Rupture de stock</span>
+              </span>
+            </div>
+          </section>
 
         {events.length > 0 && (
           <section id="evenements" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1rem' }}>

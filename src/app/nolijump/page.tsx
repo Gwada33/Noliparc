@@ -77,6 +77,22 @@ export default function Nolijump() {
             Voir les horaires
           </a>
         </div>
+<<<<<<< Updated upstream
+=======
+
+        <div className="socks-alert" role="note">
+          <FaSocks className="socks-alert__icon" aria-hidden="true" />
+          <div>
+            <p className="socks-alert__title">
+              Chaussettes anti-dérapantes obligatoires
+            </p>
+            <p className="socks-alert__text">
+              L'accès aux trampolines exige des chaussettes antidérapantes.
+              Achetez-les sur place : 7 € (adulte) · Rupture de stock (enfant).
+            </p>
+          </div>
+        </div>
+>>>>>>> Stashed changes
       </section>
 
       {/* ---- Bandeau infos pratiques ---- */}
@@ -260,8 +276,8 @@ export default function Nolijump() {
             title="Chaussettes anti-dérapantes"
             variant="nolijump-entree"
             durations={[
-              { time: "Enfant : ", price: "5€" },
-              { time: "Adulte : ", price: "8,99€" },
+              { time: "Enfant : ", price: "Rupture de stock" },
+              { time: "Adulte : ", price: "7€" },
             ]}
             showIcons={false}
             highlightPrice
