@@ -101,26 +101,6 @@ export default function ReserverClient() {
   const selectedFormule = formules.find((f) => f.value === watchFormule);
   const onlySunday = selectedFormule?.isPrivatisation ?? false;
   const enfantMin = selectedFormule?.enfantMin || 0;
-<<<<<<< Updated upstream
-=======
-  const adultMax = selectedFormule?.adultMax || 4;
-
-  // Estimation du montant total (formule × enfants + privatisation + chaussettes)
-  const estimate = (() => {
-    if (!selectedFormule) return 0;
-    let total = watchChildrenCount * (selectedFormule.pricePerChild || 0);
-    if (
-      selectedFormule.privatisationHourly &&
-      selectedFormule.privatisationHours
-    ) {
-      total += selectedFormule.privatisationHourly * selectedFormule.privatisationHours;
-    }
-    if (typeof SOCKS_PRICE_CHILD === "number")
-      total += socksChildren * SOCKS_PRICE_CHILD;
-    total += socksAdults * SOCKS_PRICE_ADULT;
-    return total;
-  })();
->>>>>>> Stashed changes
 
   // Si privatisation, on force la date au prochain dimanche
   useEffect(() => {
@@ -159,16 +139,6 @@ export default function ReserverClient() {
     setHasSubmitted(true);
     setErrorMsg(null);
 
-<<<<<<< Updated upstream
-=======
-    const socksLines: string[] = [];
-    if (data.socksChildren)
-      socksLines.push(`${data.socksChildren} chaussette(s) enfant (7€/unité)`);
-    if (data.socksAdults)
-      socksLines.push(`${data.socksAdults} chaussette(s) adulte (7€/unité)`);
-    const extrasText = [data.extras, ...socksLines].filter(Boolean).join(", ");
-
->>>>>>> Stashed changes
     try {
       const resp = await fetch("/api/reservation", {
         method: "POST",
@@ -225,6 +195,12 @@ export default function ReserverClient() {
               />
               <FormHelperText>{errors.formule?.message}</FormHelperText>
             </FormControl>
+
+            {selectedFormule?.note && (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                🧸 {selectedFormule.note}
+              </Typography>
+            )}
           </Box>
         )}
 
@@ -375,7 +351,6 @@ export default function ReserverClient() {
                           {n}
                         </MenuItem>
                       ))}
-<<<<<<< Updated upstream
                   </Select>
                 )}
               />
@@ -384,281 +359,6 @@ export default function ReserverClient() {
               </FormHelperText>
             </FormControl>
           </Box>
-=======
-                    </Select>
-                  )}
-                />
-                <FormHelperText>{errors.adultsCount?.message}</FormHelperText>
-              </FormControl>
-
-              {/* Estimation en temps réel */}
-              <Box
-                sx={{
-                  mt: 3,
-                  p: 2.5,
-                  borderRadius: 2,
-                  bgcolor: "#FDEBEF",
-                  border: "1px solid #F48FB1",
-                }}
-              >
-                <Typography fontWeight={700} color="#c2185b" gutterBottom>
-                  Estimation
-                </Typography>
-                <Typography variant="body2" color="#555">
-                  {watchChildrenCount} × {fmt(selectedFormule?.pricePerChild || 0)}
-                  {selectedFormule?.privatisationHourly
-                    ? ` + privatisation ${fmt(
-                        selectedFormule.privatisationHourly *
-                          (selectedFormule.privatisationHours || 1)
-                      )}`
-                    : ""}
-                  {socksChildren + socksAdults > 0
-                    ? ` + chaussettes ${fmt(
-                        socksChildren * SOCKS_PRICE_CHILD +
-                          socksAdults * SOCKS_PRICE_ADULT
-                      )}`
-                    : ""}
-                </Typography>
-                <Typography variant="h6" fontWeight={800} color="#000">
-                  ≈ {fmt(estimate)}
-                </Typography>
-                <Typography variant="caption" color="#666">
-                  (hors acompte de 50 % à la réservation)
-                </Typography>
-              </Box>
-            </Box>
-          )}
-
-          {/* ---------- Étape 3 : Gâteau & options (chaussettes) ---------- */}
-          {activeStep === 3 && (
-            <Box>
-              <FormControl fullWidth margin="normal" error={!!errors.cake}>
-                <InputLabel>Gâteau</InputLabel>
-                <Controller
-                  name="cake"
-                  control={control}
-                  rules={{ required: "Précisez le gâteau" }}
-                  render={({ field }) => (
-                    <Select {...field} label="Type de gâteau">
-                      <MenuItem value="gateau_yaourt">Gâteau au yaourt</MenuItem>
-                      <MenuItem value="gateau_chocolat">Gâteau au chocolat</MenuItem>
-                    </Select>
-                  )}
-                />
-                <FormHelperText>{errors.cake?.message}</FormHelperText>
-              </FormControl>
-
-              <Typography variant="subtitle2" sx={{ mt: 2, fontWeight: 700 }}>
-                🧦 Chaussettes anti-dérapantes (obligatoires au trampoline)
-              </Typography>
-              <Box display="flex" gap={2}>
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  type="number"
-                  label={`Chaussettes enfant (${typeof SOCKS_PRICE_CHILD === "number" ? fmt(SOCKS_PRICE_CHILD) + "/unité" : SOCKS_PRICE_CHILD})`}
-                  {...register("socksChildren", {
-                    min: { value: 0, message: "Valeur incorrecte" },
-                    valueAsNumber: true,
-                  })}
-                />
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  type="number"
-                  label={`Chaussettes adulte (${fmt(SOCKS_PRICE_ADULT)}/unité)`}
-                  {...register("socksAdults", {
-                    min: { value: 0, message: "Valeur incorrecte" },
-                    valueAsNumber: true,
-                  })}
-                />
-              </Box>
-
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Informations supplémentaires"
-                multiline
-                rows={3}
-                {...register("extras")}
-              />
-            </Box>
-          )}
-
-          {/* ---------- Étape 4 : Récapitulatif & envoi ---------- */}
-          {activeStep === 4 && (
-            <Box color="#000">
-              <Typography variant="subtitle1" gutterBottom>
-                <strong>Formule :</strong>{" "}
-                {formules.find((f) => f.value === watchFormule)?.label || "—"}
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                <strong>Date :</strong>{" "}
-                {watchDate ? watchDate.toLocaleDateString("fr-FR") : "Non renseignée"}
-                {watchTimeSlot ? ` — ${watchTimeSlot}` : ""}
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                <strong>Enfant :</strong> {watch("childrenName") || "—"} (
-                {watch("childAge") || 0} ans)
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                <strong>Participants :</strong> {watchChildrenCount} enfant(s) ·{" "}
-                {watchAdultsCount} adulte(s)
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                <strong>Gâteau :</strong>{" "}
-                {watch("cake") === "gateau_chocolat"
-                  ? "Gâteau au chocolat"
-                  : watch("cake") === "gateau_yaourt"
-                    ? "Gâteau au yaourt"
-                    : "—"}
-              </Typography>
-              {(socksChildren > 0 || socksAdults > 0) && (
-                <Typography variant="subtitle1" gutterBottom>
-                  <strong>Chaussettes :</strong>{" "}
-                  {[
-                    socksChildren > 0 ? `${socksChildren} enfant(s)` : "",
-                    socksAdults > 0 ? `${socksAdults} adulte(s)` : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </Typography>
-              )}
-              {watch("extras") && (
-                <Typography variant="subtitle1" gutterBottom>
-                  <strong>Infos :</strong> {watch("extras")}
-                </Typography>
-              )}
-
-              <Box
-                sx={{
-                  mt: 3,
-                  p: 2.5,
-                  borderRadius: 2,
-                  bgcolor: "#FDF1E5",
-                  border: "1px solid #F4A85C",
-                }}
-              >
-                <Typography fontWeight={700} color="#B05A12">
-                  Total estimé
-                </Typography>
-                <Typography variant="h5" fontWeight={800} color="#000">
-                  ≈ {fmt(estimate)}
-                </Typography>
-                <Typography variant="caption" color="#666">
-                  Acompte de 50 % à la réservation — le solde se règle sur place.
-                </Typography>
-              </Box>
-            </Box>
-          )}
-
-          {/* ---------- Boutons “Précédent / Suivant / Envoyer” ---------- */}
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            <Grid>
-              {activeStep > 0 && (
-                <Button variant="outlined" onClick={handleBack}>
-                  Précédent
-                </Button>
-              )}
-            </Grid>
-            <Grid>
-              {activeStep < steps.length - 1 && (
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  disabled={nextDisabled}
-                >
-                  Suivant
-                </Button>
-              )}
-              {activeStep === steps.length - 1 && (
-                <Button type="submit" variant="contained" disabled={isSubmitting}>
-                  {isSubmitting ? "Envoi..." : "Envoyer ma demande"}
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-        </form>
-
-        {/* ---------- Barre récapitulative mobile (sticky) ---------- */}
-        <div className="mobile-summary">
-          <div>
-            <div className="mobile-summary__label">{steps[activeStep]}</div>
-            <div className="mobile-summary__value">
-              {selectedFormule?.label ?? "Choisissez une formule"}
-            </div>
-          </div>
-          <div className="mobile-summary__price">≈ {fmt(estimate)}</div>
-        </div>
-
-        {/* ---------- Confirmation ---------- */}
-        <Dialog
-          open={finalModalOpen}
-          onClose={() => {
-            setFinalModalOpen(false);
-            router.push("/");
-          }}
-        >
-          <DialogTitle>Demande envoyée ! 🎉</DialogTitle>
-          <DialogContent dividers>
-            {submittedData && (
-              <Box mb={2}>
-                <Typography variant="body2" gutterBottom>
-                  <strong>Formule :</strong>{" "}
-                  {formules.find((f) => f.value === submittedData.formule)?.label}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  <strong>Date :</strong>{" "}
-                  {submittedData.date
-                    ? new Date(submittedData.date).toLocaleDateString("fr-FR")
-                    : "—"}{" "}
-                  {submittedData.timeSlot ? `— ${submittedData.timeSlot}` : ""}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  <strong>Participants :</strong> {submittedData.childrenCount}{" "}
-                  enfant(s) · {submittedData.adultsCount} adulte(s)
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  <strong>Total estimé :</strong>{" "}
-                  {fmt(
-                    (submittedData.childrenCount || 0) *
-                      (selectedFormule?.pricePerChild || 0) +
-                      (selectedFormule?.privatisationHourly || 0) *
-                        (selectedFormule?.privatisationHours || 0) +
-                      (submittedData.socksChildren || 0) * (typeof SOCKS_PRICE_CHILD === "number" ? SOCKS_PRICE_CHILD : 0) +
-                      (submittedData.socksAdults || 0) * SOCKS_PRICE_ADULT
-                  )}
-                </Typography>
-              </Box>
-            )}
-            <Typography gutterBottom>
-              ✅ Votre demande a bien été enregistrée. Notre équipe vous
-              recontacte rapidement pour confirmer.
-            </Typography>
-            <Typography whiteSpace="pre-line" gutterBottom>
-              ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en
-              cas d'annulation, mais échangeable contre un report ou des entrées.
-              {"\n"}🚫 Boissons et aliments extérieurs interdits.
-              {"\n"}🧦 Chaussettes obligatoires pour tous.
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                setFinalModalOpen(false);
-                router.push("/");
-              }}
-            >
-              Fermer
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        {errorMsg && (
-          <Typography color="error" mt={2} whiteSpace="pre-line">
-            {errorMsg}
-          </Typography>
->>>>>>> Stashed changes
         )}
 
         {/* ---------- Étape 4 : Gâteau & Infos supplémentaires ---------- */}
@@ -701,6 +401,11 @@ export default function ReserverClient() {
               <strong>Formule :</strong>{" "}
               {formules.find((f) => f.value === watchFormule)?.label}
             </Typography>
+            {selectedFormule?.note && (
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                🧸 {selectedFormule.note}
+              </Typography>
+            )}
             <Typography variant="subtitle1" gutterBottom>
               <strong>Date :</strong>{" "}
               {watchDate

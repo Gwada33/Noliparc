@@ -214,7 +214,6 @@ export default function HomePage() {
                 ]}
               />
 
-<<<<<<< Updated upstream
               <ScheduleTable
                 title="Périodes scolaires"
                 headers={["Jusqu'à 10 ans"]}
@@ -232,141 +231,6 @@ export default function HomePage() {
             </>
           )}
         </Box>
-=======
-        <section id="espaces" aria-labelledby="espaces-title" style={{ maxWidth: 1200, margin: '0 auto', padding: '5rem 1rem 0' }}>
-          <h2 id="espaces-title" className="section-heading" data-aos="fade-up">Nos espaces</h2>
-          <div className="offers-grid offers-grid--2" style={{ marginBottom: 'var(--space-8)' }}>
-            {espaces.map((espace, i) => (
-              <article
-                className="offer-card"
-                key={espace.title}
-                data-aos="fade-up"
-                data-aos-delay={i * 100}
-              >
-                <div
-                  className={`offer-card__img ${
-                    espace.contain ? "offer-card__img--contain" : ""
-                  }`}
-                >
-                  <Image
-                    src={espace.image}
-                    alt={espace.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <div className="offer-card__body">
-                  <h3 className="offer-card__title">{espace.title}</h3>
-                  <ul className="offer-card__points">
-                    {espace.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                  <Link href={espace.cta.href} className="offer-card__cta btn-primary">
-                    {espace.cta.label}
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="horaires-tarifs" aria-labelledby="horaires-tarifs-title" style={{ maxWidth: 1200, margin: '0 auto', padding: '5rem 1rem 0' }}>
-          <h2 id="horaires-tarifs-title" className="section-heading" data-aos="fade-up">
-            Horaires &amp; tarifs
-          </h2>
-
-          {/* Horaires d'ouverture */}
-          <h3 id="horaires" className="block-title" data-aos="fade-up">
-            Horaires d&apos;ouverture
-          </h3>
-
-          <div className="sched-grid" data-aos="fade-up">
-            {schedules.length > 0 ? (
-              schedules.map((schedule) => (
-                <ScheduleCard
-                  key={schedule.id}
-                  tone="green"
-                  title={String(schedule.season || "Horaires")}
-                  headers={schedule.headers || ["Jusqu'à 10 ans"]}
-                  data={schedule.rows}
-                />
-              ))
-            ) : (
-              <>
-                <ScheduleCard
-                  tone="green"
-                  title="Pendant les vacances"
-                  headers={["Jusqu'à 10 ans"]}
-                  data={VACANCES_HOME}
-                />
-                <ScheduleCard
-                  tone="green"
-                  title="Périodes scolaires"
-                  headers={["Jusqu'à 10 ans"]}
-                  data={SCOLAIRE_HOME}
-                />
-              </>
-            )}
-          </div>
-
-          {/* Tarifs */}
-          <h3 id="tarifs" className="block-title" data-aos="fade-up">
-            Tarifs
-          </h3>
-
-          <section className="tarifs-section">
-            <div className="tarif-item">
-              <span className="tarif-label">Moins de 1 an</span>
-              <span className="tarif-value">Gratuit</span>
-            </div>
-
-            <div className="tarif-item">
-              <span className="tarif-label">De 1 à 10 ans</span>
-              <span className="tarif-value">12€</span>
-            </div>
-
-            <div className="tarif-item">
-              <span className="tarif-label">Adulte</span>
-              <span className="tarif-value">
-                <br />
-                <span className="tarif-sub">+3€ par adulte accompagnateur</span>
-              </span>
-            </div>
-
-            <div className="tarif-item">
-              <span className="tarif-label">Chaussettes</span>
-              <span className="tarif-value">
-                <span className="tarif-sub">Adulte : 7€</span>
-                <br />
-                <span className="tarif-sub">Enfant : Rupture de stock</span>
-              </span>
-            </div>
-          </section>
-
-          <div className="formule-grid" data-aos="fade-up">
-            <Formule
-              title="Pass 4 entrées "
-              variant="noliparc-anniv"
-              subtitle="(Valable pour la prochaine visite)"
-              durations={[{ time: "", price: "36€" }]}
-              showIcons={false}
-              highlightPrice={true}
-              showButton={false}
-            />
-
-            <Formule
-              title="Pass 7 entrées "
-              variant="noliparc-anniv"
-              subtitle="(Valable pour la prochaine visite)"
-              durations={[{ time: "", price: "60€" }]}
-              showIcons={false}
-              highlightPrice={true}
-              showButton={false}
-            />
-          </div>
-        </section>
->>>>>>> Stashed changes
 
         {events.length > 0 && (
           <section id="evenements" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1rem' }}>
@@ -535,9 +399,9 @@ export default function HomePage() {
             <div className="tarif-item">
               <span className="tarif-label">Chaussettes</span>
               <span className="tarif-value">
-                <span className="tarif-sub">Adulte : 8,99€</span>
+                <span className="tarif-sub">Adulte : 7€</span>
                 <br />
-                <span className="tarif-sub">Enfant : 5€</span>
+                <span className="tarif-sub">Enfant : Rupture de stock</span>
               </span>
             </div>
           </section>

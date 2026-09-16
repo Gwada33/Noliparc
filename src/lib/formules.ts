@@ -1,10 +1,7 @@
-<<<<<<< Updated upstream
-=======
 // Prix des chaussettes (référence unique pour tout le site)
 export const SOCKS_PRICE_CHILD = "Rupture de stock";
 export const SOCKS_PRICE_ADULT = 7;
 
->>>>>>> Stashed changes
 export const formules = [
   {
     value: "formule-grenouille",
