@@ -61,7 +61,44 @@ export default function LegalPage() {
       </Box>
       </section>
 
-      {/* Section 2 : Mentions légales */}
+      {/* Section 2 : Conditions d'annulation et de remboursement */}
+      <section id="annulation">
+      <Box mb={10}>
+        <Typography variant="h3" gutterBottom fontWeight="bold" color="black">
+          Conditions d'annulation et de remboursement — Prestations Anniversaire
+        </Typography>
+
+        <Typography variant="body1" paragraph>
+          Les présentes conditions s'appliquent à toute réservation d'une prestation
+          anniversaire chez Noliparc, pour laquelle un acompte de 50 % est demandé à la
+          réservation.
+        </Typography>
+
+        {[
+          {
+            title: "1. Annulation à plus de 24 heures de l'événement",
+            content: "Toute annulation effectuée plus de 24 heures avant l'heure prévue de la prestation donnera lieu au remboursement de l'acompte, déduction faite des frais éventuels déjà engagés pour la réservation.",
+          },
+          {
+            title: "2. Annulation à moins de 24 heures de l'événement",
+            content: "En cas d'annulation intervenant moins de 24 heures avant le début de la prestation :\n\n• Justificatif obligatoire : un remboursement ne pourra être envisagé que sur présentation d'un justificatif valable (certificat médical ou bulletin d'hospitalisation de l'enfant ou du représentant légal). Sans ce document, l'acompte versé reste intégralement acquis à Noliparc.\n\n• Retenue pour frais engagés : en raison des préparations logistiques et alimentaires déjà réalisées (notamment la confection du gâteau et la réservation de l'espace), une retenue forfaitaire de 10 % sur le montant total de l'acompte sera appliquée.",
+          },
+          {
+            title: "3. Modalités de remboursement",
+            content: "Le solde de l'acompte (soit 90 % de la somme versée) sera restitué par virement bancaire ou crédité sur le moyen de paiement d'origine dans un délai de 7 jours suivant la réception du justificatif médical.",
+          },
+        ].map((item, index) => (
+          <Box mt={4} key={index}>
+            <Typography variant="h5" fontWeight="bold" gutterBottom color="black">
+              {item.title}
+            </Typography>
+            <Typography variant="body1" whiteSpace="pre-line">{item.content}</Typography>
+          </Box>
+        ))}
+      </Box>
+      </section>
+
+      {/* Section 3 : Mentions légales */}
       <section id="ml">
       <Box mb={10}>
         <Typography variant="h3" gutterBottom fontWeight="bold" color="black">
@@ -188,7 +225,7 @@ export default function LegalPage() {
 
       </section>
 
-      {/* Section 3 : Politique de confidentialité */}
+      {/* Section 4 : Politique de confidentialité */}
       <section id="pdc">
   <Box>
         <Typography variant="h3" gutterBottom fontWeight="bold" color="black">

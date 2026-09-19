@@ -198,6 +198,15 @@ export async function POST(request: Request) {
           <li><strong>🧒 Enfants :</strong> ${data.childrenCount}</li>
           <li><strong>🧩 Infos supplémentaires :</strong> ${extrasText}</li>
         </ul>
+        <p style="margin-top: 30px; padding: 12px 16px; background-color: #FDF6E3; border-radius: 8px; font-size: 14px;">
+          <strong>⚠️ Acompte et annulation :</strong> un acompte de 50 % est requis pour confirmer la réservation.
+          En cas d'annulation plus de 24 h avant la prestation, l'acompte est remboursé, déduction faite des frais
+          déjà engagés. À moins de 24 h, un remboursement de 90 % de l'acompte est possible uniquement sur
+          présentation d'un justificatif médical.<br />
+          <a href="${baseUrl}/legal#annulation" style="color: #4CAF50;">
+            Lire les conditions d'annulation et de remboursement
+          </a>
+        </p>
         <p style="margin-top: 30px;">
           Nous reviendrons très vite vers vous.<br />
           Merci pour votre confiance,<br />

@@ -59,6 +59,9 @@ export default function Footer() {
                   <Link href="/legal#pdc">Politique de confidentialité</Link>
                 </li>
                 <li>
+                  <Link href="/legal#annulation">Conditions d&apos;annulation et de remboursement</Link>
+                </li>
+                <li>
                   <a 
                     href="https://ewyyikh0ws.ufs.sh/f/dpcit5LWLcSxdMZ5nqLWLcSxqA9Ruy1jCf5svknpPhI6MVN7" 
                     target="_blank" 

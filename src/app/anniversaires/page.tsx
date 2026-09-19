@@ -133,8 +133,11 @@ export default function AnniversairesPage() {
         )}
 
         <p className="notice">
-          ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en cas
-          d&apos;annulation, mais échangeable contre un report ou des entrées.{" "}
+          ⚠️ Un acompte de 50% est requis pour réserver. Remboursable selon nos{" "}
+          <Link href="/legal#annulation">
+            conditions d&apos;annulation et de remboursement
+          </Link>
+          .
           <br />
           🚫 Boissons et aliments extérieurs interdits.
           <br />

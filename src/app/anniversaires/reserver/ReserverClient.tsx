@@ -435,6 +435,22 @@ export default function ReserverClient() {
                 <strong>Infos :</strong> {watch("extras")}
               </Typography>
             )}
+
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
+              ⚠️ Un acompte de 50% est requis pour réserver. Il est remboursable
+              selon nos{" "}
+              <Link
+                href="/legal#annulation"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "underline" }}
+              >
+                conditions d&apos;annulation et de remboursement
+              </Link>{" "}
+              : remboursement de l&apos;acompte en cas d&apos;annulation plus de
+              24 h avant la prestation ; à moins de 24 h, remboursement de 90 %
+              uniquement sur présentation d&apos;un justificatif médical.
+            </Typography>
           </Box>
         )}
 
@@ -486,10 +502,21 @@ export default function ReserverClient() {
             ✅ Votre demande a bien été enregistrée.
           </Typography>
           <Typography whiteSpace="pre-line" gutterBottom>
-            ⚠️ Un acompte de 50% est requis pour réserver. Non remboursable en
-            cas d'annulation, mais échangeable contre un report ou des entrées.
+            ⚠️ Un acompte de 50% est requis pour réserver, remboursable selon
+            nos conditions d'annulation et de remboursement.
             {"\n"}🚫 Boissons et aliments extérieurs interdits.
             {"\n"}🧦 Chaussettes obligatoires pour tous.
+          </Typography>
+          <Typography mt={1}>
+            📄{" "}
+            <Link
+              href="/legal#annulation"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "underline" }}
+            >
+              Lire les conditions d&apos;annulation et de remboursement
+            </Link>
           </Typography>
           <Typography mt={2}>
             📧{" "}
